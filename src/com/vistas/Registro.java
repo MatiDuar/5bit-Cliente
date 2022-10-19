@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 public class Registro extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel panelDinamico;
+	PanelRegistroPag panelRegistroPag = new PanelRegistroPag();
 
 	/**
 	 * Launch the application.
@@ -47,7 +49,7 @@ public class Registro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panelDinamico = new JPanel();
+		panelDinamico = new JPanel();
 		panelDinamico.setBounds(0, 0, 710, 495);
 		contentPane.add(panelDinamico);
 		panelDinamico.setLayout(null);
@@ -97,7 +99,7 @@ public class Registro extends JFrame {
 		textFull_4.setBounds(70, 348, 250, 42);
 		panelDinamico.add(textFull_4);
 		
-		JLabel lblNewLabel_1_2_4 = new JLabel("Email Personal");
+		JLabel lblNewLabel_1_2_4 = new JLabel("Localidad");
 		lblNewLabel_1_2_4.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNewLabel_1_2_4.setBounds(70, 323, 77, 14);
 		panelDinamico.add(lblNewLabel_1_2_4);
@@ -111,7 +113,7 @@ public class Registro extends JFrame {
 		textFull_2_1.setBounds(390, 192, 250, 42);
 		panelDinamico.add(textFull_2_1);
 		
-		JLabel lblNewLabel_1_2_3_1 = new JLabel("Usuario");
+		JLabel lblNewLabel_1_2_3_1 = new JLabel("Fecha Nacimiento");
 		lblNewLabel_1_2_3_1.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNewLabel_1_2_3_1.setBounds(390, 245, 61, 14);
 		panelDinamico.add(lblNewLabel_1_2_3_1);
@@ -120,7 +122,7 @@ public class Registro extends JFrame {
 		textFull_3_1.setBounds(390, 270, 250, 42);
 		panelDinamico.add(textFull_3_1);
 		
-		JLabel lblNewLabel_1_2_4_1 = new JLabel("Email UTEC");
+		JLabel lblNewLabel_1_2_4_1 = new JLabel("Departamento");
 		lblNewLabel_1_2_4_1.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNewLabel_1_2_4_1.setBounds(390, 323, 61, 14);
 		panelDinamico.add(lblNewLabel_1_2_4_1);
@@ -137,6 +139,16 @@ public class Registro extends JFrame {
 		panelDinamico.add(btnhvrRegistrarse);
 		
 		RSButtonHover btnhvrSiguiente = new RSButtonHover();
+		btnhvrSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelDinamico.removeAll();
+				panelRegistroPag.setSize(710, 495);
+				panelRegistroPag.setLocation(0, 0);
+				panelDinamico.add(panelRegistroPag);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
 		btnhvrSiguiente.setText("Siguiente?");
 		btnhvrSiguiente.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrSiguiente.setBackground(new Color(52, 152, 219));

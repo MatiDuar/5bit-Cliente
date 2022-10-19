@@ -95,12 +95,19 @@ public class PanelRegistroPag extends JPanel {
 		textFull_4_1.setBounds(390, 348, 250, 42);
 		add(textFull_4_1);
 		
-		RSButtonHover btnhvrRegistrarse = new RSButtonHover();
-		btnhvrRegistrarse.setText("Registrarse");
-		btnhvrRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrRegistrarse.setBackground(new Color(52, 152, 219));
-		btnhvrRegistrarse.setBounds(70, 436, 172, 33);
-		add(btnhvrRegistrarse);
+		RSButtonHover btnVolver = new RSButtonHover();
+		btnVolver.setText("Volver");
+		btnVolver.setFont(new Font("Lato", Font.BOLD, 14));
+		btnVolver.setBackground(new Color(52, 152, 219));
+		btnVolver.setBounds(70, 436, 172, 33);
+		add(btnVolver);
+		
+		RSButtonHover btnRegistrarse = new RSButtonHover();
+		btnRegistrarse.setText("Registrarse");
+		btnRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
+		btnRegistrarse.setBackground(new Color(52, 152, 219));
+		btnRegistrarse.setBounds(468, 436, 172, 33);
+		add(btnRegistrarse);
 		
 		
 
