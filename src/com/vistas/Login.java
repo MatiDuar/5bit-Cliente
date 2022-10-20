@@ -46,7 +46,7 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 363, 372);
+		setBounds(100, 100, 374, 372);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -58,7 +58,7 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("LOGIN");
-		lblNewLabel.setBounds(52, 11, 156, 58);
+		lblNewLabel.setBounds(52, 11, 160, 58);
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
 		
@@ -89,7 +89,7 @@ public class Login extends JFrame {
 		
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(218, 19, 50, 50);
+		labelImage.setBounds(252, 19, 50, 50);
 		panel.add(labelImage);
 		
 		JLabel lblRegistrarse = new JLabel("Registrarse");

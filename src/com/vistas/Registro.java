@@ -56,7 +56,7 @@ public class Registro extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("REGISTRO USUARIO");
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
-		lblNewLabel.setBounds(116, 11, 478, 58);
+		lblNewLabel.setBounds(116, 11, 524, 58);
 		panelDinamico.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Nombre 1");

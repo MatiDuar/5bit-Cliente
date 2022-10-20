@@ -19,7 +19,7 @@ public class PanelRegistroPag extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("REGISTRO USUARIO");
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
-		lblNewLabel.setBounds(116, 11, 478, 58);
+		lblNewLabel.setBounds(116, 11, 512, 58);
 		add(lblNewLabel);
 		
 		
