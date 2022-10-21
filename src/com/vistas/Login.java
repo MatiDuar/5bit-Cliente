@@ -20,10 +20,13 @@ import RSMaterialComponent.RSLabelTextIcon;
 import rojeru_san.rsfield.RSPassword;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel lblRegistrarse;
+	Registro frameRegistro = new Registro();
 
 	/**
 	 * Launch the application.
@@ -46,14 +49,20 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 374, 372);
+		setBounds(100, 100, 374, 387);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 354, 333);
+		panel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblRegistrarse.setForeground(Color.BLACK);
+			}
+		});
+		panel.setBounds(0, 0, 354, 348);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -89,10 +98,16 @@ public class Login extends JFrame {
 		
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(252, 19, 50, 50);
+		labelImage.setBounds(252, 11, 50, 50);
 		panel.add(labelImage);
 		
-		JLabel lblRegistrarse = new JLabel("Registrarse");
+		lblRegistrarse = new JLabel("Registrarse");
+		lblRegistrarse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frameRegistro.setVisible(true);
+			}
+		});
 		lblRegistrarse.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -100,8 +115,8 @@ public class Login extends JFrame {
 			}
 		});
 
-		lblRegistrarse.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblRegistrarse.setBounds(52, 308, 67, 14);
+		lblRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
+		lblRegistrarse.setBounds(52, 314, 83, 23);
 		panel.add(lblRegistrarse);
 	}
 }
