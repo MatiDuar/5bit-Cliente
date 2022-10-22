@@ -11,9 +11,6 @@ import rojeru_san.rsfield.RSTextFull;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSDateChooser;
-import rojerusan.RSComboBox;
-import rojerusan.RSRadioButton;
-import javax.swing.JButton;
 
 public class PanelRegistroPag extends JPanel {
 	
@@ -27,7 +24,7 @@ public class PanelRegistroPag extends JPanel {
 	 */
 	public PanelRegistroPag() {
 		setLayout(null);
-		setBounds(100, 100, 710, 841);
+		setBounds(100, 100, 710, 495);
 		
 		
 		JLabel lblNombre1 = new JLabel("Nombre 1");
@@ -108,87 +105,30 @@ public class PanelRegistroPag extends JPanel {
 		btnhvrRegistrarse.setText("Registrarse");
 		btnhvrRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrRegistrarse.setBackground(new Color(52, 152, 219));
-		btnhvrRegistrarse.setBounds(70, 791, 172, 33);
+		btnhvrRegistrarse.setBounds(70, 436, 172, 33);
 		add(btnhvrRegistrarse);
 		
 		RSButtonHover btnhvrSiguiente = new RSButtonHover();
 		btnhvrSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Registro.mostrarPag2(panelRegistroPag2);
-
+//				Registro.getPanelDinamico().removeAll();
+//				panelRegistroPag2.setSize(710, 495);
+//				panelRegistroPag2.setLocation(0, 0);
+//				Registro.getPanelDinamico().add(panelRegistroPag2);
+//				Registro.getPanelDinamico().revalidate();
+//				Registro.getPanelDinamico().repaint();
 			}
 		});
 		btnhvrSiguiente.setText("Siguiente");
 		btnhvrSiguiente.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrSiguiente.setBackground(new Color(52, 152, 219));
-		btnhvrSiguiente.setBounds(468, 791, 172, 33);
+		btnhvrSiguiente.setBounds(468, 436, 172, 33);
 		add(btnhvrSiguiente);
 		
 		RSDateChooser dateChooser = new RSDateChooser();
 		dateChooser.setBounds(390, 271, 250, 42);
 		add(dateChooser);
-		
-		RSComboBox comboBox = new RSComboBox();
-		comboBox.setColorFondo(new Color(52, 152, 219));
-		comboBox.setBounds(70, 450, 250, 42);
-		add(comboBox);
-		
-		RSComboBox comboBox_1 = new RSComboBox();
-		comboBox_1.setColorFondo(new Color(52, 152, 219));
-		comboBox_1.setBounds(390, 450, 250, 42);
-		add(comboBox_1);
-		
-		RSComboBox comboBox_2 = new RSComboBox();
-		comboBox_2.setColorFondo(new Color(52, 152, 219));
-		comboBox_2.setBounds(70, 528, 250, 42);
-		add(comboBox_2);
-		
-		JLabel lblNewLabel_1_2_2_1 = new JLabel("Tipo de Usuario");
-		lblNewLabel_1_2_2_1.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNewLabel_1_2_2_1.setBounds(390, 503, 77, 14);
-		add(lblNewLabel_1_2_2_1);
-		
-		RSRadioButton radioEstudiante = new RSRadioButton();
-		radioEstudiante.setText("Estudiante");
-		radioEstudiante.setFont(new Font("Lato", Font.BOLD, 11));
-		radioEstudiante.setBounds(384, 528, 87, 42);
-		add(radioEstudiante);
-		
-		RSRadioButton radioTutor = new RSRadioButton();
-		radioTutor.setText("Tutor");
-		radioTutor.setFont(new Font("Lato", Font.BOLD, 11));
-		radioTutor.setBounds(468, 528, 61, 42);
-		add(radioTutor);
-		
-		RSRadioButton radioAnalista = new RSRadioButton();
-		radioAnalista.setText("Analista");
-		radioAnalista.setFont(new Font("Lato", Font.BOLD, 11));
-		radioAnalista.setBounds(531, 528, 77, 42);
-		add(radioAnalista);
-		
-		JPanel panelDinamicoReg2 = new JPanel();
-		panelDinamicoReg2.setLayout(null);
-		panelDinamicoReg2.setBounds(70, 581, 570, 174);
-		add(panelDinamicoReg2);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(135, 48, 89, 23);
-		panelDinamicoReg2.add(btnNewButton);
-		
-		JLabel lblNewLabel_1_2_2 = new JLabel("ITR");
-		lblNewLabel_1_2_2.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNewLabel_1_2_2.setBounds(70, 503, 61, 14);
-		add(lblNewLabel_1_2_2);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Localidad");
-		lblNewLabel_1_2.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNewLabel_1_2.setBounds(70, 425, 61, 14);
-		add(lblNewLabel_1_2);
-		
-		JLabel lblNewLabel_1_2_1 = new JLabel("Departamento");
-		lblNewLabel_1_2_1.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNewLabel_1_2_1.setBounds(390, 425, 77, 14);
-		add(lblNewLabel_1_2_1);
 		
 		
 
