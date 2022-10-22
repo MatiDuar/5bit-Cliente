@@ -45,7 +45,7 @@ public class Registro extends JFrame {
 	 */
 	public Registro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 726, 844);
+		setBounds(100, 100, 726, 523);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -53,7 +53,7 @@ public class Registro extends JFrame {
 		
 
 		setPanelDinamico(new JPanel());
-		getPanelDinamico().setBounds(0, 0, 710, 844);
+		getPanelDinamico().setBounds(0, 0, 710, 495);
 		contentPane.add(getPanelDinamico());
 		getPanelDinamico().setLayout(null);
 		//Mostrar primer pagina registro

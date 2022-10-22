@@ -158,10 +158,6 @@ public class PanelRegistroPag2 extends JPanel {
 		panelDinamicoReg2.setBounds(70, 245, 570, 174);
 		add(panelDinamicoReg2);
 		panelDinamicoReg2.setLayout(null);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(135, 48, 89, 23);
-		panelDinamicoReg2.add(btnNewButton);
 		panelRegistroTutor.setSize(570, 186);
 		panelRegistroTutor.setLocation(0, 0);
 		
