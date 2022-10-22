@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import rojerusan.RSMenuBar;
+import java.awt.Toolkit;
 
 public class Menu extends JFrame {
 
@@ -32,15 +33,13 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		setTitle("Menú Principal");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 945, 725);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		RSMenuBar menuBar = new RSMenuBar();
-		menuBar.setBounds(85, 52, 118, 27);
-		contentPane.add(menuBar);
 	}
 }
