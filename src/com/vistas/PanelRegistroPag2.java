@@ -70,7 +70,7 @@ public class PanelRegistroPag2 extends JPanel {
 		RSButtonHover btnVolver = new RSButtonHover();
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Registro.mostrarPag1(panelRegistroPag1);
+				Registro.mostrarPag1(PanelRegistroPag.getInstancia());
 			}
 		});
 		btnVolver.setText("Volver");
