@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import rojeru_san.rsdate.RSDateChooser;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class PanelRegistroEstudiante extends JPanel {
 
@@ -30,5 +31,4 @@ public class PanelRegistroEstudiante extends JPanel {
 	public static PanelRegistroEstudiante getInstancia(){
 		return instancia;
 	}
-	
 }
