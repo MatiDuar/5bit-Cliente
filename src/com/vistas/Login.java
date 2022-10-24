@@ -21,6 +21,8 @@ import rojeru_san.rsfield.RSPassword;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -72,6 +74,10 @@ public class Login extends JFrame {
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
 		
 		RSButtonHover btnIngresar = new RSButtonHover();
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnIngresar.setBackground(new Color(52, 152, 219));
 		btnIngresar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnIngresar.setText("Ingresar");
@@ -83,18 +89,24 @@ public class Login extends JFrame {
 		lblContrasena.setBounds(52, 168, 61, 14);
 		panel.add(lblContrasena);
 		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEmail.setBounds(52, 90, 61, 14);
-		panel.add(lblEmail);
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblUsuario.setBounds(52, 90, 61, 14);
+		panel.add(lblUsuario);
 		
 		RSPassword password = new RSPassword();
 		password.setBounds(52, 193, 250, 42);
 		panel.add(password);
 		
-		RSTextFull textFull = new RSTextFull();
-		textFull.setBounds(52, 115, 250, 42);
-		panel.add(textFull);
+		RSTextFull textUsuario = new RSTextFull();
+		textUsuario.setFont(new Font("Lato", Font.BOLD, 14));
+		textUsuario.setPlaceholder(" Escribe algo...");
+		textUsuario.setMostrarBoton(false);
+		textUsuario.setForeground(new Color(52, 152, 219));
+		textUsuario.setBotonColor(new Color(52, 152, 219));
+		textUsuario.setBordeColorFocus(new Color(52, 152, 219));
+		textUsuario.setBounds(52, 115, 250, 42);
+		panel.add(textUsuario);
 		
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));

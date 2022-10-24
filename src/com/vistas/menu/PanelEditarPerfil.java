@@ -13,159 +13,182 @@ import rojeru_san.complementos.RSButtonHover;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSYearDate;
+import rojeru_san.rslabel.RSLabelImage;
+import javax.swing.ImageIcon;
 
-public class panelEditarPerfil extends JPanel {
+public class PanelEditarPerfil extends JPanel {
+	private Menu menu = Menu.getInstancia();
+	private JPanel panelDinamicoEditarPerfilPorTipoUsuarios;
+	private static PanelMenuEstudiante panelEstudiante = PanelMenuEstudiante.getInstancia();
+	static PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
 
 	/**
 	 * Create the panel.
 	 */
-	public panelEditarPerfil() {
+	public PanelEditarPerfil() {
 		setLayout(null);
 		
 		JLabel lblPrimerNombre = new JLabel("Primer Nombre*");
 		lblPrimerNombre.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblPrimerNombre.setBounds(10, 34, 84, 14);
+		lblPrimerNombre.setBounds(12, 110, 84, 14);
 		add(lblPrimerNombre);
 		
 		RSTextFull textNombre1 = new RSTextFull();
 		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textNombre1.setBounds(99, 20, 250, 42);
+		textNombre1.setBounds(101, 96, 250, 42);
 		add(textNombre1);
 		
 		JLabel lblNombre2 = new JLabel("Segundo Nombre");
 		lblNombre2.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNombre2.setBounds(354, 34, 86, 14);
+		lblNombre2.setBounds(356, 110, 86, 14);
 		add(lblNombre2);
 		
 		RSTextFull textNombre2 = new RSTextFull();
 		textNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textNombre2.setBounds(445, 20, 250, 42);
+		textNombre2.setBounds(447, 96, 250, 42);
 		add(textNombre2);
 		
 		JLabel lblPrimerApellido = new JLabel("Primer Apellido*");
 		lblPrimerApellido.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblPrimerApellido.setBounds(10, 81, 94, 14);
+		lblPrimerApellido.setBounds(12, 157, 94, 14);
 		add(lblPrimerApellido);
 		
 		RSTextFull textApellido1 = new RSTextFull();
 		textApellido1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textApellido1.setBounds(99, 67, 250, 42);
+		textApellido1.setBounds(101, 143, 250, 42);
 		add(textApellido1);
 		
 		JLabel lblApellido2 = new JLabel("Segundo Apellido");
 		lblApellido2.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblApellido2.setBounds(354, 81, 102, 14);
+		lblApellido2.setBounds(356, 157, 102, 14);
 		add(lblApellido2);
 		
 		RSTextFull textApellido2 = new RSTextFull();
 		textApellido2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textApellido2.setBounds(445, 67, 250, 42);
+		textApellido2.setBounds(447, 143, 250, 42);
 		add(textApellido2);
 		
 		JLabel lblCedula = new JLabel("Cédula*");
 		lblCedula.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCedula.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCedula.setBounds(10, 133, 84, 14);
+		lblCedula.setBounds(12, 209, 84, 14);
 		add(lblCedula);
 		
 		RSTextFull textCedula = new RSTextFull();
 		textCedula.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textCedula.setBounds(99, 119, 250, 42);
+		textCedula.setBounds(101, 195, 250, 42);
 		add(textCedula);
 		
 		RSDateChooser FechaNacimiento = new RSDateChooser();
-		FechaNacimiento.setBounds(445, 119, 250, 42);
+		FechaNacimiento.setBounds(447, 195, 250, 42);
 		add(FechaNacimiento);
 		
 		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento*");
 		lblFechaNacimiento.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblFechaNacimiento.setBounds(350, 133, 110, 14);
+		lblFechaNacimiento.setBounds(352, 209, 110, 14);
 		add(lblFechaNacimiento);
 		
 		JLabel lblEmailPersonal = new JLabel("Email Personal*");
 		lblEmailPersonal.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmailPersonal.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEmailPersonal.setBounds(10, 185, 84, 14);
+		lblEmailPersonal.setBounds(12, 261, 84, 14);
 		add(lblEmailPersonal);
 		
 		RSTextFull textEmailPersonal = new RSTextFull();
 		textEmailPersonal.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textEmailPersonal.setBounds(99, 171, 250, 42);
+		textEmailPersonal.setBounds(101, 247, 250, 42);
 		add(textEmailPersonal);
 		
 		JLabel lblTelefonoDeContacto = new JLabel("Teléfono de");
 		lblTelefonoDeContacto.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblTelefonoDeContacto.setBounds(354, 177, 86, 14);
+		lblTelefonoDeContacto.setBounds(356, 253, 86, 14);
 		add(lblTelefonoDeContacto);
 		
 		RSTextFull textTelefonoContacto = new RSTextFull();
 		textTelefonoContacto.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textTelefonoContacto.setBounds(445, 171, 250, 42);
+		textTelefonoContacto.setBounds(447, 247, 250, 42);
 		add(textTelefonoContacto);
 		
 		JLabel lblTelefonoDeContacto_1 = new JLabel("Contacto *");
 		lblTelefonoDeContacto_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto_1.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblTelefonoDeContacto_1.setBounds(354, 193, 86, 14);
+		lblTelefonoDeContacto_1.setBounds(356, 269, 86, 14);
 		add(lblTelefonoDeContacto_1);
 		
 		JLabel lblLocalidad = new JLabel("Localidad*");
 		lblLocalidad.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblLocalidad.setBounds(386, 238, 54, 14);
+		lblLocalidad.setBounds(388, 314, 54, 14);
 		add(lblLocalidad);
 		
 		JLabel lblDepartamento = new JLabel("Departamento*");
 		lblDepartamento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDepartamento.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblDepartamento.setBounds(8, 238, 86, 14);
+		lblDepartamento.setBounds(10, 314, 86, 14);
 		add(lblDepartamento);
 		
 		RSComboBox comboBoxDepartamento = new RSComboBox();
 		comboBoxDepartamento.setColorFondo(new Color(52, 152, 219));
-		comboBoxDepartamento.setBounds(99, 223, 250, 42);
+		comboBoxDepartamento.setBounds(101, 299, 250, 42);
 		add(comboBoxDepartamento);
 		
 		RSTextFull textLocalidad = new RSTextFull();
 		textLocalidad.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textLocalidad.setBounds(445, 223, 250, 42);
+		textLocalidad.setBounds(447, 299, 250, 42);
 		add(textLocalidad);
 		
 		JLabel lblEmailUTEC = new JLabel("Email UTEC*");
 		lblEmailUTEC.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmailUTEC.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEmailUTEC.setBounds(10, 289, 84, 14);
+		lblEmailUTEC.setBounds(12, 365, 84, 14);
 		add(lblEmailUTEC);
 		
 		RSTextFull textEmailUtec = new RSTextFull();
 		textEmailUtec.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textEmailUtec.setBounds(99, 275, 250, 42);
+		textEmailUtec.setBounds(101, 351, 250, 42);
 		add(textEmailUtec);
 		
 		JLabel lblContrasenia = new JLabel("Contraseña*");
 		lblContrasenia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblContrasenia.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblContrasenia.setBounds(356, 289, 84, 14);
+		lblContrasenia.setBounds(358, 365, 84, 14);
 		add(lblContrasenia);
 		
 		RSPassword password = new RSPassword();
-		password.setBounds(445, 275, 250, 42);
+		password.setBounds(447, 351, 250, 42);
 		add(password);
 		
 		JLabel lblITR = new JLabel("ITR *");
 		lblITR.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblITR.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblITR.setBounds(10, 341, 84, 14);
+		lblITR.setBounds(12, 417, 84, 14);
 		add(lblITR);
 		
 		RSComboBox comboBoxITR = new RSComboBox();
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
-		comboBoxITR.setBounds(99, 327, 250, 42);
+		comboBoxITR.setBounds(101, 403, 250, 42);
 		add(comboBoxITR);
 		
-		JPanel panelDinamicoEditarPerfilPorTipoUsuarios = new JPanel();
-		panelDinamicoEditarPerfilPorTipoUsuarios.setBounds(10, 379, 680, 221);
+		panelDinamicoEditarPerfilPorTipoUsuarios = new JPanel();
+		panelDinamicoEditarPerfilPorTipoUsuarios.setBounds(12, 455, 680, 221);
 		add(panelDinamicoEditarPerfilPorTipoUsuarios);
+		//
+		boolean esEstudiante = true;
+		boolean esTutor = false;
+		if(esEstudiante){
+			
+//			menu.mostrarJPanel(panelEstudiante, 200, 200);
+//			panelDinamicoEditarPerfilPorTipoUsuarios.removeAll();
+//			panelEstudiante.setSize(945, 725);
+//			panelEstudiante.setLocation(0, 0);
+//			panelDinamicoEditarPerfilPorTipoUsuarios.add(panelEstudiante);
+//			panelDinamicoEditarPerfilPorTipoUsuarios.revalidate();
+//			panelDinamicoEditarPerfilPorTipoUsuarios.repaint();
+		}else if(esTutor) {
+			
+		}else {
+			
+		}
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
 		btnhvrGuardar.addActionListener(new ActionListener() {
@@ -175,15 +198,26 @@ public class panelEditarPerfil extends JPanel {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(518, 610, 172, 33);
+		btnhvrGuardar.setBounds(520, 686, 172, 33);
 		add(btnhvrGuardar);
 		
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(10, 610, 172, 33);
+		btnhvrCancelar.setBounds(12, 686, 172, 33);
 		add(btnhvrCancelar);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("EDITAR PERFIL");
+		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
+		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblNewLabel_2_1.setBounds(301, 24, 146, 27);
+		add(lblNewLabel_2_1);
+		
+		RSLabelImage labelImage_1 = new RSLabelImage();
+		labelImage_1.setIcon(new ImageIcon(PanelEditarPerfil.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage_1.setBounds(646, 11, 51, 53);
+		add(labelImage_1);
 
 	}
 }

@@ -11,34 +11,36 @@ import rojeru_san.efectos.ValoresEnum.ICONS;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
-public class panelMenuEstudiante extends JPanel {
+public class PanelMenuEstudiante extends JPanel {
+	private Menu menu = Menu.getInstancia();
+	private JLabel lblCerrarSesion;
+	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
+	
+	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante();
 
 	/**
 	 * Create the panel.
 	 */
-	public panelMenuEstudiante() {
+	public PanelMenuEstudiante() {
 		setLayout(null);
 		
-		JPanel panelTituloSistema = new JPanel();
-		panelTituloSistema.setLayout(null);
-		panelTituloSistema.setBounds(245, 0, 700, 74);
-		add(panelTituloSistema);
-		
-		JLabel lblNewLabel_2 = new JLabel("SISTEMA DE GESTIÓN");
-		lblNewLabel_2.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(247, 23, 206, 27);
-		panelTituloSistema.add(lblNewLabel_2);
-		
-		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon(panelMenuEstudiante.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(639, 10, 51, 53);
-		panelTituloSistema.add(labelImage);
-		
 		JPanel panelDinamico = new JPanel();
-		panelDinamico.setBounds(245, 71, 700, 654);
+		panelDinamico.setBounds(245, 0, 700, 725);
 		add(panelDinamico);
+		panelDinamico.setLayout(null);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("SISTEMA DE GESTIÓN");
+		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
+		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblNewLabel_2_1.setBounds(247, 24, 206, 27);
+		panelDinamico.add(lblNewLabel_2_1);
+		
+		RSLabelImage labelImage_1 = new RSLabelImage();
+		labelImage_1.setIcon(new ImageIcon(PanelMenuEstudiante.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage_1.setBounds(639, 11, 51, 53);
+		panelDinamico.add(labelImage_1);
 		
 		JPanel menuUsuario = new JPanel();
 		menuUsuario.setLayout(null);
@@ -47,7 +49,7 @@ public class panelMenuEstudiante extends JPanel {
 		add(menuUsuario);
 		
 		RSLabelImage iconoUsuario = new RSLabelImage();
-		iconoUsuario.setIcon(new ImageIcon(panelMenuEstudiante.class.getResource("/com/vistas/img/LogoDeUsuario.png")));
+		iconoUsuario.setIcon(new ImageIcon(PanelMenuEstudiante.class.getResource("/com/vistas/img/LogoDeUsuario.png")));
 		iconoUsuario.setBounds(46, 30, 154, 154);
 		menuUsuario.add(iconoUsuario);
 		
@@ -59,6 +61,24 @@ public class panelMenuEstudiante extends JPanel {
 		menuUsuario.add(lblNombreUsuario);
 		
 		JLabel editarPerfil = new JLabel("Editar perfil");
+		editarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				editarPerfil.setForeground(Color.BLACK);
+				lblCerrarSesion.setForeground(Color.BLACK);
+			}
+		});
+		editarPerfil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelDinamico.removeAll();
+				panelEditarPerfil.setSize(945, 725);
+				panelEditarPerfil.setLocation(0, 0);
+				panelDinamico.add(panelEditarPerfil);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
 		editarPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -80,7 +100,16 @@ public class panelMenuEstudiante extends JPanel {
 		buttonReportes.setHorizontalAlignment(SwingConstants.TRAILING);
 		buttonReportes.setBounds(25, 390, 200, 40);
 		menuUsuario.add(buttonReportes);
+		
+		lblCerrarSesion = new JLabel("Cerrar sesión");
+		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCerrarSesion.setBounds(80, 684, 73, 13);
+		menuUsuario.add(lblCerrarSesion);
 
 	}
 
+	public static PanelMenuEstudiante getInstancia() {
+		return instancia;
+		
+	}
 }

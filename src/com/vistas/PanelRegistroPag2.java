@@ -92,16 +92,19 @@ public class PanelRegistroPag2 extends JPanel {
 		add(btnRegistrarse);
 		
 		RSComboBox comboBox = new RSComboBox();
+		comboBox.setFont(new Font("Lato", Font.BOLD, 14));
 		comboBox.setColorFondo(new Color(52, 152, 219));
 		comboBox.setBounds(70, 114, 250, 42);
 		add(comboBox);
 		
 		RSComboBox comboBox_1 = new RSComboBox();
+		comboBox_1.setFont(new Font("Lato", Font.BOLD, 14));
 		comboBox_1.setColorFondo(new Color(52, 152, 219));
 		comboBox_1.setBounds(390, 114, 250, 42);
 		add(comboBox_1);
 		
 		RSComboBox comboBox_2 = new RSComboBox();
+		comboBox_2.setFont(new Font("Lato", Font.BOLD, 14));
 		comboBox_2.setColorFondo(new Color(52, 152, 219));
 		comboBox_2.setBounds(70, 192, 250, 42);
 		add(comboBox_2);				
@@ -135,7 +138,7 @@ public class PanelRegistroPag2 extends JPanel {
 				
 		radioTutor.setFont(new Font("Lato", Font.BOLD, 11));
 		radioTutor.setText("Tutor");
-		radioTutor.setBounds(468, 192, 61, 42);
+		radioTutor.setBounds(468, 192, 69, 42);
 		add(radioTutor);
 		
 		radioAnalista = new RSRadioButton();
@@ -151,7 +154,7 @@ public class PanelRegistroPag2 extends JPanel {
 		});
 		radioAnalista.setText("Analista");
 		radioAnalista.setFont(new Font("Lato", Font.BOLD, 11));
-		radioAnalista.setBounds(531, 192, 77, 42);
+		radioAnalista.setBounds(539, 193, 77, 42);
 		add(radioAnalista);
 		
 		panelDinamicoReg2 = new JPanel();

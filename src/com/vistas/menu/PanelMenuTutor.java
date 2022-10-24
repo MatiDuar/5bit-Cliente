@@ -21,12 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class panelMenuTutor extends JPanel {
+public class PanelMenuTutor extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public panelMenuTutor() {
+	public PanelMenuTutor() {
 		setLayout(null);
 		
 		JPanel menuUsuario = new JPanel();

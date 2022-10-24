@@ -33,8 +33,9 @@ public class PanelRegistroPag extends JPanel {
 		add(lblNombre1);
 		
 		RSTextFull textNombre1 = new RSTextFull();
-		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textNombre1.setBounds(70, 115, 250, 33);
+		textNombre1.setPlaceholder(" Nombre...");
+		textNombre1.setFont(new Font("Lato", Font.BOLD, 14));
+		textNombre1.setBounds(70, 115, 250, 42);
 		add(textNombre1);
 		
 		JLabel lblNombre2 = new JLabel("Nombre 2");
@@ -43,10 +44,14 @@ public class PanelRegistroPag extends JPanel {
 		add(lblNombre2);
 		
 		RSTextFull textNombre2 = new RSTextFull();
+		textNombre2.setPlaceholder(" Nombre...");
+		textNombre2.setFont(new Font("Lato", Font.BOLD, 14));
 		textNombre2.setBounds(390, 115, 250, 42);
 		add(textNombre2);
 		
 		RSTextFull textApellido1 = new RSTextFull();
+		textApellido1.setPlaceholder(" Apellido...");
+		textApellido1.setFont(new Font("Lato", Font.BOLD, 14));
 		textApellido1.setBounds(70, 193, 250, 42);
 		add(textApellido1);
 		
@@ -56,6 +61,8 @@ public class PanelRegistroPag extends JPanel {
 		add(lbApellido1);
 		
 		RSTextFull textdOCUMENTO = new RSTextFull();
+		textdOCUMENTO.setPlaceholder(" Documento...");
+		textdOCUMENTO.setFont(new Font("Lato", Font.BOLD, 14));
 		textdOCUMENTO.setBounds(70, 271, 250, 42);
 		add(textdOCUMENTO);
 		
@@ -65,6 +72,8 @@ public class PanelRegistroPag extends JPanel {
 		add(lblDocumento);
 		
 		RSTextFull textMailPersonal = new RSTextFull();
+		textMailPersonal.setPlaceholder(" Email...");
+		textMailPersonal.setFont(new Font("Lato", Font.BOLD, 14));
 		textMailPersonal.setBounds(70, 349, 250, 42);
 		add(textMailPersonal);
 		
@@ -79,6 +88,8 @@ public class PanelRegistroPag extends JPanel {
 		add(lblApellido2);
 		
 		RSTextFull textApellido2 = new RSTextFull();
+		textApellido2.setPlaceholder(" Apellido...");
+		textApellido2.setFont(new Font("Lato", Font.BOLD, 14));
 		textApellido2.setBounds(390, 193, 250, 42);
 		add(textApellido2);
 		
@@ -93,6 +104,8 @@ public class PanelRegistroPag extends JPanel {
 		add(lblEmailUtec);
 		
 		RSTextFull textMailUtec = new RSTextFull();
+		textMailUtec.setPlaceholder(" Email...");
+		textMailUtec.setFont(new Font("Lato", Font.BOLD, 14));
 		textMailUtec.setBounds(390, 349, 250, 42);
 		add(textMailUtec);
 		

@@ -7,12 +7,12 @@ import javax.swing.SwingConstants;
 import rojerusan.RSComboBox;
 import java.awt.Color;
 
-public class panelEditarPerfilTutor extends JPanel {
+public class PanelEditarPerfilTutor extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public panelEditarPerfilTutor() {
+	public PanelEditarPerfilTutor() {
 		setLayout(null);
 		
 		JLabel lblAreaTutor = new JLabel("Área*");

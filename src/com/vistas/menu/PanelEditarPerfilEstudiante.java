@@ -7,12 +7,12 @@ import rojeru_san.rsdate.RSYearDate;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class panelEditarPerfilEstudiante extends JPanel {
+public class PanelEditarPerfilEstudiante extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public panelEditarPerfilEstudiante() {
+	public PanelEditarPerfilEstudiante() {
 		setLayout(null);
 		
 		RSYearDate yearDate = new RSYearDate();
