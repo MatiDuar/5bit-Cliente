@@ -37,6 +37,7 @@ public class PanelMenu extends JPanel {
 	public void initUI() {
 		
 		removeAll();
+		
 		setBounds(0,0,955, 725);
 		setLayout(null);
 		JPanel panelDinamico = new JPanel();
@@ -181,6 +182,7 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		buttonGestionUsuarios.setHorizontalAlignment(SwingConstants.TRAILING);

@@ -10,14 +10,15 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 
 public class PanelEditarPerfilExtra extends JPanel {
-
+	
 	/**
 	 * Create the panel.
 	 */
 	public PanelEditarPerfilExtra() {
 
 	}
-	public void initUI() {
+	public void initUIEstudiante() {
+		removeAll();
 		setLayout(null);
 		
 		RSYearDate yearDate = new RSYearDate();
@@ -25,7 +26,7 @@ public class PanelEditarPerfilExtra extends JPanel {
 		yearDate.setBounds(98, 10, 250, 42);
 		add(yearDate);
 		
-		JLabel lblAoDeIngreso = new JLabel("Año de ingreso");
+		JLabel lblAoDeIngreso = new JLabel("A;o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblAoDeIngreso.setBounds(10, 17, 86, 14);

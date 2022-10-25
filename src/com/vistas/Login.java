@@ -1,6 +1,5 @@
 package com.vistas;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,19 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.vistas.menu.Menu;
-import com.vistas.menu.Menu;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import rojeru_san.complementos.RSButtonHover;
-import rojeru_san.rslabel.RSLabelAnimated;
-import rojeru_san.rsfield.RSTextField;
 import rojeru_san.rsfield.RSTextFull;
-import rojeru_san.rsfield.RSTextFullRound;
+
 import rojeru_san.rslabel.RSLabelImage;
-import RSMaterialComponent.RSLabelTextIcon;
 import rojeru_san.rsfield.RSPassword;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
@@ -58,6 +53,7 @@ public class Login extends JFrame {
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 374, 387);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -85,7 +81,7 @@ public class Login extends JFrame {
 								
 				Menu menu=new Menu();
 				
-					menu.estudiantePanel.initUITutor();
+				menu.panelMenu.initUI();
 
 				
 				menu.setVisible(true);

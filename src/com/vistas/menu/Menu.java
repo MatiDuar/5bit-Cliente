@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
-	public PanelMenu estudiantePanel=new PanelMenu();
+	public PanelMenu panelMenu=new PanelMenu();
 
 	/**
 	 * Launch the application.
@@ -33,6 +33,7 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		
 		setTitle("Menú Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,8 +42,9 @@ public class Menu extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		estudiantePanel.initUI();
-		contentPane.add(estudiantePanel);
+		panelMenu.initUI();
+		contentPane.add(panelMenu);
+		setLocationRelativeTo(null);
 	}
 
 }

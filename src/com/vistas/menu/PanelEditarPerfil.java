@@ -178,7 +178,7 @@ public class PanelEditarPerfil extends JPanel {
 		boolean esEstudiante = false;
 		boolean esTutor = true;
 		if(esEstudiante){
-			panelDinamicoEditarPerfilPorTipoUsuarios.initUI();
+			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();
 		}else if(esTutor) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
 		}else {
