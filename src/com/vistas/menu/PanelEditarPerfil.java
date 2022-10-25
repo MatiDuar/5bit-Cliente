@@ -17,15 +17,19 @@ import rojeru_san.rslabel.RSLabelImage;
 import javax.swing.ImageIcon;
 
 public class PanelEditarPerfil extends JPanel {
-	private Menu menu = Menu.getInstancia();
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private Menu menu = new Menu();
 	private JPanel panelDinamicoEditarPerfilPorTipoUsuarios;
-	private static PanelMenuEstudiante panelEstudiante = PanelMenuEstudiante.getInstancia();
-	static PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
-
+	private PanelMenu panelEstudiante = new PanelMenu();
 	/**
 	 * Create the panel.
 	 */
 	public PanelEditarPerfil() {
+		setBounds(245, 0, 700, 725);
+
 		setLayout(null);
 		
 		JLabel lblPrimerNombre = new JLabel("Primer Nombre*");
@@ -168,27 +172,20 @@ public class PanelEditarPerfil extends JPanel {
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setBounds(101, 403, 250, 42);
 		add(comboBoxITR);
-		
-		panelDinamicoEditarPerfilPorTipoUsuarios = new JPanel();
-		panelDinamicoEditarPerfilPorTipoUsuarios.setBounds(12, 455, 680, 221);
-		add(panelDinamicoEditarPerfilPorTipoUsuarios);
+		PanelEditarPerfilExtra panelDinamicoEditarPerfilPorTipoUsuarios=new PanelEditarPerfilExtra();
+		panelDinamicoEditarPerfilPorTipoUsuarios.setBounds(12, 455, 680, 124);
 		//
-		boolean esEstudiante = true;
-		boolean esTutor = false;
+		boolean esEstudiante = false;
+		boolean esTutor = true;
 		if(esEstudiante){
-			
-//			menu.mostrarJPanel(panelEstudiante, 200, 200);
-//			panelDinamicoEditarPerfilPorTipoUsuarios.removeAll();
-//			panelEstudiante.setSize(945, 725);
-//			panelEstudiante.setLocation(0, 0);
-//			panelDinamicoEditarPerfilPorTipoUsuarios.add(panelEstudiante);
-//			panelDinamicoEditarPerfilPorTipoUsuarios.revalidate();
-//			panelDinamicoEditarPerfilPorTipoUsuarios.repaint();
+			panelDinamicoEditarPerfilPorTipoUsuarios.initUI();
 		}else if(esTutor) {
-			
+			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
 		}else {
 			
 		}
+		add(panelDinamicoEditarPerfilPorTipoUsuarios);
+
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
 		btnhvrGuardar.addActionListener(new ActionListener() {
@@ -198,14 +195,14 @@ public class PanelEditarPerfil extends JPanel {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(520, 686, 172, 33);
+		btnhvrGuardar.setBounds(518, 630, 172, 33);
 		add(btnhvrGuardar);
 		
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(12, 686, 172, 33);
+		btnhvrCancelar.setBounds(10, 630, 172, 33);
 		add(btnhvrCancelar);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("EDITAR PERFIL");

@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.vistas.menu.Menu;
+import com.vistas.menu.Menu;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -29,6 +33,8 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblRegistrarse;
 	Registro frameRegistro = new Registro();
+	
+	
 
 	/**
 	 * Launch the application.
@@ -76,6 +82,17 @@ public class Login extends JFrame {
 		RSButtonHover btnIngresar = new RSButtonHover();
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+								
+				Menu menu=new Menu();
+				
+					menu.estudiantePanel.initUITutor();
+
+				
+				menu.setVisible(true);
+				
+				
+				
+				setVisible(false);
 			}
 		});
 		btnIngresar.setBackground(new Color(52, 152, 219));
