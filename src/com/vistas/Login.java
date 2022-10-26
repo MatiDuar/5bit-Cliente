@@ -1,27 +1,33 @@
 package com.vistas;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.controlador.DAOUsuario;
+import com.entities.Analista;
+import com.entities.Estudiante;
+import com.entities.Tutor;
+import com.entities.Usuario;
+import com.exception.ServicesException;
 import com.vistas.menu.Menu;
 
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.ImageIcon;
 import rojeru_san.complementos.RSButtonHover;
-import rojeru_san.rsfield.RSTextFull;
-
-import rojeru_san.rslabel.RSLabelImage;
 import rojeru_san.rsfield.RSPassword;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import rojeru_san.rsfield.RSTextFull;
+import rojeru_san.rslabel.RSLabelImage;
 
 public class Login extends JFrame {
 
@@ -40,6 +46,8 @@ public class Login extends JFrame {
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
+					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,6 +59,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 374, 387);
 		setLocationRelativeTo(null);
@@ -75,27 +84,7 @@ public class Login extends JFrame {
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
 		
-		RSButtonHover btnIngresar = new RSButtonHover();
-		btnIngresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-								
-				Menu menu=new Menu();
-				
-				menu.panelMenu.initUI();
-
-				
-				menu.setVisible(true);
-				
-				
-				
-				setVisible(false);
-			}
-		});
-		btnIngresar.setBackground(new Color(52, 152, 219));
-		btnIngresar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnIngresar.setText("Ingresar");
-		btnIngresar.setBounds(91, 264, 172, 33);
-		panel.add(btnIngresar);
+		;
 		
 		JLabel lblContrasena = new JLabel("ContraseÃ±a");
 		lblContrasena.setFont(new Font("Lato", Font.PLAIN, 11));
@@ -143,5 +132,46 @@ public class Login extends JFrame {
 		lblRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
 		lblRegistrarse.setBounds(52, 314, 83, 23);
 		panel.add(lblRegistrarse);
+		
+		RSButtonHover btnIngresar = new RSButtonHover();
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOUsuario us=new DAOUsuario();			
+				Menu menu=new Menu();
+				String nombreUsuario=textUsuario.getText();
+				String pswd=password.getText();
+				
+				
+				Usuario usuarioIngresado;
+				try {
+					usuarioIngresado = us.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+					if(usuarioIngresado instanceof Tutor) {
+						menu.panelMenu.initUITutor();
+						menu.setVisible(true);
+						setVisible(false);
+					}else if(usuarioIngresado instanceof Analista) {
+						menu.panelMenu.initUIAnalista();
+						menu.setVisible(true);
+						setVisible(false);
+					}else if(usuarioIngresado instanceof Estudiante){
+						menu.panelMenu.initUI();
+						menu.setVisible(true);
+						setVisible(false);
+					}else {
+						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto",
+							      "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (ServicesException e1) {
+					e1.printStackTrace();
+				}
+	
+				
+			}
+		});
+		btnIngresar.setBackground(new Color(52, 152, 219));
+		btnIngresar.setFont(new Font("Lato", Font.BOLD, 14));
+		btnIngresar.setText("Ingresar");
+		btnIngresar.setBounds(91, 264, 172, 33);
+		panel.add(btnIngresar);
 	}
 }
