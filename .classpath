@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/5bit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/RojeruSan.full_9.6.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-core-5.3.28.Final.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

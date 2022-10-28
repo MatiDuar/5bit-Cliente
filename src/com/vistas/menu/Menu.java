@@ -40,12 +40,11 @@ public class Menu extends JFrame {
 		setTitle("Menú Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 981, 725);
+		setBounds(100, 100, 955, 725);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		panelMenu.initUI();
 		contentPane.add(panelMenu);
 		setLocationRelativeTo(null);
 	}

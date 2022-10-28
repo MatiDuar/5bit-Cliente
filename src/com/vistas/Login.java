@@ -35,8 +35,6 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblRegistrarse;
 	Registro frameRegistro = new Registro();
-	
-	
 
 	/**
 	 * Launch the application.
@@ -47,7 +45,6 @@ public class Login extends JFrame {
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
-					
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +57,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		DAOGeneral dao=new DAOGeneral();
+		DAOGeneral dao = new DAOGeneral();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 374, 387);
 		setLocationRelativeTo(null);
@@ -68,7 +65,7 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -79,28 +76,28 @@ public class Login extends JFrame {
 		panel.setBounds(0, 0, 354, 348);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("LOGIN");
 		lblNewLabel.setBounds(52, 11, 160, 58);
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
-		
+
 		;
-		
+
 		JLabel lblContrasena = new JLabel("ContraseÃ±a");
 		lblContrasena.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblContrasena.setBounds(52, 168, 61, 14);
 		panel.add(lblContrasena);
-		
+
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblUsuario.setBounds(52, 90, 61, 14);
 		panel.add(lblUsuario);
-		
+
 		RSPassword password = new RSPassword();
 		password.setBounds(52, 193, 250, 42);
 		panel.add(password);
-		
+
 		RSTextFull textUsuario = new RSTextFull();
 		textUsuario.setFont(new Font("Lato", Font.BOLD, 14));
 		textUsuario.setPlaceholder(" Escribe algo...");
@@ -110,12 +107,12 @@ public class Login extends JFrame {
 		textUsuario.setBordeColorFocus(new Color(52, 152, 219));
 		textUsuario.setBounds(52, 115, 250, 42);
 		panel.add(textUsuario);
-		
+
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(252, 11, 50, 50);
 		panel.add(labelImage);
-		
+
 		lblRegistrarse = new JLabel("Registrarse");
 		lblRegistrarse.addMouseListener(new MouseAdapter() {
 			@Override
@@ -134,53 +131,47 @@ public class Login extends JFrame {
 		lblRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
 		lblRegistrarse.setBounds(52, 314, 83, 23);
 		panel.add(lblRegistrarse);
-		
+
 		RSButtonHover btnIngresar = new RSButtonHover();
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DAOUsuario us=new DAOUsuario();			
-				Menu menu=new Menu();
-				String nombreUsuario=textUsuario.getText();
-				String pswd=password.getText();
-				
-				
+				DAOUsuario us = new DAOUsuario();
+				Menu menu = new Menu();
+				String nombreUsuario = textUsuario.getText();
+				String pswd = password.getText();
+
 				Usuario usuarioIngresado;
-				
-				// se comenta esta parte para hacer pruebas
-				
-//				try {
-//					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
-//					if(usuarioIngresado instanceof Tutor) {
-//						menu.panelMenu.initUITutor();
-//						Menu.usuarioIngresado=usuarioIngresado;
-//
-//						menu.setVisible(true);
-//						setVisible(false);
-//					}else if(usuarioIngresado instanceof Analista) {
-//						menu.panelMenu.initUIAnalista();
-//						Menu.usuarioIngresado=usuarioIngresado;
-//
-//						menu.setVisible(true);
-//						setVisible(false);
-//					}else if(usuarioIngresado instanceof Estudiante){
-//						menu.panelMenu.initUI();
-//						Menu.usuarioIngresado=usuarioIngresado;
-//						menu.setVisible(true);
-//						setVisible(false);
-//					}else {
-//						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto",
-//							      "Error", JOptionPane.ERROR_MESSAGE);
-//					}
-//					
-//				} catch (ServicesException e1) {
-//					e1.printStackTrace();
-//				}
-				
-				//para pruebas descomentar esto
-				menu.panelMenu.initUIAnalista();
-				menu.setVisible(true);
-				setVisible(false);
-				
+				try {
+					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+					if (usuarioIngresado instanceof Tutor) {
+						
+						Menu.usuarioIngresado = usuarioIngresado;
+
+						menu.panelMenu.initUITutor();
+
+						menu.setVisible(true);
+						setVisible(false);
+					} else if (usuarioIngresado instanceof Analista) {
+						
+						Menu.usuarioIngresado = usuarioIngresado;
+						menu.panelMenu.initUIAnalista();
+						menu.setVisible(true);
+						setVisible(false);
+					} else if (usuarioIngresado instanceof Estudiante) {
+						
+						Menu.usuarioIngresado = usuarioIngresado;
+						menu.panelMenu.initUI();
+						menu.setVisible(true);
+						setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+				} catch (ServicesException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		btnIngresar.setBackground(new Color(52, 152, 219));
@@ -188,5 +179,6 @@ public class Login extends JFrame {
 		btnIngresar.setText("Ingresar");
 		btnIngresar.setBounds(91, 264, 172, 33);
 		panel.add(btnIngresar);
+
 	}
 }

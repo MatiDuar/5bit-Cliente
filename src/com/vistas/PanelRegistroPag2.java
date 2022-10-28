@@ -5,9 +5,12 @@ import javax.swing.JPanel;
 import com.controlador.DAOGeneral;
 import com.entities.Analista;
 import com.entities.Departamento;
+import com.entities.Estudiante;
 import com.entities.ITR;
+import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exception.ServicesException;
+import com.vistas.menu.PanelEditarPerfilExtra;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +29,8 @@ import rojerusan.RSComboBox;
 import rojerusan.RSCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
+
 import rojerusan.RSRadioButton;
 import RSMaterialComponent.RSPanelMaterial;
 
@@ -45,17 +50,17 @@ public class PanelRegistroPag2 extends JPanel {
 	private RSRadioButton radioTutor;
 	private RSRadioButton radioEstudiante;
 	
-	DefaultComboBoxModel<String> modeloDep=new DefaultComboBoxModel();
-	RSComboBox comboBoxDep;
-	RSComboBox comboBoxITR;
-	DefaultComboBoxModel<String> modeloITR=new DefaultComboBoxModel();
+	 DefaultComboBoxModel modeloDep=new DefaultComboBoxModel<>();;
+	 RSComboBox comboBoxDep;
+	 RSComboBox comboBoxITR;
+	 DefaultComboBoxModel modeloITR=new DefaultComboBoxModel<>();
 
 	static JPanel panelDinamicoReg2;
 	
 	Usuario us=PanelRegistroPag.usuarioRegistro;
 
 	/**
-	 * Create the panel.
+	 * Create the panel. 
 	 */
 	public PanelRegistroPag2() {
 		setLayout(null);
@@ -102,8 +107,49 @@ public class PanelRegistroPag2 extends JPanel {
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(radioAnalista.isSelected()) {
-//					Analista analistaRegistro=PanelRegistroPag.usuarioRegistro;
-//					analistaRegistro.set
+					try {
+						Analista analistaRegistro=(Analista) PanelRegistroPag.usuarioRegistro;
+						PanelRegistroPag.usuarioRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						PanelRegistroPag.usuarioRegistro.setLocalidad("El pinar");
+						PanelRegistroPag.usuarioRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						DAOGeneral.usuarioRemote.crearUsuario(PanelRegistroPag.usuarioRegistro);
+						System.out.println("LOCURAAAAAAAAA");
+					}catch(Exception m) {
+						m.printStackTrace();
+					}
+				}else if(radioTutor.isSelected()) {
+					try {
+						Tutor tutorRegistro=(Tutor) PanelRegistroPag.usuarioRegistro;
+						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						tutorRegistro.setLocalidad("El pinar");
+						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						
+						//no se si va hacer un comboBox o un textField
+						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarAreaTutorPorId((long)1));
+						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRempote.buscarTipoTutorPorId((long)PanelRegistroTutor.comboBoxTipo.getSelectedIndex()));
+						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
+						System.out.println("LOCURAAAAAAAAA");
+					}catch(Exception m) {
+						m.printStackTrace();
+					}
+				}else if(radioEstudiante.isSelected()) {
+					Estudiante estudianteRegistro=(Estudiante) PanelRegistroPag.usuarioRegistro;
+					
+					try {
+						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						estudianteRegistro.setLocalidad("El pinar");
+						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						//no se como hacerlo por que la tabla generacion solo tiene nombre y no es por a;o
+						
+						estudianteRegistro.setGeneracion(null);
+						
+						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
+					} catch (ServicesException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
 				}
 			}
 		});
@@ -120,13 +166,14 @@ public class PanelRegistroPag2 extends JPanel {
 		comboBox.setBounds(70, 114, 250, 42);
 		add(comboBox);
 		
+		
 		comboBoxDep = new RSComboBox();
 		comboBoxDep.setModel(modeloDep);
 		comboBoxDep.setFont(new Font("Lato", Font.BOLD, 14));
 		comboBoxDep.setColorFondo(new Color(52, 152, 219));
 		comboBoxDep.setBounds(390, 114, 250, 42);
 		add(comboBoxDep);
-		
+				
 		comboBoxITR = new RSComboBox();
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setFont(new Font("Lato", Font.BOLD, 14));
@@ -154,10 +201,12 @@ public class PanelRegistroPag2 extends JPanel {
 		radioTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PanelRegistroTutor tt=new PanelRegistroTutor();
 				radioEstudiante.setSelected(false);
 				radioTutor.setSelected(true);
 				radioAnalista.setSelected(false);	
-				registro.mostrarDatosTutor(panelRegistroTutor);
+				tt.cargarComboTipo();
+				registro.mostrarDatosTutor(tt);
 			}						
 		});
 				
@@ -189,7 +238,6 @@ public class PanelRegistroPag2 extends JPanel {
 		panelRegistroTutor.setSize(570, 186);
 		panelRegistroTutor.setLocation(0, 0);
 		
-		
 
 	}
 	
@@ -198,29 +246,30 @@ public class PanelRegistroPag2 extends JPanel {
 	}
 	public void cargaComboBox() {
 		try {
-			cargarComboBoxDepartamento(comboBoxDep);
+			cargarComboBoxDepartamento();
 			System.out.println("Se cargo con exito los Departamentos");
-			cargarComboBoxITR(comboBoxITR);
+			cargarComboBoxITR();
 			System.out.println("Se cargo con exito los ITR");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public void cargarComboBoxDepartamento(RSComboBox comboCargar) throws ServicesException {
+	public void cargarComboBoxDepartamento() throws ServicesException {
 		modeloDep.removeAllElements();
+		modeloDep.addElement("");
+
 		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
 			modeloDep.addElement(d.getNombre());
 			System.out.println(d.getNombre());
 		}
-		
 	}
 	
-	public void cargarComboBoxITR(RSComboBox comboCargar) throws ServicesException {
+	public void cargarComboBoxITR() throws ServicesException {
 		modeloITR.removeAllElements();
+		modeloITR.addElement("");
 		for(ITR itr:DAOGeneral.itrRemote.obtenerItrs()) {
 			modeloITR.addElement(itr.getNombre());
 			System.out.println(itr.getNombre());
-
 		}
 	}
 }

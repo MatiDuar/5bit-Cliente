@@ -18,6 +18,7 @@ import java.awt.Font;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsfield.RSTextFull;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSDateChooser;
@@ -26,7 +27,7 @@ public class PanelRegistroPag extends JPanel {
 	
 	private static PanelRegistroPag instancia = new PanelRegistroPag();
 	
-	PanelRegistroPag2 panelRegistroPag2 = new PanelRegistroPag2();
+//	PanelRegistroPag2 panelRegistroPag2;
 	Registro regsitro = Registro.getInstancia();
 	
 	public static Usuario usuarioRegistro;
@@ -140,40 +141,80 @@ public class PanelRegistroPag extends JPanel {
 		RSButtonHover btnhvrSiguiente = new RSButtonHover();
 		btnhvrSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Registro.mostrarPag2(panelRegistroPag2);
 				
 				try {
+					
+					
 					usuarioRegistro=new Analista();
+					
 					usuarioRegistro.setActivo(true);
+					
 					usuarioRegistro.setApellido1(textApellido1.getText());
+					
 					usuarioRegistro.setApellido2(textApellido2.getText());
-					usuarioRegistro.setContrasena("12345678");
+					
+					usuarioRegistro.setContrasena("12345678");//no existe campo en vista
+					
 					usuarioRegistro.setDocumento(textdOCUMENTO.getText());
+					
 					
 	//				LocalDate localDate = LocalDate.of(1999, 04, 01);
 	//				Date date= Date.valueOf(localDate);
 	
 					//pasar de util.date a sql.date
-				    java.sql.Date sqlDate = new java.sql.Date(dateChooser.getDatoFecha().getTime());
-				    usuarioRegistro.setFechaNacimiento(sqlDate);
+					
+		
+					java.util.Date fecha= dateChooser.getDatoFecha();
+					
+					LocalDate fechaActualLD = LocalDate.now();
+//		
+					java.sql.Date fechaActualSQL=java.sql.Date.valueOf(fechaActualLD);
+					
+					java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+					
+					if(fecha.before(fechaActualDATE)){
+						java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+				    	usuarioRegistro.setFechaNacimiento(sqlDate);
+					}else{
+						throw new Exception("Fecha inválida");
+					}
 				    
-					usuarioRegistro.setItr(null);
-					usuarioRegistro.setLocalidad("El pinar");				
-					usuarioRegistro.setMail(textMailPersonal.getText());
-					usuarioRegistro.setMailInstitucional(textMailUtec.getText());
+				    
+				    String mailPersonal= textMailPersonal.getText();
+				    
+				    if(mailPersonal.contains("@")){
+						usuarioRegistro.setMail(mailPersonal);
+					}else{
+						throw new Exception("Formato de email personal incorrecto");
+					}
+					
+					String mailInstitucional =textMailUtec.getText();
+				
+					
+					if(mailInstitucional.contains("@")){
+						usuarioRegistro.setMailInstitucional(mailInstitucional);
+					}else{
+						throw new Exception("Formato de email institucional incorrecto");
+					}
+					
 					usuarioRegistro.setNombre1(textNombre1.getText());
+					
 					usuarioRegistro.setNombre2(textNombre2.getText());
+					
 					String[] splitNombreUsuario=textMailUtec.getText().split("@");
 					usuarioRegistro.setNombreUsuario(splitNombreUsuario[0]);
 					
 					usuarioRegistro.setTelefono("099999999");//esto falta
 				
-				
+					Registro.mostrarPag2(PanelRegistroPag2.getInstancia());
+
 				}catch(Exception m) {
 					JOptionPane.showMessageDialog(null, m.getMessage(),
 						      "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
+				
+
 				
 				
 				

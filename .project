@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/hibernate-core-5.3.28.Final.jar</name>
+			<type>1</type>
+			<location>C:/wildfly-26.1.2.Final/modules/system/layers/base/org/hibernate/main/hibernate-core-5.3.28.Final.jar</location>
+		</link>
+		<link>
+			<name>lib/jboss-client.jar</name>
+			<type>1</type>
+			<location>C:/wildfly-26.1.2.Final/bin/client/jboss-client.jar</location>
+		</link>
+	</linkedResources>
 </projectDescription>

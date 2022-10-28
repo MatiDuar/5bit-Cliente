@@ -72,8 +72,10 @@ public class Registro extends JFrame {
 	
 	public static void mostrarPag2(PanelRegistroPag2 panelRegistroPag2) {
 		panelDinamico.removeAll();
+		panelRegistroPag2.cargaComboBox();
 		panelRegistroPag2.setSize(710, 495);
 		panelRegistroPag2.setLocation(0, 0);
+		panelRegistroPag2.cargaComboBox();
 		panelDinamico.add(panelRegistroPag2);
 		panelDinamico.revalidate();
 		panelDinamico.repaint();

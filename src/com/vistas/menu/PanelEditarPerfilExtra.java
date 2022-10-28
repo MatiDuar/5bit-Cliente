@@ -1,6 +1,7 @@
 package com.vistas.menu;
 
 import javax.swing.JPanel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import rojeru_san.rsdate.RSYearDate;
@@ -9,11 +10,20 @@ import rojerusan.RSComboBox;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
+import com.controlador.DAOGeneral;
+import com.entities.AreaTutor;
+import com.entities.TipoTutor;
+import com.entities.Tutor;
+import com.entities.Estudiante;
+import com.exception.ServicesException;
+
 public class PanelEditarPerfilExtra extends JPanel {
 	
-	/**
-	 * Create the panel.
-	 */
+	DefaultComboBoxModel modeloAreaTutor=new DefaultComboBoxModel();
+	DefaultComboBoxModel modeloTipoTutor=new DefaultComboBoxModel();
+	
+	RSComboBox comboBoxAreaTutor;
+	RSComboBox comboBoxRolTutor;
 	public PanelEditarPerfilExtra() {
 
 	}
@@ -24,7 +34,9 @@ public class PanelEditarPerfilExtra extends JPanel {
 		RSYearDate yearDate = new RSYearDate();
 		yearDate.setColorBackground(new Color(52, 152, 219));
 		yearDate.setBounds(98, 10, 250, 42);
+		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getGeneracion().getAnoIngreso());
 		add(yearDate);
+		
 		
 		JLabel lblAoDeIngreso = new JLabel("A;o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -48,12 +60,14 @@ public class PanelEditarPerfilExtra extends JPanel {
 		lblAreaTutor.setFont(new Font("Lato", Font.PLAIN, 11));
 		add(lblAreaTutor);
 		
-		RSComboBox comboBoxRolTutor = new RSComboBox();
+		comboBoxRolTutor = new RSComboBox();
+		comboBoxRolTutor.setModel(modeloTipoTutor);
 		comboBoxRolTutor.setBounds(93, 10, 250, 42);
 		comboBoxRolTutor.setColorFondo(new Color(52, 152, 219));
 		add(comboBoxRolTutor);
 		
-		RSComboBox comboBoxAreaTutor = new RSComboBox();
+		comboBoxAreaTutor = new RSComboBox();
+		comboBoxAreaTutor.setModel(modeloAreaTutor);
 		comboBoxAreaTutor.setColorFondo(new Color(52, 152, 219));
 		comboBoxAreaTutor.setBounds(93, 62, 250, 42);
 		add(comboBoxAreaTutor);
@@ -63,11 +77,35 @@ public class PanelEditarPerfilExtra extends JPanel {
 		lblRol.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblRol.setBounds(5, 26, 78, 14);
 		add(lblRol);
+		cargarComboBox();
+		
+		comboBoxAreaTutor.setSelectedItem(((Tutor) Menu.usuarioIngresado).getAreaTutor().getNombre());
+		comboBoxRolTutor.setSelectedItem(((Tutor) Menu.usuarioIngresado).getTipoTutor().getNombre());
 
 	}
 	
 	public void initUIAnalista() {
 		
 		
+	}
+	
+	
+	public void cargarComboBox() {	
+		try {
+			modeloAreaTutor.removeAllElements();
+			modeloAreaTutor.addElement("");
+			for(AreaTutor t:DAOGeneral.areaTutorRemote.obtenerAreaTutor()) {
+				modeloAreaTutor.addElement(t.getNombre());
+			}
+			
+			modeloTipoTutor.removeAllElements();
+			modeloTipoTutor.addElement("");
+			for(TipoTutor tp:DAOGeneral.tipoTutorRempote.obtenerTipoTutor()) {
+				modeloTipoTutor.addElement(tp.getNombre());
+			}
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

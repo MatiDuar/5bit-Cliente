@@ -18,16 +18,17 @@ import java.awt.event.MouseMotionAdapter;
 
 public class PanelMenu extends JPanel {
 	private JLabel lblCerrarSesion;
-	private GestionDeEventos  panelGestionDeEventos = new GestionDeEventos();
 //	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
 	
-//	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante();
+//	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante()
+
+	GestionDeEventos panelGestionDeEventos=new GestionDeEventos();
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		initUITutor();
+		
 	}
 
 //	public static PanelMenuEstudiante getInstancia() {
@@ -52,6 +53,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
+		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
@@ -152,6 +154,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
+		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
@@ -170,9 +173,16 @@ public class PanelMenu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PanelEditarPerfil panelEditarPerfil=new PanelEditarPerfil();
+				
 				panelDinamico.removeAll();
+				try {
+					panelEditarPerfil.cargaComboBox();
+				}catch(Exception m) {
+					m.printStackTrace();
+				}
 				panelEditarPerfil.setSize(945, 725);
 				panelEditarPerfil.setLocation(0, 0);
+				
 				panelDinamico.add(panelEditarPerfil);
 				panelDinamico.revalidate();
 				panelDinamico.repaint();
@@ -211,7 +221,8 @@ public class PanelMenu extends JPanel {
 	public void initUIAnalista() {
 		removeAll();
 		setLayout(null);
-		
+		setBounds(0,0,955, 725);
+
 		JPanel menuUsuario = new JPanel();
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 
@@ -232,6 +243,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
+		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
@@ -266,7 +278,7 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 			}
 		});
 		buttonGestionUsuarios.setHorizontalAlignment(SwingConstants.TRAILING);
