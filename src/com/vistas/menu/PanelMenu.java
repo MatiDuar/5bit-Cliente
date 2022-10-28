@@ -18,7 +18,6 @@ import java.awt.event.MouseMotionAdapter;
 
 public class PanelMenu extends JPanel {
 	private JLabel lblCerrarSesion;
-	private GestionDeUsuario  panelGestionDeUsuarios = new GestionDeUsuario();
 	private GestionDeEventos  panelGestionDeEventos = new GestionDeEventos();
 //	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
 	
@@ -267,12 +266,7 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelDinamico.removeAll();
-				panelGestionDeUsuarios.setSize(945, 725);
-				panelGestionDeUsuarios.setLocation(0, 0);
-				panelDinamico.add(panelGestionDeUsuarios);
-				panelDinamico.revalidate();
-				panelDinamico.repaint();
+
 			}
 		});
 		buttonGestionUsuarios.setHorizontalAlignment(SwingConstants.TRAILING);

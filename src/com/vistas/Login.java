@@ -145,34 +145,41 @@ public class Login extends JFrame {
 				
 				
 				Usuario usuarioIngresado;
-				try {
-					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
-					if(usuarioIngresado instanceof Tutor) {
-						menu.panelMenu.initUITutor();
-						Menu.usuarioIngresado=usuarioIngresado;
-
-						menu.setVisible(true);
-						setVisible(false);
-					}else if(usuarioIngresado instanceof Analista) {
-						menu.panelMenu.initUIAnalista();
-						Menu.usuarioIngresado=usuarioIngresado;
-
-						menu.setVisible(true);
-						setVisible(false);
-					}else if(usuarioIngresado instanceof Estudiante){
-						menu.panelMenu.initUI();
-						Menu.usuarioIngresado=usuarioIngresado;
-						menu.setVisible(true);
-						setVisible(false);
-					}else {
-						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto",
-							      "Error", JOptionPane.ERROR_MESSAGE);
-					}
-					
-				} catch (ServicesException e1) {
-					e1.printStackTrace();
-				}
-	
+				
+				// se comenta esta parte para hacer pruebas
+				
+//				try {
+//					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+//					if(usuarioIngresado instanceof Tutor) {
+//						menu.panelMenu.initUITutor();
+//						Menu.usuarioIngresado=usuarioIngresado;
+//
+//						menu.setVisible(true);
+//						setVisible(false);
+//					}else if(usuarioIngresado instanceof Analista) {
+//						menu.panelMenu.initUIAnalista();
+//						Menu.usuarioIngresado=usuarioIngresado;
+//
+//						menu.setVisible(true);
+//						setVisible(false);
+//					}else if(usuarioIngresado instanceof Estudiante){
+//						menu.panelMenu.initUI();
+//						Menu.usuarioIngresado=usuarioIngresado;
+//						menu.setVisible(true);
+//						setVisible(false);
+//					}else {
+//						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto",
+//							      "Error", JOptionPane.ERROR_MESSAGE);
+//					}
+//					
+//				} catch (ServicesException e1) {
+//					e1.printStackTrace();
+//				}
+				
+				//para pruebas descomentar esto
+				menu.panelMenu.initUIAnalista();
+				menu.setVisible(true);
+				setVisible(false);
 				
 			}
 		});

@@ -43,7 +43,12 @@ public class GestionDeEventos extends JPanel {
 		lblNewLabel_2_1.setBounds(236, 23, 227, 27);
 		add(lblNewLabel_2_1);
 		
+		panelDinamico = new JPanel();
+		panelDinamico.setBounds(0, 153, 697, 514);
+		add(panelDinamico);
+		
 		RSLabelImage labelImage_1 = new RSLabelImage();
+		labelImage_1.setIcon(new ImageIcon(GestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
 //		labelImage_1.setIcon(new ImageIcon(Diseño.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
@@ -55,7 +60,7 @@ public class GestionDeEventos extends JPanel {
 				btnhvrConvocatoriaAEventos.setBackground(new Color(0,160,255));
 				btnhvrListadoDeEventos.setBackground(new Color(0,112,192));
 				//mostrar Panel
-
+				panelDinamico.removeAll();
 				
 			}
 		});
@@ -73,8 +78,8 @@ public class GestionDeEventos extends JPanel {
 				ListadoEventos panelListadoEventos = new ListadoEventos();
 				panelDinamico.removeAll();
 				panelDinamico.setLayout(null);
-				panelListadoEventos.setSize(1, 1);
-				panelListadoEventos.setLocation(348, 5);
+				panelListadoEventos.setBounds(panelDinamico.getBounds());
+				panelListadoEventos.setLocation(0,0);
 				panelDinamico.add(panelListadoEventos);
 				panelDinamico.revalidate();
 				panelDinamico.repaint();
@@ -85,15 +90,13 @@ public class GestionDeEventos extends JPanel {
 		btnhvrListadoDeEventos.setBounds(16, 93, 325, 40);
 		add(btnhvrListadoDeEventos);
 		
-		panelDinamico = new JPanel();
-		panelDinamico.setBounds(0, 153, 697, 514);
-		add(panelDinamico);
+		
 		
 		ListadoEventos panelListadoEventos = new ListadoEventos();
 		panelDinamico.removeAll();
 		panelDinamico.setLayout(null);
-		panelListadoEventos.setSize(1, 1);
-		panelListadoEventos.setLocation(348, 5);
+		panelListadoEventos.setBounds(panelDinamico.getBounds());
+		panelListadoEventos.setLocation(0,0);
 		panelDinamico.add(panelListadoEventos);
 		panelDinamico.revalidate();
 		panelDinamico.repaint();
