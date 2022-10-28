@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.controlador.DAOGeneral;
 import com.controlador.DAOUsuario;
 import com.entities.Analista;
 import com.entities.Estudiante;
@@ -59,7 +60,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		
+		DAOGeneral dao=new DAOGeneral();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 374, 387);
 		setLocationRelativeTo(null);
@@ -119,6 +120,7 @@ public class Login extends JFrame {
 		lblRegistrarse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				frameRegistro.panelRegistroPag2.cargaComboBox();
 				frameRegistro.setVisible(true);
 			}
 		});
@@ -144,23 +146,29 @@ public class Login extends JFrame {
 				
 				Usuario usuarioIngresado;
 				try {
-					usuarioIngresado = us.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
 					if(usuarioIngresado instanceof Tutor) {
 						menu.panelMenu.initUITutor();
+						Menu.usuarioIngresado=usuarioIngresado;
+
 						menu.setVisible(true);
 						setVisible(false);
 					}else if(usuarioIngresado instanceof Analista) {
 						menu.panelMenu.initUIAnalista();
+						Menu.usuarioIngresado=usuarioIngresado;
+
 						menu.setVisible(true);
 						setVisible(false);
 					}else if(usuarioIngresado instanceof Estudiante){
 						menu.panelMenu.initUI();
+						Menu.usuarioIngresado=usuarioIngresado;
 						menu.setVisible(true);
 						setVisible(false);
 					}else {
 						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto",
 							      "Error", JOptionPane.ERROR_MESSAGE);
 					}
+					
 				} catch (ServicesException e1) {
 					e1.printStackTrace();
 				}

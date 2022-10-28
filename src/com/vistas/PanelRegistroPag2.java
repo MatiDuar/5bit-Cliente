@@ -1,7 +1,16 @@
 package com.vistas;
 
 import javax.swing.JPanel;
+
+import com.controlador.DAOGeneral;
+import com.entities.Analista;
+import com.entities.Departamento;
+import com.entities.ITR;
+import com.entities.Usuario;
+import com.exception.ServicesException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,6 +28,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import rojerusan.RSRadioButton;
 import RSMaterialComponent.RSPanelMaterial;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class PanelRegistroPag2 extends JPanel {
@@ -33,7 +44,15 @@ public class PanelRegistroPag2 extends JPanel {
 	private RSRadioButton radioAnalista;
 	private RSRadioButton radioTutor;
 	private RSRadioButton radioEstudiante;
+	
+	DefaultComboBoxModel<String> modeloDep=new DefaultComboBoxModel();
+	RSComboBox comboBoxDep;
+	RSComboBox comboBoxITR;
+	DefaultComboBoxModel<String> modeloITR=new DefaultComboBoxModel();
+
 	static JPanel panelDinamicoReg2;
+	
+	Usuario us=PanelRegistroPag.usuarioRegistro;
 
 	/**
 	 * Create the panel.
@@ -82,6 +101,10 @@ public class PanelRegistroPag2 extends JPanel {
 		RSButtonHover btnRegistrarse = new RSButtonHover();
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(radioAnalista.isSelected()) {
+//					Analista analistaRegistro=PanelRegistroPag.usuarioRegistro;
+//					analistaRegistro.set
+				}
 			}
 		});
 
@@ -97,17 +120,19 @@ public class PanelRegistroPag2 extends JPanel {
 		comboBox.setBounds(70, 114, 250, 42);
 		add(comboBox);
 		
-		RSComboBox comboBox_1 = new RSComboBox();
-		comboBox_1.setFont(new Font("Lato", Font.BOLD, 14));
-		comboBox_1.setColorFondo(new Color(52, 152, 219));
-		comboBox_1.setBounds(390, 114, 250, 42);
-		add(comboBox_1);
+		comboBoxDep = new RSComboBox();
+		comboBoxDep.setModel(modeloDep);
+		comboBoxDep.setFont(new Font("Lato", Font.BOLD, 14));
+		comboBoxDep.setColorFondo(new Color(52, 152, 219));
+		comboBoxDep.setBounds(390, 114, 250, 42);
+		add(comboBoxDep);
 		
-		RSComboBox comboBox_2 = new RSComboBox();
-		comboBox_2.setFont(new Font("Lato", Font.BOLD, 14));
-		comboBox_2.setColorFondo(new Color(52, 152, 219));
-		comboBox_2.setBounds(70, 192, 250, 42);
-		add(comboBox_2);				
+		comboBoxITR = new RSComboBox();
+		comboBoxITR.setModel(modeloITR);
+		comboBoxITR.setFont(new Font("Lato", Font.BOLD, 14));
+		comboBoxITR.setColorFondo(new Color(52, 152, 219));
+		comboBoxITR.setBounds(70, 192, 250, 42);
+		add(comboBoxITR);				
 				
 		radioEstudiante = new RSRadioButton();
 		radioEstudiante.setFont(new Font("Lato", Font.BOLD, 11));
@@ -164,11 +189,38 @@ public class PanelRegistroPag2 extends JPanel {
 		panelRegistroTutor.setSize(570, 186);
 		panelRegistroTutor.setLocation(0, 0);
 		
+		
 
 	}
 	
 	public static PanelRegistroPag2 getInstancia(){
 		return instancia;
 	}
+	public void cargaComboBox() {
+		try {
+			cargarComboBoxDepartamento(comboBoxDep);
+			System.out.println("Se cargo con exito los Departamentos");
+			cargarComboBoxITR(comboBoxITR);
+			System.out.println("Se cargo con exito los ITR");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void cargarComboBoxDepartamento(RSComboBox comboCargar) throws ServicesException {
+		modeloDep.removeAllElements();
+		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
+			modeloDep.addElement(d.getNombre());
+			System.out.println(d.getNombre());
+		}
+		
+	}
 	
+	public void cargarComboBoxITR(RSComboBox comboCargar) throws ServicesException {
+		modeloITR.removeAllElements();
+		for(ITR itr:DAOGeneral.itrRemote.obtenerItrs()) {
+			modeloITR.addElement(itr.getNombre());
+			System.out.println(itr.getNombre());
+
+		}
+	}
 }

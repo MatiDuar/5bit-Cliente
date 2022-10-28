@@ -26,14 +26,97 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		
+		initUITutor();
 	}
 
 //	public static PanelMenuEstudiante getInstancia() {
 //		return instancia;
 //		
 //	}
-	
+	public void initUITutor() {
+		removeAll();
+		
+		setBounds(0,0,955, 725);
+		setLayout(null);
+		
+		JPanel menuUsuario = new JPanel();
+		menuUsuario.setBounds(0, 0, 246, 725);
+		menuUsuario.setBackground(new Color(177, 192, 207));
+		add(menuUsuario);
+		menuUsuario.setLayout(null);
+		
+		RSLabelImage iconoUsuario = new RSLabelImage();
+		iconoUsuario.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\Downloads\\LogoDeUsuario.png"));
+		iconoUsuario.setBounds(46, 30, 154, 154);
+		menuUsuario.add(iconoUsuario);
+		
+		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
+		lblNombreUsuario.setForeground(new Color(59, 168, 231));
+		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
+		lblNombreUsuario.setBounds(10, 194, 227, 30);
+		menuUsuario.add(lblNombreUsuario);
+		
+		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
+		buttonGestionEventos.setIcons(ICONS.DATE_RANGE);
+		buttonGestionEventos.setText("EVENTOS                             ");
+		buttonGestionEventos.setBounds(25, 340, 200, 40);
+		menuUsuario.add(buttonGestionEventos);
+		
+		RSButtonMaterialIconUno buttonGestionConstancias = new RSButtonMaterialIconUno();
+		buttonGestionConstancias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonGestionConstancias.setIcons(ICONS.ASSESSMENT);
+		buttonGestionConstancias.setText("REPORTES                          ");
+		buttonGestionConstancias.setBounds(25, 390, 200, 40);
+		menuUsuario.add(buttonGestionConstancias);
+		
+		JPanel panelTituloSistema = new JPanel();
+		panelTituloSistema.setBounds(245, 0, 700, 74);
+		add(panelTituloSistema);
+		panelTituloSistema.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("SISTEMA DE GESTIÓN");
+		lblNewLabel_2.setForeground(new Color(58, 69, 75));
+		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(247, 23, 206, 27);
+		panelTituloSistema.add(lblNewLabel_2);
+		
+		RSLabelImage labelImage = new RSLabelImage();
+		labelImage.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\ProyectoPDT\\5bit-Cliente\\src\\com\\vistas\\img\\UTEC.png"));
+		labelImage.setBounds(639, 10, 51, 53);
+		panelTituloSistema.add(labelImage);
+		
+		JPanel panelDinamico = new JPanel();
+		panelDinamico.setBounds(245, 0, 700, 725);
+		add(panelDinamico);
+		panelDinamico.setLayout(null);
+		
+		JLabel lblEditarPerfil = new JLabel("Editar perfil");
+		lblEditarPerfil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelEditarPerfil panelEditarPerfil=new PanelEditarPerfil();
+				panelDinamico.removeAll();
+				panelEditarPerfil.setSize(945, 725);
+				panelEditarPerfil.setLocation(0, 0);
+				panelDinamico.add(panelEditarPerfil);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+				
+				
+			}
+		});
+		
+		lblEditarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblEditarPerfil.setBounds(93, 226, 60, 13);
+		
+		
+		menuUsuario.add(lblEditarPerfil);
+
+	}
 	public void initUI() {
 		
 		removeAll();
@@ -216,11 +299,6 @@ public class PanelMenu extends JPanel {
 				lblCerrarSesion.setForeground(Color.BLUE);
 			}
 		});
-		lblCerrarSesion.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
 		
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCerrarSesion.setBounds(93, 686, 73, 13);
@@ -242,75 +320,5 @@ public class PanelMenu extends JPanel {
 		panelDinamico.add(labelImage_1);
 	}
 	
-	public void initUITutor() {
-		removeAll();
-		setLayout(null);
-		
-		JPanel menuUsuario = new JPanel();
-		menuUsuario.setBounds(0, 0, 246, 725);
-		menuUsuario.setBackground(new Color(177, 192, 207));
-		add(menuUsuario);
-		menuUsuario.setLayout(null);
-		
-		RSLabelImage iconoUsuario = new RSLabelImage();
-		iconoUsuario.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\Downloads\\LogoDeUsuario.png"));
-		iconoUsuario.setBounds(46, 30, 154, 154);
-		menuUsuario.add(iconoUsuario);
-		
-		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
-		lblNombreUsuario.setForeground(new Color(59, 168, 231));
-		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
-		lblNombreUsuario.setBounds(10, 194, 227, 30);
-		menuUsuario.add(lblNombreUsuario);
-		
-		JLabel lblEditarPerfil = new JLabel("Editar perfil");
-		lblEditarPerfil.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				
-			}
-		});
-		lblEditarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEditarPerfil.setBounds(93, 226, 60, 13);
-		menuUsuario.add(lblEditarPerfil);
-		
-		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
-		buttonGestionEventos.setIcons(ICONS.DATE_RANGE);
-		buttonGestionEventos.setText("EVENTOS                             ");
-		buttonGestionEventos.setBounds(25, 340, 200, 40);
-		menuUsuario.add(buttonGestionEventos);
-		
-		RSButtonMaterialIconUno buttonGestionConstancias = new RSButtonMaterialIconUno();
-		buttonGestionConstancias.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		buttonGestionConstancias.setIcons(ICONS.ASSESSMENT);
-		buttonGestionConstancias.setText("REPORTES                          ");
-		buttonGestionConstancias.setBounds(25, 390, 200, 40);
-		menuUsuario.add(buttonGestionConstancias);
-		
-		JPanel panelTituloSistema = new JPanel();
-		panelTituloSistema.setBounds(245, 0, 700, 74);
-		add(panelTituloSistema);
-		panelTituloSistema.setLayout(null);
-		
-		JLabel lblNewLabel_2 = new JLabel("SISTEMA DE GESTIÓN");
-		lblNewLabel_2.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(247, 23, 206, 27);
-		panelTituloSistema.add(lblNewLabel_2);
-		
-		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\ProyectoPDT\\5bit-Cliente\\src\\com\\vistas\\img\\UTEC.png"));
-		labelImage.setBounds(639, 10, 51, 53);
-		panelTituloSistema.add(labelImage);
-		
-		JPanel panelDinamico = new JPanel();
-		panelDinamico.setBounds(245, 71, 700, 654);
-		add(panelDinamico);
-
-	}
+	
 }

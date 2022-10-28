@@ -5,6 +5,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import rojeru_san.rsfield.RSTextFull;
 import javax.swing.SwingConstants;
+
+import com.entities.Estudiante;
+import com.entities.Tutor;
+
 import rojeru_san.rsdate.RSDateChooser;
 import rojerusan.RSComboBox;
 import java.awt.Color;
@@ -22,7 +26,7 @@ public class PanelEditarPerfil extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Menu menu = new Menu();
-	private JPanel panelDinamicoEditarPerfilPorTipoUsuarios;
+	public PanelEditarPerfilExtra  panelDinamicoEditarPerfilPorTipoUsuarios;
 	private PanelMenu panelEstudiante = new PanelMenu();
 	/**
 	 * Create the panel.
@@ -172,17 +176,14 @@ public class PanelEditarPerfil extends JPanel {
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setBounds(101, 403, 250, 42);
 		add(comboBoxITR);
-		PanelEditarPerfilExtra panelDinamicoEditarPerfilPorTipoUsuarios=new PanelEditarPerfilExtra();
+		panelDinamicoEditarPerfilPorTipoUsuarios=new PanelEditarPerfilExtra();
 		panelDinamicoEditarPerfilPorTipoUsuarios.setBounds(12, 455, 680, 124);
 		//
-		boolean esEstudiante = false;
-		boolean esTutor = true;
-		if(esEstudiante){
+		
+		if(Menu.usuarioIngresado instanceof Estudiante) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();
-		}else if(esTutor) {
+		}else if(Menu.usuarioIngresado instanceof Tutor){
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
-		}else {
-			
 		}
 		add(panelDinamicoEditarPerfilPorTipoUsuarios);
 

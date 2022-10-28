@@ -8,10 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.entities.Usuario;
+
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
 	public PanelMenu panelMenu=new PanelMenu();
+	public static Usuario usuarioIngresado;
 
 	/**
 	 * Launch the application.

@@ -1,7 +1,16 @@
 package com.vistas;
 
 import javax.swing.JPanel;
+
+import com.controlador.DAOGeneral;
+import com.controlador.DAOGenero;
+import com.entities.Analista;
+import com.entities.Estudiante;
+import com.entities.Usuario;
+import com.exception.ServicesException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +18,7 @@ import java.awt.Font;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsfield.RSTextFull;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSDateChooser;
 
@@ -18,6 +28,8 @@ public class PanelRegistroPag extends JPanel {
 	
 	PanelRegistroPag2 panelRegistroPag2 = new PanelRegistroPag2();
 	Registro regsitro = Registro.getInstancia();
+	
+	public static Usuario usuarioRegistro;
 
 	/**
 	 * Create the panel.
@@ -114,6 +126,10 @@ public class PanelRegistroPag extends JPanel {
 		lblTitulo.setBounds(116, 11, 524, 58);
 		add(lblTitulo);
 		
+		RSDateChooser dateChooser = new RSDateChooser();
+		dateChooser.setBounds(390, 271, 250, 42);
+		add(dateChooser);
+		
 		RSButtonHover btnhvrRegistrarse = new RSButtonHover();
 		btnhvrRegistrarse.setText("Registrarse");
 		btnhvrRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
@@ -125,6 +141,48 @@ public class PanelRegistroPag extends JPanel {
 		btnhvrSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Registro.mostrarPag2(panelRegistroPag2);
+				
+				try {
+					usuarioRegistro=new Analista();
+					usuarioRegistro.setActivo(true);
+					usuarioRegistro.setApellido1(textApellido1.getText());
+					usuarioRegistro.setApellido2(textApellido2.getText());
+					usuarioRegistro.setContrasena("12345678");
+					usuarioRegistro.setDocumento(textdOCUMENTO.getText());
+					
+	//				LocalDate localDate = LocalDate.of(1999, 04, 01);
+	//				Date date= Date.valueOf(localDate);
+	
+					//pasar de util.date a sql.date
+				    java.sql.Date sqlDate = new java.sql.Date(dateChooser.getDatoFecha().getTime());
+				    usuarioRegistro.setFechaNacimiento(sqlDate);
+				    
+					usuarioRegistro.setItr(null);
+					usuarioRegistro.setLocalidad("El pinar");				
+					usuarioRegistro.setMail(textMailPersonal.getText());
+					usuarioRegistro.setMailInstitucional(textMailUtec.getText());
+					usuarioRegistro.setNombre1(textNombre1.getText());
+					usuarioRegistro.setNombre2(textNombre2.getText());
+					String[] splitNombreUsuario=textMailUtec.getText().split("@");
+					usuarioRegistro.setNombreUsuario(splitNombreUsuario[0]);
+					
+					usuarioRegistro.setTelefono("099999999");//esto falta
+				
+				
+				}catch(Exception m) {
+					JOptionPane.showMessageDialog(null, m.getMessage(),
+						      "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+				
+				
+				
+				
+				
+				Usuario estudiante=new Estudiante();
+				
+				
 //				Registro.getPanelDinamico().removeAll();
 //				panelRegistroPag2.setSize(710, 495);
 //				panelRegistroPag2.setLocation(0, 0);
@@ -139,9 +197,7 @@ public class PanelRegistroPag extends JPanel {
 		btnhvrSiguiente.setBounds(468, 436, 172, 33);
 		add(btnhvrSiguiente);
 		
-		RSDateChooser dateChooser = new RSDateChooser();
-		dateChooser.setBounds(390, 271, 250, 42);
-		add(dateChooser);
+		
 		
 		
 
@@ -150,4 +206,6 @@ public class PanelRegistroPag extends JPanel {
 	public static PanelRegistroPag getInstancia(){
 		return instancia;
 	}
+	
+
 }
