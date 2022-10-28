@@ -118,7 +118,7 @@ public class PanelMenu extends JPanel {
 		
 		lblCerrarSesion = new JLabel("Cerrar sesión");
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(80, 684, 73, 13);
+		lblCerrarSesion.setBounds(80, 635, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
 	}
 	
@@ -180,8 +180,15 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(lblEditarPerfil);
 		
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
-		buttonGestionUsuarios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		buttonGestionUsuarios.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				PanelGestionUsuarios panelGestionUsuarios = new PanelGestionUsuarios();
+				panelDinamico.removeAll();
+				panelGestionUsuarios.setSize(974,725);
+				panelGestionUsuarios.setLocation(0,0);
+				panelDinamico.add(panelGestionUsuarios);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
 				
 			}
 		});
@@ -223,7 +230,7 @@ public class PanelMenu extends JPanel {
 		});
 		
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(93, 686, 73, 13);
+		lblCerrarSesion.setBounds(93, 635, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
 		
 		panelDinamico.setBounds(245, 0, 700, 725);
@@ -311,6 +318,23 @@ public class PanelMenu extends JPanel {
 		JPanel panelDinamico = new JPanel();
 		panelDinamico.setBounds(245, 71, 700, 654);
 		add(panelDinamico);
+		
+		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
+		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+			}
+		});
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
+		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCerrarSesion.setBounds(93, 635, 73, 13);
+		menuUsuario.add(lblCerrarSesion);
 
 	}
 }
