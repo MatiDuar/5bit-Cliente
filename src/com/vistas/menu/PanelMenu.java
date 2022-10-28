@@ -18,6 +18,8 @@ import java.awt.event.MouseMotionAdapter;
 
 public class PanelMenu extends JPanel {
 	private JLabel lblCerrarSesion;
+	private GestionDeUsuario  panelGestionDeUsuarios = new GestionDeUsuario();
+	private GestionDeEventos  panelGestionDeEventos = new GestionDeEventos();
 //	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
 	
 //	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante();
@@ -265,7 +267,12 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				panelDinamico.removeAll();
+				panelGestionDeUsuarios.setSize(945, 725);
+				panelGestionDeUsuarios.setLocation(0, 0);
+				panelDinamico.add(panelGestionDeUsuarios);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
 			}
 		});
 		buttonGestionUsuarios.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -274,6 +281,16 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(buttonGestionUsuarios);
 		
 		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
+		buttonGestionEventos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelDinamico.removeAll();
+				panelGestionDeEventos.setSize(945, 725);
+				panelGestionDeEventos.setLocation(0, 0);
+				panelDinamico.add(panelGestionDeEventos);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
 		buttonGestionEventos.setIcons(ICONS.DATE_RANGE);
 		buttonGestionEventos.setText("EVENTOS                             ");
 		buttonGestionEventos.setBounds(25, 380, 200, 40);
