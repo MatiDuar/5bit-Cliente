@@ -21,9 +21,9 @@ public class PanelEditarPerfilExtra extends JPanel {
 	
 	DefaultComboBoxModel modeloAreaTutor=new DefaultComboBoxModel();
 	DefaultComboBoxModel modeloTipoTutor=new DefaultComboBoxModel();
-	
-	RSComboBox comboBoxAreaTutor;
-	RSComboBox comboBoxRolTutor;
+	static public RSYearDate yearDate;
+	static public RSComboBox comboBoxAreaTutor;
+	static public RSComboBox comboBoxRolTutor;
 	public PanelEditarPerfilExtra() {
 
 	}
@@ -31,10 +31,10 @@ public class PanelEditarPerfilExtra extends JPanel {
 		removeAll();
 		setLayout(null);
 		
-		RSYearDate yearDate = new RSYearDate();
+		yearDate = new RSYearDate();
 		yearDate.setColorBackground(new Color(52, 152, 219));
 		yearDate.setBounds(98, 10, 250, 42);
-		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getGeneracion().getAnoIngreso());
+		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getAnoIngreso());
 		add(yearDate);
 		
 		
@@ -100,7 +100,7 @@ public class PanelEditarPerfilExtra extends JPanel {
 			
 			modeloTipoTutor.removeAllElements();
 			modeloTipoTutor.addElement("");
-			for(TipoTutor tp:DAOGeneral.tipoTutorRempote.obtenerTipoTutor()) {
+			for(TipoTutor tp:DAOGeneral.tipoTutorRemote.obtenerTipoTutor()) {
 				modeloTipoTutor.addElement(tp.getNombre());
 			}
 		} catch (ServicesException e) {

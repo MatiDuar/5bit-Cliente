@@ -175,11 +175,6 @@ public class PanelMenu extends JPanel {
 				PanelEditarPerfil panelEditarPerfil=new PanelEditarPerfil();
 				
 				panelDinamico.removeAll();
-				try {
-					panelEditarPerfil.cargaComboBox();
-				}catch(Exception m) {
-					m.printStackTrace();
-				}
 				panelEditarPerfil.setSize(945, 725);
 				panelEditarPerfil.setLocation(0, 0);
 				
