@@ -70,7 +70,7 @@ public class Login extends JFrame {
 		panel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				lblRegistrarse.setForeground(Color.BLACK);
+				lblRegistrarse.setForeground(new Color(27, 91, 124));;
 			}
 		});
 		panel.setBounds(0, 0, 354, 348);
@@ -95,14 +95,18 @@ public class Login extends JFrame {
 		panel.add(lblUsuario);
 
 		RSPassword password = new RSPassword();
+		password.setForeground(new Color(27, 91, 124));
+		password.setMostrarBoton(false);
+		password.setBordeColorFocus(new Color(52, 152, 219));
+		password.setPlaceholder(" Contrase\u00F1a... ");
 		password.setBounds(52, 193, 250, 42);
 		panel.add(password);
 
 		RSTextFull textUsuario = new RSTextFull();
 		textUsuario.setFont(new Font("Lato", Font.BOLD, 14));
-		textUsuario.setPlaceholder(" Escribe algo...");
+		textUsuario.setPlaceholder(" Nombre de Usuario ...");
 		textUsuario.setMostrarBoton(false);
-		textUsuario.setForeground(new Color(52, 152, 219));
+		textUsuario.setForeground(new Color(27, 91, 124));
 		textUsuario.setBotonColor(new Color(52, 152, 219));
 		textUsuario.setBordeColorFocus(new Color(52, 152, 219));
 		textUsuario.setBounds(52, 115, 250, 42);
@@ -114,6 +118,7 @@ public class Login extends JFrame {
 		panel.add(labelImage);
 
 		lblRegistrarse = new JLabel("Registrarse");
+		lblRegistrarse.setForeground(new Color(27, 91, 124));
 		lblRegistrarse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

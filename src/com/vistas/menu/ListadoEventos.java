@@ -6,6 +6,15 @@ import rojeru_san.complementos.RSButtonHover;
 import rojerusan.RSComboBox;
 import RSMaterialComponent.RSTextFieldIconDos;
 import rojeru_san.efectos.ValoresEnum.ICONS;
+import rojeru_san.rsdate.RSDateChooser;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import rojerusan.RSRadioButton;
+import rojerusan.RSCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListadoEventos extends JPanel {
 
@@ -16,31 +25,111 @@ public class ListadoEventos extends JPanel {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 62, 561, 444);
+		scrollPane.setBounds(10, 160, 561, 357);
 		add(scrollPane);
 		
-		RSButtonHover btnModificar = new RSButtonHover();
-		btnModificar.setText("Modificar");
-		btnModificar.setBounds(581, 179, 109, 40);
-		add(btnModificar);
+		RSDateChooser dateChooserFechaInicio = new RSDateChooser();
+		dateChooserFechaInicio.setPlaceholder("Fecha desde");
+		dateChooserFechaInicio.setBounds(15, 43, 159, 32);
+		add(dateChooserFechaInicio);
 		
-		RSComboBox comboBoxFiltro2 = new RSComboBox();
-		comboBoxFiltro2.setBounds(430, 10, 140, 42);
-		add(comboBoxFiltro2);
+		RSDateChooser dateChooserFechaHasta = new RSDateChooser();
+		dateChooserFechaHasta.setPlaceholder("Fecha hasta");
+		dateChooserFechaHasta.setBounds(184, 43, 150, 32);
+		add(dateChooserFechaHasta);
 		
-		RSComboBox comboBoxFiltro1 = new RSComboBox();
-		comboBoxFiltro1.setBounds(280, 10, 140, 42);
-		add(comboBoxFiltro1);
+		JLabel lblNewLabel = new JLabel("Tipo Evento");
+		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblNewLabel.setBounds(17, 101, 61, 13);
+		add(lblNewLabel);
 		
-		RSTextFieldIconDos textFieldBuscador = new RSTextFieldIconDos();
-		textFieldBuscador.setIcons(ICONS.SEARCH);
-		textFieldBuscador.setBounds(10, 10, 260, 42);
-		add(textFieldBuscador);
+		RSComboBox comboBox = new RSComboBox();
+		comboBox.setColorBoton(Color.WHITE);
+		comboBox.setBounds(17, 118, 121, 32);
+		add(comboBox);
 		
-		RSButtonHover btnEliminar = new RSButtonHover();
-		btnEliminar.setText("Eliminar");
-		btnEliminar.setBounds(581, 305, 109, 40);
-		add(btnEliminar);
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblEstado.setBounds(155, 101, 45, 13);
+		add(lblEstado);
+		
+		RSComboBox comboBox_1 = new RSComboBox();
+		comboBox_1.setColorBoton(Color.WHITE);
+		comboBox_1.setBounds(155, 118, 121, 32);
+		add(comboBox_1);
+		
+		RSComboBox comboBox_2 = new RSComboBox();
+		comboBox_2.setColorBoton(Color.WHITE);
+		comboBox_2.setBounds(293, 118, 121, 32);
+		add(comboBox_2);
+		
+		RSComboBox comboBox_1_1 = new RSComboBox();
+		comboBox_1_1.setColorBoton(Color.WHITE);
+		comboBox_1_1.setBounds(431, 118, 121, 32);
+		add(comboBox_1_1);
+		
+		RSButtonHover btnhvrFiltrar = new RSButtonHover();
+		btnhvrFiltrar.setText("Filtrar");
+		btnhvrFiltrar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrar.setBounds(581, 118, 108, 33);
+		add(btnhvrFiltrar);
+		
+		JLabel lblNewLabel_1 = new JLabel("ITR");
+		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblNewLabel_1.setBounds(293, 102, 45, 13);
+		add(lblNewLabel_1);
+		
+		JLabel lblEstado_1 = new JLabel("Modalidad");
+		lblEstado_1.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblEstado_1.setBounds(431, 102, 52, 13);
+		add(lblEstado_1);
+		
+		RSButtonHover btnhvrModificar = new RSButtonHover();
+		btnhvrModificar.setText("Modificar");
+		btnhvrModificar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrModificar.setBackground(new Color(0, 112, 192));
+		btnhvrModificar.setBounds(581, 362, 108, 33);
+		add(btnhvrModificar);
+		
+		RSButtonHover btnhvrEliminar = new RSButtonHover();
+		btnhvrEliminar.setText("Eliminar");
+		btnhvrEliminar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrEliminar.setBackground(new Color(0, 112, 192));
+		btnhvrEliminar.setBounds(581, 484, 108, 33);
+		add(btnhvrEliminar);
+		
+		JLabel lblFechaDeInicio = new JLabel("Fecha de Inicio");
+		lblFechaDeInicio.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblFechaDeInicio.setBounds(17, 19, 77, 13);
+		add(lblFechaDeInicio);
+		
+		RSCheckBox chckbxFechaExacta = new RSCheckBox();
+		chckbxFechaExacta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(chckbxFechaExacta.isSelected()) {
+					dateChooserFechaHasta.setVisible(false);
+					dateChooserFechaInicio.setPlaceholder("Fecha");
+					dateChooserFechaInicio.repaint();					
+				}else {
+					dateChooserFechaHasta.setVisible(true);
+					dateChooserFechaInicio.setPlaceholder("Fecha desde");
+					dateChooserFechaInicio.repaint();
+				}
+			}
+		});
+		chckbxFechaExacta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		chckbxFechaExacta.setText("Fecha Exacta");
+		chckbxFechaExacta.setBounds(100, 6, 180, 40);
+		add(chckbxFechaExacta);
+		
+		RSButtonHover btnhvrAlta = new RSButtonHover();
+		btnhvrAlta.setText("Alta");
+		btnhvrAlta.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrAlta.setBackground(new Color(0, 112, 192));
+		btnhvrAlta.setBounds(581, 240, 108, 33);
+		add(btnhvrAlta);
 
 	}
 }

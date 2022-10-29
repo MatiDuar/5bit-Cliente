@@ -331,7 +331,7 @@ public class PanelMenu extends JPanel {
 		});
 		
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(93, 686, 73, 13);
+		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
 		
 		panelDinamico.setBounds(245, 0, 700, 725);

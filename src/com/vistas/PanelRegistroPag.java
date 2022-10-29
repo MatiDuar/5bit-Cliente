@@ -49,6 +49,7 @@ public class PanelRegistroPag extends JPanel {
 		textNombre1.setPlaceholder(" Nombre...");
 		textNombre1.setFont(new Font("Lato", Font.BOLD, 14));
 		textNombre1.setBounds(70, 115, 250, 42);
+		textNombre1.setBordeColorFocus(new Color(52, 152, 219));
 		add(textNombre1);
 		
 		JLabel lblNombre2 = new JLabel("Nombre 2");
@@ -60,12 +61,14 @@ public class PanelRegistroPag extends JPanel {
 		textNombre2.setPlaceholder(" Nombre...");
 		textNombre2.setFont(new Font("Lato", Font.BOLD, 14));
 		textNombre2.setBounds(390, 115, 250, 42);
+		textNombre2.setBordeColorFocus(new Color(52, 152, 219));
 		add(textNombre2);
 		
 		RSTextFull textApellido1 = new RSTextFull();
 		textApellido1.setPlaceholder(" Apellido...");
 		textApellido1.setFont(new Font("Lato", Font.BOLD, 14));
 		textApellido1.setBounds(70, 193, 250, 42);
+		textApellido1.setBordeColorFocus(new Color(52, 152, 219));
 		add(textApellido1);
 		
 		JLabel lbApellido1 = new JLabel("Apellido 1");
@@ -77,6 +80,7 @@ public class PanelRegistroPag extends JPanel {
 		textdOCUMENTO.setPlaceholder(" Documento...");
 		textdOCUMENTO.setFont(new Font("Lato", Font.BOLD, 14));
 		textdOCUMENTO.setBounds(70, 271, 250, 42);
+		textdOCUMENTO.setBordeColorFocus(new Color(52, 152, 219));
 		add(textdOCUMENTO);
 		
 		JLabel lblDocumento = new JLabel("Documento");
@@ -88,9 +92,10 @@ public class PanelRegistroPag extends JPanel {
 		textMailPersonal.setPlaceholder(" Email...");
 		textMailPersonal.setFont(new Font("Lato", Font.BOLD, 14));
 		textMailPersonal.setBounds(70, 349, 250, 42);
+		textMailPersonal.setBordeColorFocus(new Color(52, 152, 219));
 		add(textMailPersonal);
 		
-		JLabel lblEmailPersonal = new JLabel("Email Personal");
+		JLabel lblEmailPersonal = new JLabel("Contrase\u00F1a");
 		lblEmailPersonal.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblEmailPersonal.setBounds(70, 324, 77, 14);
 		add(lblEmailPersonal);
@@ -104,6 +109,7 @@ public class PanelRegistroPag extends JPanel {
 		textApellido2.setPlaceholder(" Apellido...");
 		textApellido2.setFont(new Font("Lato", Font.BOLD, 14));
 		textApellido2.setBounds(390, 193, 250, 42);
+		textApellido2.setBordeColorFocus(new Color(52, 152, 219));
 		add(textApellido2);
 		
 		JLabel lblFecNac = new JLabel("Fecha Naciemiento");
@@ -111,15 +117,16 @@ public class PanelRegistroPag extends JPanel {
 		lblFecNac.setBounds(390, 246, 100, 14);
 		add(lblFecNac);
 		
-		JLabel lblEmailUtec = new JLabel("Email UTEC");
+		JLabel lblEmailUtec = new JLabel("Telefono");
 		lblEmailUtec.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEmailUtec.setBounds(390, 324, 61, 14);
+		lblEmailUtec.setBounds(390, 324, 93, 14);
 		add(lblEmailUtec);
 		
 		RSTextFull textMailUtec = new RSTextFull();
 		textMailUtec.setPlaceholder(" Email...");
 		textMailUtec.setFont(new Font("Lato", Font.BOLD, 14));
 		textMailUtec.setBounds(390, 349, 250, 42);
+		textMailUtec.setBordeColorFocus(new Color(52, 152, 219));
 		add(textMailUtec);
 		
 		JLabel lblTitulo = new JLabel("REGISTRO USUARIO");
@@ -128,15 +135,16 @@ public class PanelRegistroPag extends JPanel {
 		add(lblTitulo);
 		
 		RSDateChooser dateChooser = new RSDateChooser();
+		dateChooser.setColorBackground(new Color(52, 152, 219));
 		dateChooser.setBounds(390, 271, 250, 42);
 		add(dateChooser);
 		
-		RSButtonHover btnhvrRegistrarse = new RSButtonHover();
-		btnhvrRegistrarse.setText("Registrarse");
-		btnhvrRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrRegistrarse.setBackground(new Color(52, 152, 219));
-		btnhvrRegistrarse.setBounds(70, 436, 172, 33);
-		add(btnhvrRegistrarse);
+		RSButtonHover btnhvrCancelar = new RSButtonHover();
+		btnhvrCancelar.setText("Cancelar");
+		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
+		btnhvrCancelar.setBounds(70, 436, 172, 33);
+		add(btnhvrCancelar);
 		
 		RSButtonHover btnhvrSiguiente = new RSButtonHover();
 		btnhvrSiguiente.addActionListener(new ActionListener() {
