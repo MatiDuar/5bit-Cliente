@@ -3,6 +3,7 @@ package com.vistas;
 import javax.swing.JPanel;
 
 import com.controlador.DAOGeneral;
+import com.entities.AreaTutor;
 import com.entities.TipoTutor;
 
 import rojeru_san.rsdate.RSDateChooser;
@@ -17,11 +18,12 @@ import rojeru_san.rsfield.RSTextFull;
 public class PanelRegistroTutor extends JPanel {
 
 	private static PanelRegistroTutor instancia = new PanelRegistroTutor();
-			
-	public static RSComboBox comboBoxTipo = new RSComboBox();
-	private static RSComboBox comboBoxRol;
+	public static RSComboBox comboBoxArea= new RSComboBox();
+	public static RSComboBox comboBoxRol = new RSComboBox();
 
-	public DefaultComboBoxModel modeloTipo=new DefaultComboBoxModel();
+	public DefaultComboBoxModel modeloRol=new DefaultComboBoxModel();
+	
+	public DefaultComboBoxModel modeloArea=new DefaultComboBoxModel();
 	/**
 	 * Create the panel.
 	 */
@@ -37,7 +39,7 @@ public class PanelRegistroTutor extends JPanel {
 		
 		comboBoxRol = new RSComboBox();
 		comboBoxRol.setColorSeleccion(new Color(52, 152, 219));
-		comboBoxRol.setModel(modeloTipo);
+		comboBoxRol.setModel(modeloRol);
 		comboBoxRol.setFont(new Font("Lato", Font.BOLD, 14));
 		comboBoxRol.setColorFondo(new Color(52, 152, 219));
 		comboBoxRol.setBounds(321, 36, 250, 42);
@@ -48,25 +50,34 @@ public class PanelRegistroTutor extends JPanel {
 		lblArea.setBounds(0, 11, 61, 14);
 		add(lblArea);
 		
-		RSTextFull textArea = new RSTextFull();
-		textArea.setMostrarBoton(false);
-		textArea.setFont(new Font("Lato", Font.BOLD, 14));
-		textArea.setPlaceholder("Ingrese Area...");
-		textArea.setBounds(0, 36, 250, 42);
-		textArea.setBordeColorFocus(new Color(52, 152, 219));
-		add(textArea);
+		comboBoxArea = new RSComboBox();
+		comboBoxArea.setModel(modeloArea);
+		comboBoxArea.setFont(new Font("Dialog", Font.BOLD, 14));
+		comboBoxArea.setColorSeleccion(new Color(52, 152, 219));
+		comboBoxArea.setColorFondo(new Color(52, 152, 219));
+		comboBoxArea.setBounds(0, 36, 250, 42);
+		add(comboBoxArea);
 	}
 	public static PanelRegistroTutor getInstancia(){
 		return instancia;
 	}
 	
 	public void cargarComboTipo() {
-		modeloTipo.removeAllElements();
-		modeloTipo.addElement("");
+		modeloRol.removeAllElements();
+		modeloRol.addElement("");
+		
+		modeloArea.removeAllElements();
+		modeloArea.addElement("");
 		try {
 			for(TipoTutor t:DAOGeneral.tipoTutorRemote.obtenerTipoTutor()){
-				modeloTipo.addElement(t.getNombre());
+				modeloRol.addElement(t.getNombre());
 			}
+			
+			for(AreaTutor a:DAOGeneral.areaTutorRemote.obtenerAreaTutor()){
+				modeloArea.addElement(a.getNombre());
+			}
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSDateChooser;
+import rojeru_san.rsfield.RSPassword;
 
 public class PanelRegistroPag extends JPanel {
 	
@@ -31,6 +32,7 @@ public class PanelRegistroPag extends JPanel {
 	Registro regsitro = Registro.getInstancia();
 	
 	public static Usuario usuarioRegistro;
+	private RSPassword password;
 
 	/**
 	 * Create the panel.
@@ -88,13 +90,6 @@ public class PanelRegistroPag extends JPanel {
 		lblDocumento.setBounds(70, 246, 61, 14);
 		add(lblDocumento);
 		
-		RSTextFull textMailPersonal = new RSTextFull();
-		textMailPersonal.setPlaceholder(" Email...");
-		textMailPersonal.setFont(new Font("Lato", Font.BOLD, 14));
-		textMailPersonal.setBounds(70, 349, 250, 42);
-		textMailPersonal.setBordeColorFocus(new Color(52, 152, 219));
-		add(textMailPersonal);
-		
 		JLabel lblEmailPersonal = new JLabel("Contrase\u00F1a");
 		lblEmailPersonal.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblEmailPersonal.setBounds(70, 324, 77, 14);
@@ -122,12 +117,12 @@ public class PanelRegistroPag extends JPanel {
 		lblEmailUtec.setBounds(390, 324, 93, 14);
 		add(lblEmailUtec);
 		
-		RSTextFull textMailUtec = new RSTextFull();
-		textMailUtec.setPlaceholder(" Email...");
-		textMailUtec.setFont(new Font("Lato", Font.BOLD, 14));
-		textMailUtec.setBounds(390, 349, 250, 42);
-		textMailUtec.setBordeColorFocus(new Color(52, 152, 219));
-		add(textMailUtec);
+		RSTextFull textTelefono = new RSTextFull();
+		textTelefono.setPlaceholder(" Telefono ...");
+		textTelefono.setFont(new Font("Lato", Font.BOLD, 14));
+		textTelefono.setBounds(390, 349, 250, 42);
+		textTelefono.setBordeColorFocus(new Color(52, 152, 219));
+		add(textTelefono);
 		
 		JLabel lblTitulo = new JLabel("REGISTRO USUARIO");
 		lblTitulo.setFont(new Font("Lato", Font.BOLD, 50));
@@ -146,12 +141,19 @@ public class PanelRegistroPag extends JPanel {
 		btnhvrCancelar.setBounds(70, 436, 172, 33);
 		add(btnhvrCancelar);
 		
+		password = new RSPassword();
+		password.setPlaceholder(" Contrase\u00F1a... ");
+		password.setMostrarBoton(false);
+		password.setForeground(new Color(27, 91, 124));
+		password.setBordeColorFocus(new Color(52, 152, 219));
+		password.setBounds(70, 348, 250, 42);
+		add(password);
+		
 		RSButtonHover btnhvrSiguiente = new RSButtonHover();
 		btnhvrSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					
 					
 					usuarioRegistro=new Analista();
 					
@@ -160,9 +162,7 @@ public class PanelRegistroPag extends JPanel {
 					usuarioRegistro.setApellido1(textApellido1.getText());
 					
 					usuarioRegistro.setApellido2(textApellido2.getText());
-					
-					usuarioRegistro.setContrasena("12345678");//no existe campo en vista
-					
+										
 					usuarioRegistro.setDocumento(textdOCUMENTO.getText());
 					
 					
@@ -187,32 +187,31 @@ public class PanelRegistroPag extends JPanel {
 						throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
 					}
 				    
-				    
-				    String mailPersonal= textMailPersonal.getText();
-				    
-				    if(mailPersonal.contains("@")){
-						usuarioRegistro.setMail(mailPersonal);
-					}else{
-						throw new Exception("Formato de email personal incorrecto");
-					}
-					
-					String mailInstitucional =textMailUtec.getText();
-				
-					
-					if(mailInstitucional.contains("@")){
-						usuarioRegistro.setMailInstitucional(mailInstitucional);
-					}else{
-						throw new Exception("Formato de email institucional incorrecto");
-					}
+				    				    
+//				    if(mailPersonal.contains("@")){
+//						usuarioRegistro.setMail(mailPersonal);
+//					}else{
+//						throw new Exception("Formato de email personal incorrecto");
+//					}
+//					
+//					String mailInstitucional =textTelefono.getText();
+//				
+//					
+//					if(mailInstitucional.contains("@")){
+//						usuarioRegistro.setMailInstitucional(mailInstitucional);
+//					}else{
+//						throw new Exception("Formato de email institucional incorrecto");
+//					}
 					
 					usuarioRegistro.setNombre1(textNombre1.getText());
 					
 					usuarioRegistro.setNombre2(textNombre2.getText());
 					
-					String[] splitNombreUsuario=textMailUtec.getText().split("@");
-					usuarioRegistro.setNombreUsuario(splitNombreUsuario[0]);
+					usuarioRegistro.setTelefono(textTelefono.getText());
+					usuarioRegistro.setContrasena(password.getText());
 					
-					usuarioRegistro.setTelefono("099999999");//esto falta
+//					String[] splitNombreUsuario=textTelefono.getText().split("@");
+//					usuarioRegistro.setNombreUsuario(splitNombreUsuario[0]);
 				
 					Registro.mostrarPag2(PanelRegistroPag2.getInstancia());
 
@@ -249,12 +248,12 @@ public class PanelRegistroPag extends JPanel {
 		
 		
 		
+		
+		
 
 	}
 	
 	public static PanelRegistroPag getInstancia(){
 		return instancia;
 	}
-	
-
 }

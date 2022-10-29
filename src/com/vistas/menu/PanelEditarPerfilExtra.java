@@ -34,7 +34,7 @@ public class PanelEditarPerfilExtra extends JPanel {
 		yearDate = new RSYearDate();
 		yearDate.setColorBackground(new Color(52, 152, 219));
 		yearDate.setBounds(98, 10, 250, 42);
-		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getAnoIngreso());
+//		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getAnoIngreso());
 		add(yearDate);
 		
 		

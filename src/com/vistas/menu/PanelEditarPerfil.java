@@ -224,58 +224,58 @@ public class PanelEditarPerfil extends JPanel {
 
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-				Usuario usuarioMod=Menu.usuarioIngresado;
-				usuarioMod.setApellido1(textApellido1.getText());
-				usuarioMod.setApellido2(textApellido2.getText());
-				usuarioMod.setNombre1(textNombre1.getText());
-				usuarioMod.setNombre2(textNombre2.getText());
-				usuarioMod.setContrasena(password.getText());
-				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
-
-
-				java.util.Date fecha= FechaNacimiento.getDatoFecha();
-					
-				LocalDate fechaActualLD = LocalDate.now();	
-				java.sql.Date fechaActualSQL=java.sql.Date.valueOf(fechaActualLD);
-					
-				java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
-					
-				if(fecha.before(fechaActualDATE)){
-					java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
-				    usuarioMod.setFechaNacimiento(sqlDate);
-				}else{
-					throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
-				}
-				
-				usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long)1));
-				usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
-				usuarioMod.setLocalidad("buceo");
-				usuarioMod.setMail(textEmailPersonal.getText());
-				usuarioMod.setMailInstitucional(textEmailUtec.getText());
-				usuarioMod.setTelefono(textTelefonoContacto.getText());
-				
-				if(usuarioMod instanceof Tutor) {
-					
-					((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.obtenerAreaTutorPorNombre(PanelEditarPerfilExtra.comboBoxAreaTutor.getSelectedItem().toString()));
-					((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelEditarPerfilExtra.comboBoxRolTutor.getSelectedItem().toString()));
-					
-				}else if(usuarioMod instanceof Estudiante) {
-					((Estudiante) usuarioMod).setAnoIngreso(PanelEditarPerfilExtra.yearDate.getYear());
-				}
-				
-				DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
-				
-				
-				
-				}catch(Exception m) {
-					JOptionPane.showMessageDialog(null, m.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+//		btnhvrGuardar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//				Usuario usuarioMod=Menu.usuarioIngresado;
+//				usuarioMod.setApellido1(textApellido1.getText());
+//				usuarioMod.setApellido2(textApellido2.getText());
+//				usuarioMod.setNombre1(textNombre1.getText());
+//				usuarioMod.setNombre2(textNombre2.getText());
+//				usuarioMod.setContrasena(password.getText());
+//				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
+//
+//
+//				java.util.Date fecha= FechaNacimiento.getDatoFecha();
+//					
+//				LocalDate fechaActualLD = LocalDate.now();	
+//				java.sql.Date fechaActualSQL=java.sql.Date.valueOf(fechaActualLD);
+//					
+//				java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+//					
+//				if(fecha.before(fechaActualDATE)){
+//					java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+//				    usuarioMod.setFechaNacimiento(sqlDate);
+//				}else{
+//					throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+//				}
+//				
+//				usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long)1));
+//				usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+//				usuarioMod.setLocalidad("buceo");
+//				usuarioMod.setMail(textEmailPersonal.getText());
+//				usuarioMod.setMailInstitucional(textEmailUtec.getText());
+//				usuarioMod.setTelefono(textTelefonoContacto.getText());
+//				
+//				if(usuarioMod instanceof Tutor) {
+//					
+//					((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.obtenerAreaTutorPorNombre(PanelEditarPerfilExtra.comboBoxAreaTutor.getSelectedItem().toString()));
+//					((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelEditarPerfilExtra.comboBoxRolTutor.getSelectedItem().toString()));
+//					
+//				}else if(usuarioMod instanceof Estudiante) {
+//					((Estudiante) usuarioMod).setAnoIngreso(PanelEditarPerfilExtra.yearDate.getYear());
+//				}
+//				
+//				DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
+//				
+//				
+//				
+//				}catch(Exception m) {
+//					JOptionPane.showMessageDialog(null, m.getMessage(), "Error",
+//							JOptionPane.ERROR_MESSAGE);
+//				}
+//			}
+//		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));

@@ -70,6 +70,9 @@ public class PanelRegistroPag2 extends JPanel {
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
 		lblNewLabel.setBounds(116, 11, 512, 58);
 		add(lblNewLabel);
+		
+				RSButtonHover btnRegistrarse = new RSButtonHover();
+
 				
 		JLabel lblNewLabel_1_2 = new JLabel("Localidad");
 		lblNewLabel_1_2.setFont(new Font("Lato", Font.PLAIN, 11));
@@ -103,56 +106,7 @@ public class PanelRegistroPag2 extends JPanel {
 		btnVolver.setBounds(70, 436, 172, 33);
 		add(btnVolver);
 		
-		RSButtonHover btnRegistrarse = new RSButtonHover();
-		btnRegistrarse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(radioAnalista.isSelected()) {
-					try {
-						Analista analistaRegistro=(Analista) PanelRegistroPag.usuarioRegistro;
-						PanelRegistroPag.usuarioRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
-						PanelRegistroPag.usuarioRegistro.setLocalidad("El pinar");
-						PanelRegistroPag.usuarioRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
-						DAOGeneral.usuarioRemote.crearUsuario(PanelRegistroPag.usuarioRegistro);
-						System.out.println("LOCURAAAAAAAAA");
-					}catch(Exception m) {
-						m.printStackTrace();
-					}
-				}else if(radioTutor.isSelected()) {
-					try {
-						Tutor tutorRegistro=(Tutor) PanelRegistroPag.usuarioRegistro;
-						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
-						tutorRegistro.setLocalidad("El pinar");
-						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
-						
-						//no se si va hacer un comboBox o un textField
-						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarAreaTutorPorId((long)1));
-						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.buscarTipoTutorPorId((long)PanelRegistroTutor.comboBoxTipo.getSelectedIndex()));
-						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
-						System.out.println("LOCURAAAAAAAAA");
-					}catch(Exception m) {
-						m.printStackTrace();
-					}
-				}else if(radioEstudiante.isSelected()) {
-					Estudiante estudianteRegistro=(Estudiante) PanelRegistroPag.usuarioRegistro;
-					
-					try {
-						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
-						estudianteRegistro.setLocalidad("El pinar");
-						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
-						//no se como hacerlo por que la tabla generacion solo tiene nombre y no es por a;o
-						
-						estudianteRegistro.setAnoIngreso(0);
-						
-						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
-					} catch (ServicesException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					
-				}
-			}
-		});
+		
 
 		btnRegistrarse.setText("Registrarse");
 		btnRegistrarse.setFont(new Font("Lato", Font.BOLD, 14));
@@ -273,6 +227,86 @@ public class PanelRegistroPag2 extends JPanel {
 		panelRegistroTutor.setSize(570, 186);
 		panelRegistroTutor.setLocation(0, 0);
 		
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(radioAnalista.isSelected()) {
+					try {
+						Analista analistaRegistro=(Analista) PanelRegistroPag.usuarioRegistro;
+						
+						analistaRegistro.setMail(textMailPersonal.getText());
+						analistaRegistro.setMailInstitucional(textMailUtec.getText());
+						
+						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						analistaRegistro.setNombreUsuario(splitNombreUsuario[0]);
+						
+						analistaRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						analistaRegistro.setLocalidad(textLocalidad.getText());
+						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						
+						System.out.println(analistaRegistro);
+						DAOGeneral.usuarioRemote.crearUsuario(analistaRegistro);
+						System.out.println("LOCURAAAAAAAAA");
+					}catch(Exception m) {
+						m.printStackTrace();
+					}
+				}else if(radioTutor.isSelected()) {
+					try {
+						Tutor tutorRegistro=new Tutor();
+						copiarUsuario(PanelRegistroPag.usuarioRegistro, tutorRegistro);
+						tutorRegistro.setMailInstitucional(textMailUtec.getText());
+						tutorRegistro.setMail(textMailPersonal.getText());
+						
+						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						tutorRegistro.setNombreUsuario(splitNombreUsuario[0]);
+						
+						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						tutorRegistro.setLocalidad(textLocalidad.getText());
+						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						
+						//no se si va hacer un comboBox o un textField
+						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString()));
+
+						
+						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelRegistroTutor.comboBoxRol.getSelectedItem().toString()));
+						
+						
+						System.out.println(tutorRegistro);
+						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
+						System.out.println("LOCURAAAAAAAAA");
+					}catch(Exception m) {
+						m.printStackTrace();
+					}
+				}else if(radioEstudiante.isSelected()) {
+					
+					try {
+						Estudiante estudianteRegistro=new Estudiante();
+						copiarUsuario(PanelRegistroPag.usuarioRegistro, estudianteRegistro);
+						
+						estudianteRegistro.setMailInstitucional(textMailUtec.getText());
+						estudianteRegistro.setMail(textMailPersonal.getText());
+						
+						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						estudianteRegistro.setNombreUsuario(splitNombreUsuario[0]);
+						
+						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						estudianteRegistro.setLocalidad(textLocalidad.getText());
+						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						
+						estudianteRegistro.setAnoIngreso(PanelRegistroEstudiante.yearDate.getYear());
+						
+						
+						System.out.println(estudianteRegistro);
+						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
+					} catch (ServicesException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+				}
+			}
+		});
+		
 
 	}
 	
@@ -306,5 +340,25 @@ public class PanelRegistroPag2 extends JPanel {
 			modeloITR.addElement(itr.getNombre());
 			System.out.println(itr.getNombre());
 		}
+	}
+	
+	
+	public void copiarUsuario(Usuario a,Usuario b){
+		b.setDocumento(a.getDocumento());
+		b.setFechaNacimiento(a.getFechaNacimiento());
+		b.setActivo(a.getActivo());
+		b.setApellido1(a.getApellido1());
+		b.setApellido2(a.getApellido2());
+		b.setContrasena(a.getContrasena());
+		b.setDepartamento(a.getDepartamento());
+		b.setGenero(a.getGenero());
+		b.setItr(a.getItr());
+		b.setLocalidad(a.getLocalidad());
+		b.setMail(b.getMail());
+		b.setMailInstitucional(a.getMailInstitucional());
+		b.setNombre1(a.getNombre2());
+		b.setNombre2(a.getNombre2());
+		b.setTelefono(a.getTelefono());
+		b.setNombreUsuario(a.getNombreUsuario());
 	}
 }

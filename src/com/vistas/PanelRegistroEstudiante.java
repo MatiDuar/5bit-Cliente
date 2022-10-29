@@ -9,10 +9,11 @@ import java.awt.Font;
 import javax.swing.JButton;
 import RSMaterialComponent.RSLabelTextIcon;
 import rojeru_san.efectos.ValoresEnum.ICONS;
+import rojeru_san.rsdate.RSYearDate;
 
 public class PanelRegistroEstudiante extends JPanel {
 
-	
+	public static RSYearDate yearDate = new RSYearDate();
 	private static PanelRegistroEstudiante instancia = new PanelRegistroEstudiante();
 	/**
 	 * Create the panel.
@@ -27,10 +28,10 @@ public class PanelRegistroEstudiante extends JPanel {
 		lblAoDeIngreso.setBounds(0, 11, 100, 14);
 		add(lblAoDeIngreso);
 		
-		RSDateChooser dateChooserAnoIngreso = new RSDateChooser();
-		dateChooserAnoIngreso.setBounds(0, 36, 250, 42);
-		dateChooserAnoIngreso.setColorBackground(new Color(52, 152, 219));
-		add(dateChooserAnoIngreso);
+		yearDate = new RSYearDate();
+		yearDate.setColorBackground(new Color(52, 152, 219));
+		yearDate.setBounds(0, 35, 250, 40);
+		add(yearDate);
 	}
 	
 	public static PanelRegistroEstudiante getInstancia(){
