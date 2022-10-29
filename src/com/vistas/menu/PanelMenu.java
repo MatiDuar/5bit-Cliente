@@ -276,8 +276,15 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(lblEditarPerfil);
 		
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
-		buttonGestionUsuarios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		buttonGestionUsuarios.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				PanelGestionUsuarios panelGestionUsuarios = new PanelGestionUsuarios();
+				panelDinamico.removeAll();
+				panelGestionUsuarios.setSize(974,725);
+				panelGestionUsuarios.setLocation(0,0);
+				panelDinamico.add(panelGestionUsuarios);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
 				
 			}
 		});
