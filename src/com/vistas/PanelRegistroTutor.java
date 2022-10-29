@@ -61,7 +61,7 @@ public class PanelRegistroTutor extends JPanel {
 		modeloTipo.removeAllElements();
 		modeloTipo.addElement("");
 		try {
-			for(TipoTutor t:DAOGeneral.tipoTutorRempote.obtenerTipoTutor()){
+			for(TipoTutor t:DAOGeneral.tipoTutorRemote.obtenerTipoTutor()){
 				modeloTipo.addElement(t.getNombre());
 			}
 		}catch(Exception e) {
