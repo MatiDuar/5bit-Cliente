@@ -184,7 +184,7 @@ public class PanelRegistroPag extends JPanel {
 						java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
 				    	usuarioRegistro.setFechaNacimiento(sqlDate);
 					}else{
-						throw new Exception("Fecha inválida");
+						throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
 					}
 				    
 				    

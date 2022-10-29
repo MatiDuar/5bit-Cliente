@@ -126,7 +126,7 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						//no se si va hacer un comboBox o un textField
 						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarAreaTutorPorId((long)1));
-						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRempote.buscarTipoTutorPorId((long)PanelRegistroTutor.comboBoxTipo.getSelectedIndex()));
+						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.buscarTipoTutorPorId((long)PanelRegistroTutor.comboBoxTipo.getSelectedIndex()));
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
 						System.out.println("LOCURAAAAAAAAA");
 					}catch(Exception m) {
@@ -141,7 +141,7 @@ public class PanelRegistroPag2 extends JPanel {
 						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
 						//no se como hacerlo por que la tabla generacion solo tiene nombre y no es por a;o
 						
-						estudianteRegistro.setGeneracion(null);
+						estudianteRegistro.setAnoIngreso(0);
 						
 						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
 					} catch (ServicesException e1) {

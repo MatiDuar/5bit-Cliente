@@ -2,6 +2,8 @@ package com.vistas.menu;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import rojeru_san.rsfield.RSTextFull;
 import javax.swing.SwingConstants;
@@ -20,6 +22,7 @@ import java.awt.Color;
 import rojeru_san.rsfield.RSPassword;
 import rojeru_san.complementos.RSButtonHover;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSYearDate;
 import rojeru_san.rslabel.RSLabelImage;
@@ -231,11 +234,45 @@ public class PanelEditarPerfil extends JPanel {
 				usuarioMod.setNombre2(textNombre2.getText());
 				usuarioMod.setContrasena(password.getText());
 				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
+
+
+				java.util.Date fecha= FechaNacimiento.getDatoFecha();
+					
+				LocalDate fechaActualLD = LocalDate.now();	
+				java.sql.Date fechaActualSQL=java.sql.Date.valueOf(fechaActualLD);
+					
+				java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+					
+				if(fecha.before(fechaActualDATE)){
+					java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+				    usuarioMod.setFechaNacimiento(sqlDate);
+				}else{
+					throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+				}
 				
-//				java.sql.Date fechaActualDATE = new java.util.Date(FechaNacimiento.getDatoFecha().getTime());
-//				usuarioMod.setFechaNacimiento(FechaNacimiento.getDatoFecha().getTime());
+				usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long)1));
+				usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+				usuarioMod.setLocalidad("buceo");
+				usuarioMod.setMail(textEmailPersonal.getText());
+				usuarioMod.setMailInstitucional(textEmailUtec.getText());
+				usuarioMod.setTelefono(textTelefonoContacto.getText());
+				
+				if(usuarioMod instanceof Tutor) {
+					
+					((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.obtenerAreaTutorPorNombre(PanelEditarPerfilExtra.comboBoxAreaTutor.getSelectedItem().toString()));
+					((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelEditarPerfilExtra.comboBoxRolTutor.getSelectedItem().toString()));
+					
+				}else if(usuarioMod instanceof Estudiante) {
+					((Estudiante) usuarioMod).setAnoIngreso(PanelEditarPerfilExtra.yearDate.getYear());
+				}
+				
+				DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
+				
+				
+				
 				}catch(Exception m) {
-					m.printStackTrace();
+					JOptionPane.showMessageDialog(null, m.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
