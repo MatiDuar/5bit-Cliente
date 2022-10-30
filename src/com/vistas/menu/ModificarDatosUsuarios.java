@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 
 public class ModificarDatosUsuarios extends JFrame {
 
+	private static ModificarDatosUsuarios instancia=new ModificarDatosUsuarios();
+	
 	public PanelModificarDatosUsuarios panelDatosUsuario = new PanelModificarDatosUsuarios();
 	/**
 	 * Launch the application.
@@ -28,13 +30,13 @@ public class ModificarDatosUsuarios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModificarDatosUsuarios() {
+	private ModificarDatosUsuarios() {
 		JPanel panelCargarDatosUsuario = new JPanel();
 		panelCargarDatosUsuario.setLayout(null);
 		add(panelCargarDatosUsuario);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarDatosUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar datos de usuario");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 680, 546);
 
 		
@@ -46,5 +48,10 @@ public class ModificarDatosUsuarios extends JFrame {
 		panelCargarDatosUsuario.add(panelDatosUsuario);
 		setLocationRelativeTo(null);
 		
+	}
+	
+	
+	public static ModificarDatosUsuarios getInstancia() {
+		return instancia;
 	}
 }

@@ -83,4 +83,8 @@ public class PanelRegistroTutor extends JPanel {
 		}
 		
 	}
+	
+	public static void reset() {
+		instancia=new PanelRegistroTutor();
 	}
+}

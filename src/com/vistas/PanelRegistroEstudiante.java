@@ -37,4 +37,7 @@ public class PanelRegistroEstudiante extends JPanel {
 	public static PanelRegistroEstudiante getInstancia(){
 		return instancia;
 	}
+	public static void reset() {
+		instancia=new PanelRegistroEstudiante();
+	}
 }

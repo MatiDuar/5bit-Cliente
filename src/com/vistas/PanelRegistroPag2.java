@@ -39,7 +39,7 @@ import javax.swing.JButton;
 
 public class PanelRegistroPag2 extends JPanel {
 	
-	private static final PanelRegistroPag2 instancia = new PanelRegistroPag2();
+	private static PanelRegistroPag2 instancia = new PanelRegistroPag2();
 	// Inntancias Paneles
 	Registro registro = Registro.getInstancia();
 	PanelRegistroPag panelRegistroPag1 = PanelRegistroPag.getInstancia();
@@ -145,7 +145,7 @@ public class PanelRegistroPag2 extends JPanel {
 				radioEstudiante.setSelected(true);
 				radioTutor.setSelected(false);
 				radioAnalista.setSelected(false);
-				registro.mostrarDatoEstudiante(panelRegistroEstudiante);
+				registro.mostrarDatoEstudiante(PanelRegistroEstudiante.getInstancia());
 				
 			}
 		});
@@ -156,7 +156,7 @@ public class PanelRegistroPag2 extends JPanel {
 		radioTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PanelRegistroTutor tt=new PanelRegistroTutor();
+				PanelRegistroTutor tt=PanelRegistroTutor.getInstancia();
 				radioEstudiante.setSelected(false);
 				radioTutor.setSelected(true);
 				radioAnalista.setSelected(false);	
@@ -243,11 +243,22 @@ public class PanelRegistroPag2 extends JPanel {
 						analistaRegistro.setLocalidad(textLocalidad.getText());
 						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
 						
-						System.out.println(analistaRegistro);
+						
 						DAOGeneral.usuarioRemote.crearUsuario(analistaRegistro);
-						System.out.println("LOCURAAAAAAAAA");
+						
+						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						
+						
+						
+						Registro.resetDatos();
+						Registro.getInstancia().setVisible(false);
+						Login login = new Login();
+						login.setVisible(true);
+
 					}catch(Exception m) {
-						m.printStackTrace();
+						JOptionPane.showMessageDialog(null, m.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);					
 					}
 				}else if(radioTutor.isSelected()) {
 					try {
@@ -270,11 +281,19 @@ public class PanelRegistroPag2 extends JPanel {
 						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelRegistroTutor.comboBoxRol.getSelectedItem().toString()));
 						
 						
-						System.out.println(tutorRegistro);
+						
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
-						System.out.println("LOCURAAAAAAAAA");
+						
+						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						Registro.resetDatos();
+						Registro.getInstancia().setVisible(false);
+						Login login = new Login();
+						login.setVisible(true);
+
 					}catch(Exception m) {
-						m.printStackTrace();
+						JOptionPane.showMessageDialog(null, m.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
 					}
 				}else if(radioEstudiante.isSelected()) {
 					
@@ -294,12 +313,18 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						estudianteRegistro.setAnoIngreso(PanelRegistroEstudiante.yearDate.getYear());
 						
-						
 						System.out.println(estudianteRegistro);
+						
 						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
+						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						Registro.resetDatos();
+						Registro.getInstancia().setVisible(false);
+						Login login = new Login();
+						login.setVisible(true);
 					} catch (ServicesException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
 					}
 					
 					
@@ -360,5 +385,11 @@ public class PanelRegistroPag2 extends JPanel {
 		b.setNombre2(a.getNombre2());
 		b.setTelefono(a.getTelefono());
 		b.setNombreUsuario(a.getNombreUsuario());
+	}
+	
+	
+	
+	public static void reset() {
+		instancia=new PanelRegistroPag2();
 	}
 }

@@ -21,7 +21,7 @@ public class Registro extends JFrame {
 
 	private JPanel contentPane;
 	private static JPanel panelDinamico;
-	PanelRegistroPag panelRegistroPag = new PanelRegistroPag();
+	PanelRegistroPag panelRegistroPag = PanelRegistroPag.getInstancia();
 	static PanelRegistroPag2 panelRegistroPag2 = PanelRegistroPag2.getInstancia();
 
 	/**
@@ -102,6 +102,10 @@ public class Registro extends JFrame {
 	public static Registro getInstancia(){
 		return instancia;
 	}
+	
+	public static void setInstancia(Registro registro){
+		instancia=registro;
+	}
 
 	public static JPanel getPanelDinamico() {
 		return panelDinamico;
@@ -111,5 +115,13 @@ public class Registro extends JFrame {
 	public static void setPanelDinamico(JPanel panelDinamico) {
 		Registro.panelDinamico = panelDinamico;
 		
+	}
+	
+	
+	public static void resetDatos() {
+		PanelRegistroEstudiante.reset();
+		PanelRegistroPag.reset();
+		PanelRegistroPag2.reset();
+		PanelRegistroTutor.reset();
 	}
 }

@@ -245,6 +245,18 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setBounds(10, 194, 227, 30);
 		menuUsuario.add(lblNombreUsuario);
 		
+		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
+		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+			}
+		});
+		
+		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCerrarSesion.setBounds(93, 600, 73, 13);
+		menuUsuario.add(lblCerrarSesion);
+		
 		lblEditarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -273,7 +285,7 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				PanelGestionUsuarios panelGestionUsuarios = new PanelGestionUsuarios();
+				PanelGestionUsuarios panelGestionUsuarios = PanelGestionUsuarios.getInstancia();
 				panelDinamico.removeAll();
 				panelGestionUsuarios.setSize(974,725);
 				panelGestionUsuarios.setLocation(0,0);
@@ -317,17 +329,7 @@ public class PanelMenu extends JPanel {
 		buttonReportes.setBounds(25, 480, 200, 40);
 		menuUsuario.add(buttonReportes);
 		
-		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
-		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				lblCerrarSesion.setForeground(Color.BLUE);
-			}
-		});
 		
-		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(93, 600, 73, 13);
-		menuUsuario.add(lblCerrarSesion);
 		
 		panelDinamico.setBounds(245, 0, 700, 725);
 		add(panelDinamico);

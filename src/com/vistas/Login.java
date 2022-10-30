@@ -122,8 +122,11 @@ public class Login extends JFrame {
 		lblRegistrarse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frameRegistro.panelRegistroPag2.cargaComboBox();
-				frameRegistro.setVisible(true);
+				
+				Registro reg=new Registro();
+				Registro.setInstancia(reg);
+				setVisible(false);
+				reg.setVisible(true);
 			}
 		});
 		lblRegistrarse.addMouseMotionListener(new MouseMotionAdapter() {
