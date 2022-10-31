@@ -168,7 +168,7 @@ public class PanelRegistroPag extends JPanel {
 
 					usuarioRegistro = new Analista();
 
-					usuarioRegistro.setActivo(true);
+					usuarioRegistro.setActivo(false);
 
 					usuarioRegistro.setApellido1(textApellido1.getText());
 

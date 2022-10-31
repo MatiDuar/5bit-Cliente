@@ -336,7 +336,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 					DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
 					
-					PanelGestionUsuarios.getInstancia().cargarDatosTabla();
+					PanelGestionUsuarios.getInstancia().cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 					JOptionPane.showMessageDialog(null, "Se modifico correctamente el usuario", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 					
 					ModificarDatosUsuarios.getInstancia().setVisible(false);

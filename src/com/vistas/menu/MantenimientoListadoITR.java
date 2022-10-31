@@ -1,27 +1,33 @@
 package com.vistas.menu;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
-import rojeru_san.rslabel.RSLabelImage;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import java.awt.Toolkit;
-import rojeru_san.complementos.TableMetro;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import rojeru_san.complementos.RSButtonHover;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import com.controlador.DAOGeneral;
+import com.entities.ITR;
+import com.exception.ServicesException;
+
+import rojeru_san.complementos.RSButtonHover;
+import rojeru_san.complementos.TableMetro;
+import rojeru_san.rslabel.RSLabelImage;
 
 public class MantenimientoListadoITR extends JFrame {
 
 	private JPanel contentPane;
-
+	private DefaultTableModel modeloItr;
 	/**
 	 * Launch the application.
 	 */
@@ -79,27 +85,16 @@ public class MantenimientoListadoITR extends JFrame {
 		tableMetro.setFuenteHead(new Font("Tahoma", Font.BOLD, 14));
 		tableMetro.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
 		tableMetro.setAltoHead(30);
-		tableMetro.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-			},
-			new String[] {
-				"Id", "Nombre"
-			}
-		));
+		
+		modeloItr= new DefaultTableModel(
+				new Object[][] {
+					{null, null},
+				},
+				new String[] {
+					"Id", "Nombre"
+				}
+			);
+		tableMetro.setModel(modeloItr);
 		tableMetro.getColumnModel().getColumn(0).setPreferredWidth(40);
 		tableMetro.getColumnModel().getColumn(0).setMinWidth(40);
 		scrollPane.setViewportView(tableMetro);
@@ -140,6 +135,22 @@ public class MantenimientoListadoITR extends JFrame {
 		contentPane.add(btnhvrAgregarITR);
 		
 		setLocationRelativeTo(null);
-
+		try {
+			cargarTabla();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void cargarTabla() throws ServicesException {
+		modeloItr.setRowCount(0);
+		for(ITR itr:DAOGeneral.itrRemote.obtenerItrs()) {
+			Vector v1=new Vector();
+			v1.add(itr.getId());
+			v1.add(itr.getNombre());
+			modeloItr.addRow(v1);
+		}
 	}
 }

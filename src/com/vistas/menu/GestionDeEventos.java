@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,24 +14,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import RSMaterialComponent.RSTextFieldIconDos;
 import rojeru_san.complementos.RSButtonHover;
-import rojeru_san.efectos.ValoresEnum.ICONS;
-import rojeru_san.rslabel.RSLabelImage;
-import rojerusan.RSComboBox;
-import rojeru_san.rslabel.RSLabelBorder;
-import RSComponentShade.RSToggleButtonRippleShade;
-import RSComponentShade.RSToggleButtonShade;
-import rojerusan.RSMenuBar;
-import javax.swing.JButton;
-import RSComponentShade.RSToggleButtonShade.THEMETOOLTIP;
 import rojeru_san.rsdate.RSDateChooser;
+import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import rojerusan.RSComboBox;
+import rojerusan.RSTableMetro;
 
 public class GestionDeEventos extends JPanel {
-	private JTable table;
+	private RSTableMetro table;
 	
 	
 	/**
@@ -55,7 +48,7 @@ public class GestionDeEventos extends JPanel {
 		scrollPane.setBounds(10, 233, 561, 357);
 		add(scrollPane);
 		
-		table = new JTable();
+		table = new RSTableMetro();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
