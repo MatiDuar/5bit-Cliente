@@ -35,7 +35,7 @@ public class PanelEditarPerfil extends JPanel {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private Menu menu = new Menu();
+	private Menu menu = Menu.getInstancia();
 	public PanelEditarPerfilExtra  panelDinamicoEditarPerfilPorTipoUsuarios;
 	private PanelMenu panelEstudiante = new PanelMenu();
 	

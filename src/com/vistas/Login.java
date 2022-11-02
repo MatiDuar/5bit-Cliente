@@ -1,6 +1,7 @@
 package com.vistas;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -70,7 +71,11 @@ public class Login extends JFrame {
 		panel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				lblRegistrarse.setForeground(new Color(27, 91, 124));;
+				if(lblRegistrarse.getForeground()==Color.BLUE) {
+					lblRegistrarse.setForeground(new Color(27, 91, 124));
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				
 			}
 		});
 		panel.setBounds(0, 0, 354, 348);
@@ -84,7 +89,7 @@ public class Login extends JFrame {
 
 		;
 
-		JLabel lblContrasena = new JLabel("Contraseña");
+		JLabel lblContrasena = new JLabel("Contrase\u00F1a");
 		lblContrasena.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblContrasena.setBounds(52, 168, 61, 14);
 		panel.add(lblContrasena);
@@ -133,6 +138,7 @@ public class Login extends JFrame {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				lblRegistrarse.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
 
@@ -144,7 +150,7 @@ public class Login extends JFrame {
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOUsuario us = new DAOUsuario();
-				Menu menu = new Menu();
+				Menu menu = Menu.getInstancia();
 				String nombreUsuario = textUsuario.getText();
 				String pswd = password.getText();
 

@@ -4,8 +4,13 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import rojeru_san.rslabel.RSLabelImage;
 import javax.swing.SwingConstants;
+
+import com.vistas.Login;
+
 import RSMaterialComponent.RSButtonMaterialIconUno;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 import javax.swing.ImageIcon;
@@ -28,7 +33,6 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		
 	}
 
 //	public static PanelMenuEstudiante getInstancia() {
@@ -48,7 +52,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.setLayout(null);
 		
 		RSLabelImage iconoUsuario = new RSLabelImage();
-		iconoUsuario.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\Downloads\\LogoDeUsuario.png"));
+		iconoUsuario.setIcon(new ImageIcon("/com/vistas/img/LogoDeUsuario.png"));
 		iconoUsuario.setBounds(46, 30, 154, 154);
 		menuUsuario.add(iconoUsuario);
 		
@@ -88,7 +92,7 @@ public class PanelMenu extends JPanel {
 		panelTituloSistema.add(lblNewLabel_2);
 		
 		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon("C:\\Users\\GabrielaP\\ProyectoPDT\\5bit-Cliente\\src\\com\\vistas\\img\\UTEC.png"));
+		labelImage.setIcon(new ImageIcon("/com/vistas/img/UTEC.png"));
 		labelImage.setBounds(639, 10, 51, 53);
 		panelTituloSistema.add(labelImage);
 		
@@ -112,13 +116,54 @@ public class PanelMenu extends JPanel {
 				
 			}
 		});
+		lblEditarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblEditarPerfil.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 		
 		lblEditarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblEditarPerfil.setBounds(93, 226, 60, 13);
 		
 		
 		menuUsuario.add(lblEditarPerfil);
-
+		lblCerrarSesion=new JLabel("Cerrar sesion");
+		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.usuarioIngresado=null;
+				Menu.getInstancia().setVisible(false);
+				
+				Login log=new Login();
+				log.setVisible(true);
+			}
+		});
+		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCerrarSesion.setBounds(93, 600, 73, 13);
+		
+		menuUsuario.add(lblCerrarSesion);
+		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if(lblEditarPerfil.getForeground()==Color.BLUE) {
+					lblEditarPerfil.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				if(lblCerrarSesion.getForeground()==Color.BLUE) {
+					lblCerrarSesion.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+			}
+		});
 	}
 	public void initUI() {
 		
@@ -162,11 +207,17 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(lblNombreUsuario);
 		
 		JLabel editarPerfil = new JLabel("Editar perfil");
-		editarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
+		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				editarPerfil.setForeground(Color.BLACK);
-				lblCerrarSesion.setForeground(Color.BLACK);
+				if(editarPerfil.getForeground()==Color.BLUE) {
+					editarPerfil.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				if(lblCerrarSesion.getForeground()==Color.BLUE) {
+					lblCerrarSesion.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
 			}
 		});
 		editarPerfil.addMouseListener(new MouseAdapter() {
@@ -183,11 +234,14 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		editarPerfil.addMouseListener(new MouseAdapter() {
+		editarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseMoved(MouseEvent e) {
+				editarPerfil.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
+		
 		editarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
 		editarPerfil.setBounds(93, 226, 60, 13);
 		menuUsuario.add(editarPerfil);
@@ -205,9 +259,25 @@ public class PanelMenu extends JPanel {
 		buttonReportes.setBounds(25, 390, 200, 40);
 		menuUsuario.add(buttonReportes);
 		
-		lblCerrarSesion = new JLabel("Cerrar sesión");
+		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.usuarioIngresado=null;
+				Menu.getInstancia().setVisible(false);
+				
+				Login log=new Login();
+				log.setVisible(true);
+			}
+		});
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(80, 684, 73, 13);
+		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
 	}
 	
@@ -219,14 +289,8 @@ public class PanelMenu extends JPanel {
 		setBounds(0,0,955, 725);
 
 		JPanel menuUsuario = new JPanel();
-		JLabel lblEditarPerfil = new JLabel("Editar perfil");
+		JPanel panelDinamico = new JPanel();
 
-		menuUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				lblEditarPerfil.setForeground(Color.BLUE);
-			}
-		});
 		menuUsuario.setBounds(0, 0, 246, 725);
 		menuUsuario.setBackground(new Color(177, 192, 207));
 		add(menuUsuario);
@@ -245,27 +309,14 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setBounds(10, 194, 227, 30);
 		menuUsuario.add(lblNombreUsuario);
 		
-		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
-		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				lblCerrarSesion.setForeground(Color.BLUE);
-			}
-		});
-		
-		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(93, 600, 73, 13);
-		menuUsuario.add(lblCerrarSesion);
-		
+		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				lblEditarPerfil.setForeground(Color.BLACK);
-				lblCerrarSesion.setForeground(Color.BLACK);
+				lblEditarPerfil.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
-		JPanel panelDinamico = new JPanel();
-
 		lblEditarPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -281,6 +332,25 @@ public class PanelMenu extends JPanel {
 		lblEditarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblEditarPerfil.setBounds(93, 226, 60, 13);
 		menuUsuario.add(lblEditarPerfil);
+		
+		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
+
+		
+		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if(lblEditarPerfil.getForeground()==Color.BLUE) {
+					lblEditarPerfil.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				if(lblCerrarSesion.getForeground()==Color.BLUE) {
+					lblCerrarSesion.setForeground(Color.BLACK);
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+			}
+		});
+
+		
 		
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addMouseListener(new MouseAdapter() {
@@ -345,6 +415,27 @@ public class PanelMenu extends JPanel {
 		labelImage_1.setIcon(new ImageIcon(PanelMenu.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		panelDinamico.add(labelImage_1);
+		
+		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Menu.usuarioIngresado=null;
+				Menu.getInstancia().setVisible(false);
+				
+				Login log=new Login();
+				log.setVisible(true);
+			}
+		});
+		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCerrarSesion.setBounds(93, 600, 73, 13);
+		menuUsuario.add(lblCerrarSesion);
 	}
 	
 	

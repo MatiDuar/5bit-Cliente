@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import rojeru_san.complementos.RSButtonHover;
@@ -45,6 +46,8 @@ public class GestionDeEventos extends JPanel {
 		add(labelImage_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 233, 561, 357);
 		add(scrollPane);
 		
@@ -53,9 +56,16 @@ public class GestionDeEventos extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column", "New column"
+				"Titulo", "Tipo", "ITR", "Semestre", "Modalidad", "Fec Inc", "Fec Fin", "Localizaci\u00F3n", "Creditos", "Estado"
 			}
 		));
+//		table.getColumnModel().getColumn(0).setMinWidth(60);
+
+		for(int i=0;i<table.getColumnCount();i++) {
+			table.getColumnModel().getColumn(i).setMinWidth(60);
+		}
+		table.getColumnModel().getColumn(0).setMinWidth(120);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
 		
 		RSDateChooser dateChooserFechaInicio = new RSDateChooser();

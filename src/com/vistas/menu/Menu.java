@@ -15,6 +15,7 @@ public class Menu extends JFrame {
 	private JPanel contentPane;
 	public PanelMenu panelMenu=new PanelMenu();
 	public static Usuario usuarioIngresado;
+	private static Menu instancia=new Menu();
 
 	/**
 	 * Launch the application.
@@ -35,7 +36,7 @@ public class Menu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Menu() {
+	private Menu() {
 		
 		setTitle("Menú Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
@@ -47,6 +48,10 @@ public class Menu extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(panelMenu);
 		setLocationRelativeTo(null);
+	}
+	
+	public static Menu getInstancia() {
+		return instancia;
 	}
 
 }
