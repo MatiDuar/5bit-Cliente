@@ -1,24 +1,36 @@
 package com.vistas.menu;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-import rojeru_san.rslabel.RSLabelImage;
+
+import com.controlador.DAOGeneral;
+import com.entities.Departamento;
+import com.entities.ITR;
+import com.exception.ServicesException;
+
 import RSMaterialComponent.RSTextFieldIconUno;
-import rojeru_san.efectos.ValoresEnum.ICONS;
-import rojerusan.RSComboBox;
 import rojeru_san.complementos.RSButtonHover;
-import javax.swing.ImageIcon;
+import rojeru_san.efectos.ValoresEnum.ICONS;
+import rojeru_san.rslabel.RSLabelImage;
+import rojerusan.RSComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrameModificarITR extends JFrame {
 
 	private JPanel contentPane;
+	public static ITR itr;
+	private DefaultComboBoxModel modeloDep;
 
 	/**
 	 * Launch the application.
@@ -68,6 +80,7 @@ public class FrameModificarITR extends JFrame {
 		
 		RSTextFieldIconUno textFieldNombreUno = new RSTextFieldIconUno();
 		textFieldNombreUno.setPlaceholder("Ingresar Nombre");
+		textFieldNombreUno.setText(itr.getNombre());
 		textFieldNombreUno.setIcons(ICONS.BUSINESS);
 		textFieldNombreUno.setBounds(10, 76, 291, 36);
 		contentPane.add(textFieldNombreUno);
@@ -78,8 +91,18 @@ public class FrameModificarITR extends JFrame {
 		contentPane.add(lblDepartamento);
 		
 		RSComboBox comboBox = new RSComboBox();
+		modeloDep=new DefaultComboBoxModel();
+		comboBox.setModel(modeloDep);
 		comboBox.setBounds(10, 138, 291, 36);
 		contentPane.add(comboBox);
+		try {
+			cargarCombo();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		comboBox.setSelectedItem(itr.getDepartamento().getNombre());
 		
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
@@ -89,10 +112,36 @@ public class FrameModificarITR extends JFrame {
 		contentPane.add(btnhvrCancelar);
 		
 		RSButtonHover btnhvrModificar = new RSButtonHover();
+		btnhvrModificar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					itr.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBox.getSelectedItem().toString()));
+					itr.setNombre(textFieldNombreUno.getText());
+					DAOGeneral.itrRemote.actualizarITR(itr);
+					MantenimientoListadoITR.getInstancia().cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+					PanelGestionUsuarios.getInstancia().cargarComboBox();
+					JOptionPane.showMessageDialog(null, "Se realizo correctamente la modificacion del itr ", "Aviso",
+							JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnhvrModificar.setText("Modificar");
 		btnhvrModificar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrModificar.setBackground(new Color(0, 112, 192));
 		btnhvrModificar.setBounds(203, 200, 98, 30);
 		contentPane.add(btnhvrModificar);
+	}
+	
+	public void cargarCombo() throws ServicesException {
+		modeloDep.removeAllElements();
+		modeloDep.addElement("");
+		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
+			modeloDep.addElement(d.getNombre());
+		}
 	}
 }

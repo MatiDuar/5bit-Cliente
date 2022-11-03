@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,6 +36,7 @@ import rojerusan.RSComboBox;
 
 public class MantenimientoListadoITR extends JFrame {
 
+	private static MantenimientoListadoITR instancia=new MantenimientoListadoITR();
 	private JPanel contentPane;
 	private DefaultTableModel modeloItr;
 
@@ -57,7 +59,7 @@ public class MantenimientoListadoITR extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MantenimientoListadoITR() {
+	private MantenimientoListadoITR() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoListadoITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Mantenimiento Lista de ITR");
@@ -102,6 +104,14 @@ public class MantenimientoListadoITR extends JFrame {
 		scrollPane.setViewportView(tableMetro);
 
 		RSButtonHover btnhvrCerrar = new RSButtonHover();
+		btnhvrCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+				setVisible(false);
+				reset();
+			}
+		});
 		btnhvrCerrar.setText("Cerrar");
 		btnhvrCerrar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCerrar.setBackground(new Color(0, 112, 192));
@@ -115,19 +125,23 @@ public class MantenimientoListadoITR extends JFrame {
 		btnhvrGuardar.setBounds(254, 370, 108, 33);
 		contentPane.add(btnhvrGuardar);
 
-		RSButtonHover btnhvrReactivarITR = new RSButtonHover();
-		btnhvrReactivarITR.setText("Reactivar");
-		btnhvrReactivarITR.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrReactivarITR.setBackground(new Color(0, 112, 192));
-		btnhvrReactivarITR.setBounds(254, 260, 108, 33);
-		contentPane.add(btnhvrReactivarITR);
+		
 
 		RSButtonHover btnhvrModificarITR = new RSButtonHover();
 		btnhvrModificarITR.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				ModificarITR modificarITR = new ModificarITR();
-//				modificarITR.setVisible(true);
+				
+				try {
+					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+					ModificarITR.itr=itr;
+					ModificarITR modificarITR = new ModificarITR();
+					modificarITR.setVisible(true);
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnhvrModificarITR.setText("Modificar");
@@ -150,12 +164,7 @@ public class MantenimientoListadoITR extends JFrame {
 		btnhvrAgregarITR.setBounds(254, 164, 108, 33);
 		contentPane.add(btnhvrAgregarITR);
 
-		RSButtonHover btnhvrEliminarITR_1 = new RSButtonHover();
-		btnhvrEliminarITR_1.setText("Eliminar");
-		btnhvrEliminarITR_1.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrEliminarITR_1.setBackground(new Color(0, 112, 192));
-		btnhvrEliminarITR_1.setBounds(254, 308, 108, 33);
-		contentPane.add(btnhvrEliminarITR_1);
+		
 
 		RSComboBox comboBoxEstadoITR = new RSComboBox();
 		comboBoxEstadoITR.setDisabledIdex("");
@@ -197,7 +206,59 @@ public class MantenimientoListadoITR extends JFrame {
 		contentPane.add(lblEstado);
 
 		setLocationRelativeTo(null);
+		RSButtonHover btnhvrEliminarITR_1 = new RSButtonHover();
+		btnhvrEliminarITR_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+					itr.setActivo(false);
+					DAOGeneral.itrRemote.actualizarITR(itr);
+					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+					JOptionPane.showMessageDialog(null, "Se realizo la baja logica del itr seleccionada", "Aviso",
+							JOptionPane.INFORMATION_MESSAGE);
+					comboBoxEstadoITR.setSelectedIndex(0);
+				
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
+			}
+		});
+		btnhvrEliminarITR_1.setText("Eliminar");
+		btnhvrEliminarITR_1.setFont(new Font("Lato", Font.BOLD, 14));
+		btnhvrEliminarITR_1.setBackground(new Color(0, 112, 192));
+		btnhvrEliminarITR_1.setBounds(254, 308, 108, 33);
+		contentPane.add(btnhvrEliminarITR_1);
+		
+		RSButtonHover btnhvrReactivarITR = new RSButtonHover();
+		btnhvrReactivarITR.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+					itr.setActivo(true);
+					DAOGeneral.itrRemote.actualizarITR(itr);
+					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+					JOptionPane.showMessageDialog(null, "Se reactivo el itr seleccionada", "Aviso",
+							JOptionPane.INFORMATION_MESSAGE);
+					comboBoxEstadoITR.setSelectedIndex(0);
+					
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
+			}
+		});
+		btnhvrReactivarITR.setText("Reactivar");
+		btnhvrReactivarITR.setFont(new Font("Lato", Font.BOLD, 14));
+		btnhvrReactivarITR.setBackground(new Color(0, 112, 192));
+		btnhvrReactivarITR.setBounds(254, 260, 108, 33);
+		contentPane.add(btnhvrReactivarITR);
+		
 		try {
 			cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
 		} catch (ServicesException e1) {
@@ -213,5 +274,12 @@ public class MantenimientoListadoITR extends JFrame {
 			v1.add(itr.getNombre());
 			modeloItr.addRow(v1);
 		}
+	}
+	
+	public static MantenimientoListadoITR getInstancia() {
+		return instancia;
+	}
+	public static void reset() {
+		instancia=new MantenimientoListadoITR();
 	}
 }

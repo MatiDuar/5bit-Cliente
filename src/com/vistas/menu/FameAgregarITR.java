@@ -1,26 +1,34 @@
 package com.vistas.menu;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-import rojeru_san.rslabel.RSLabelImage;
-import javax.swing.ImageIcon;
+
+import com.controlador.DAOGeneral;
+import com.entities.Departamento;
+import com.exception.ServicesException;
+
 import RSMaterialComponent.RSTextFieldIconUno;
-import RSMaterialComponent.RSTextFieldIconDos;
-import RSMaterialComponent.RSTextFieldMaterialIcon;
-import rojerusan.RSComboBox;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.efectos.ValoresEnum.ICONS;
+import rojeru_san.rslabel.RSLabelImage;
+import rojerusan.RSComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FameAgregarITR extends JFrame {
 
 	private JPanel contentPane;
+	
+	private DefaultComboBoxModel modeloDep;
 
 	/**
 	 * Launch the application.
@@ -63,11 +71,11 @@ public class FameAgregarITR extends JFrame {
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		
-		RSTextFieldIconUno textFieldNombreUno = new RSTextFieldIconUno();
-		textFieldNombreUno.setIcons(ICONS.BUSINESS);
-		textFieldNombreUno.setPlaceholder("Ingresar Nombre");
-		textFieldNombreUno.setBounds(10, 76, 291, 36);
-		contentPane.add(textFieldNombreUno);
+		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre.setIcons(ICONS.BUSINESS);
+		textNombre.setPlaceholder("Ingresar Nombre");
+		textNombre.setBounds(10, 76, 291, 36);
+		contentPane.add(textNombre);
 		
 		JLabel lblIngresarNombre = new JLabel("Nombre");
 		lblIngresarNombre.setFont(new Font("Lato", Font.PLAIN, 11));
@@ -79,9 +87,11 @@ public class FameAgregarITR extends JFrame {
 		lblDepartamento.setBounds(10, 122, 85, 13);
 		contentPane.add(lblDepartamento);
 		
-		RSComboBox comboBox = new RSComboBox();
-		comboBox.setBounds(10, 138, 291, 36);
-		contentPane.add(comboBox);
+		RSComboBox comboBoxDep = new RSComboBox();
+		modeloDep=new DefaultComboBoxModel();
+		comboBoxDep.setModel(modeloDep);
+		comboBoxDep.setBounds(10, 138, 291, 36);
+		contentPane.add(comboBoxDep);
 		
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
@@ -91,10 +101,40 @@ public class FameAgregarITR extends JFrame {
 		contentPane.add(btnhvrCancelar);
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
+		btnhvrGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				try {
+					DAOGeneral.itrRemote.crearITR(textNombre.getText(),DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()), true);
+					PanelGestionUsuarios.getInstancia().cargarComboBox();
+					MantenimientoListadoITR.getInstancia().cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+				
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(0, 112, 192));
 		btnhvrGuardar.setBounds(203, 200, 98, 30);
 		contentPane.add(btnhvrGuardar);
+		
+		try {
+			cargarCombo();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void cargarCombo() throws ServicesException {
+		modeloDep.removeAllElements();
+		modeloDep.addElement("");
+		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
+			modeloDep.addElement(d.getNombre());
+		}
 	}
 }

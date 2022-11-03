@@ -363,7 +363,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrMantenimientoListaItr.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MantenimientoListadoITR mantenerListaITR = new MantenimientoListadoITR();
+				MantenimientoListadoITR mantenerListaITR=MantenimientoListadoITR.getInstancia();
 				mantenerListaITR.setVisible(true);
 			}
 		});
