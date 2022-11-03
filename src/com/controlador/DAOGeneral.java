@@ -6,6 +6,7 @@ import com.services.AnalistaBeanRemote;
 import com.services.AreaTutorBeanRemote;
 import com.services.DepartamentoBeanRemote;
 import com.services.EventoBeanRemote;
+import com.services.FuncionalidadBeanRemote;
 import com.services.GeneracionBeanRemote;
 import com.services.GeneroBeanRemote;
 import com.services.ITRBeanRemote;
@@ -13,6 +14,7 @@ import com.services.TipoActividadBeanRemote;
 import com.services.TipoTutorBeanRemote;
 import com.services.TutorBeanRemote;
 import com.services.UsuarioBeanRemote;
+import com.services.RolBeanRemote;
 
 public class DAOGeneral {
 
@@ -27,6 +29,10 @@ public class DAOGeneral {
 	public static AnalistaBeanRemote analistaRemote;
 	public static TutorBeanRemote tutorRemote;
 	public static GeneracionBeanRemote generacionRemote;
+	public static FuncionalidadBeanRemote funcionalidadRemote;
+	public static RolBeanRemote rolBean;
+
+
 	
 	public DAOGeneral ( ) {
 		try {
@@ -41,6 +47,8 @@ public class DAOGeneral {
 			analistaRemote=(AnalistaBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/AnalistaBean!com.services.AnalistaBeanRemote");
 			tutorRemote=(TutorBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/TutorBean!com.services.TutorBeanRemote");
 			generacionRemote=(GeneracionBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/GeneracionBean!com.services.GeneracionBeanRemote");
+			funcionalidadRemote=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/FuncionalidadBean!com.services.FuncionalidadBeanRemote");
+			rolBean=(RolBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/RolBean!com.services.RolBeanRemote");
 
 		}catch(Exception e) {
 			e.printStackTrace();

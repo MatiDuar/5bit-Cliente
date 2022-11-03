@@ -33,6 +33,7 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
+//		initUIAnalista();
 	}
 
 //	public static PanelMenuEstudiante getInstancia() {
@@ -80,26 +81,16 @@ public class PanelMenu extends JPanel {
 		buttonGestionConstancias.setBounds(25, 390, 200, 40);
 		menuUsuario.add(buttonGestionConstancias);
 		
-		JPanel panelTituloSistema = new JPanel();
-		panelTituloSistema.setBounds(245, 0, 700, 74);
-		add(panelTituloSistema);
-		panelTituloSistema.setLayout(null);
-		
-		JLabel lblNewLabel_2 = new JLabel("SISTEMA DE GESTIÓN");
-		lblNewLabel_2.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(247, 23, 206, 27);
-		panelTituloSistema.add(lblNewLabel_2);
-		
-		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon("/com/vistas/img/UTEC.png"));
-		labelImage.setBounds(639, 10, 51, 53);
-		panelTituloSistema.add(labelImage);
-		
 		JPanel panelDinamico = new JPanel();
 		panelDinamico.setBounds(245, 0, 700, 725);
 		add(panelDinamico);
 		panelDinamico.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("SISTEMA DE GESTIÓN");
+		lblNewLabel_2.setForeground(new Color(58, 69, 75));
+		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(247, 28, 206, 27);
+		panelDinamico.add(lblNewLabel_2);
 		
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.addMouseListener(new MouseAdapter() {
@@ -151,6 +142,13 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		
 		menuUsuario.add(lblCerrarSesion);
+		
+		RSButtonMaterialIconUno btnmtrlcnFuncionalidades = new RSButtonMaterialIconUno();
+		btnmtrlcnFuncionalidades.setHorizontalAlignment(SwingConstants.LEFT);
+		btnmtrlcnFuncionalidades.setText("FUNCIONALIDADES                 ");
+		btnmtrlcnFuncionalidades.setIcons(ICONS.INFO_OUTLINE);
+		btnmtrlcnFuncionalidades.setBounds(25, 441, 200, 40);
+		menuUsuario.add(btnmtrlcnFuncionalidades);
 		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
 //			@Override
 //			public void mouseMoved(MouseEvent e) {
@@ -165,6 +163,7 @@ public class PanelMenu extends JPanel {
 //			}
 		});
 	}
+	
 	public void initUI() {
 		
 		removeAll();
@@ -258,13 +257,13 @@ public class PanelMenu extends JPanel {
 		buttonReportes.setHorizontalAlignment(SwingConstants.TRAILING);
 		buttonReportes.setBounds(25, 390, 200, 40);
 		menuUsuario.add(buttonReportes);
-		
+		lblCerrarSesion=new JLabel("Cerrar sesion");
 		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
-//			@Override
-//			public void mouseMoved(MouseEvent e) {
-//				lblCerrarSesion.setForeground(Color.BLUE);
-//				setCursor(new Cursor(Cursor.HAND_CURSOR));
-//			}
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblCerrarSesion.setForeground(Color.BLUE);
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 		});
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -279,6 +278,24 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
+		
+		RSButtonMaterialIconUno btnFuncionalidades = new RSButtonMaterialIconUno();
+		btnFuncionalidades.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PanelFuncionalidades panelFuncionalidades=new PanelFuncionalidades();
+				panelDinamico.removeAll();
+				panelFuncionalidades.setSize(945, 725);
+				panelFuncionalidades.setLocation(0, 0);
+				panelDinamico.add(panelFuncionalidades);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnFuncionalidades.setText(" FUNCIONALIDADES                 ");
+		btnFuncionalidades.setIcons(ICONS.INFO_OUTLINE);
+		btnFuncionalidades.setHorizontalAlignment(SwingConstants.LEFT);
+		btnFuncionalidades.setBounds(25, 441, 200, 40);
+		menuUsuario.add(btnFuncionalidades);
 	}
 	
 	
@@ -311,11 +328,11 @@ public class PanelMenu extends JPanel {
 		
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				lblEditarPerfil.setForeground(Color.BLUE);
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
+//			@Override
+//			public void mouseMoved(MouseEvent e) {
+//				lblEditarPerfil.setForeground(Color.BLUE);
+//				setCursor(new Cursor(Cursor.HAND_CURSOR));
+//			}
 		});
 		lblEditarPerfil.addMouseListener(new MouseAdapter() {
 			@Override
@@ -336,19 +353,19 @@ public class PanelMenu extends JPanel {
 		JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
 
 		
-		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				if(lblEditarPerfil.getForeground()==Color.BLUE) {
-					lblEditarPerfil.setForeground(Color.BLACK);
-					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-				if(lblCerrarSesion.getForeground()==Color.BLUE) {
-					lblCerrarSesion.setForeground(Color.BLACK);
-					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			}
-		});
+//		menuUsuario.addMouseMotionListener(new MouseMotionAdapter() {
+//			@Override
+//			public void mouseMoved(MouseEvent e) {
+//				if(lblEditarPerfil.getForeground()==Color.BLUE) {
+//					lblEditarPerfil.setForeground(Color.BLACK);
+//					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//				}
+//				if(lblCerrarSesion.getForeground()==Color.BLUE) {
+//					lblCerrarSesion.setForeground(Color.BLACK);
+//					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//				}
+//			}
+//		});
 
 		
 		
@@ -436,7 +453,23 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
+		
+		RSButtonMaterialIconUno btnmtrlcnFuncionalidades = new RSButtonMaterialIconUno();
+		btnmtrlcnFuncionalidades.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PanelFuncionalidadesAnalista panelFuncionalidadesAnalista = new PanelFuncionalidadesAnalista();
+				panelDinamico.removeAll();
+				panelFuncionalidadesAnalista.setSize(945, 725);
+				panelFuncionalidadesAnalista.setLocation(0, 0);
+				panelDinamico.add(panelFuncionalidadesAnalista);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnmtrlcnFuncionalidades.setIcons(ICONS.INFO_OUTLINE);
+		btnmtrlcnFuncionalidades.setText("FUNCIONALIDADES");
+		btnmtrlcnFuncionalidades.setHorizontalAlignment(SwingConstants.LEFT);
+		btnmtrlcnFuncionalidades.setBounds(25, 531, 200, 40);
+		menuUsuario.add(btnmtrlcnFuncionalidades);
 	}
-	
-	
 }
