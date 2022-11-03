@@ -337,28 +337,6 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrEliminarUsuario.setBounds(585, 315, 108, 33);
 		add(btnhvrEliminarUsuario);
 
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(585, 598, 108, 33);
-		add(btnhvrGuardar);
-
-		RSButtonHover btnhvrCerrar = new RSButtonHover();
-		btnhvrCerrar.addMouseListener(new MouseAdapter() {
-
-		});
-		btnhvrCerrar.setText("Cerrar");
-		btnhvrCerrar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrCerrar.setBackground(new Color(0, 112, 192));
-		btnhvrCerrar.setBounds(585, 646, 108, 33);
-		add(btnhvrCerrar);
-
 		RSButtonHover btnhvrMantenimientoListaItr = new RSButtonHover();
 		btnhvrMantenimientoListaItr.addMouseListener(new MouseAdapter() {
 			@Override
