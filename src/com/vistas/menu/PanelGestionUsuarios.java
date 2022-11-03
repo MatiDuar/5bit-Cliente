@@ -393,7 +393,7 @@ public class PanelGestionUsuarios extends JPanel {
 					Usuario usuarioMod = DAOGeneral.usuarioRemote.buscarNombre(s[0]);
 					PanelModificarDatosUsuarios.usuarioLogeado = usuarioMod;
 
-					ModificarDatosUsuarios modificarDatosUsuario = ModificarDatosUsuarios.getInstancia();
+					FrameModificarDatosUsuarios modificarDatosUsuario = FrameModificarDatosUsuarios.getInstancia();
 
 					if (usuarioMod instanceof Estudiante) {
 						modificarDatosUsuario.panelDatosUsuario.datosEstudiante();

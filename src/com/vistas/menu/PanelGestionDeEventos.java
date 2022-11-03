@@ -22,14 +22,14 @@ import rojerusan.RSCheckBox;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
 
-public class GestionDeEventos extends JPanel {
+public class PanelGestionDeEventos extends JPanel {
 	private RSTableMetro table;
 	
 	
 	/**
 	 * Create the panel.
 	 */
-	public GestionDeEventos() {
+	public PanelGestionDeEventos() {
 		setBounds(0, 0, 700, 705);
 		setLayout(null);
 		
@@ -40,8 +40,8 @@ public class GestionDeEventos extends JPanel {
 		add(lblNewLabel_2_1);
 		
 		RSLabelImage labelImage_1 = new RSLabelImage();
-		labelImage_1.setIcon(new ImageIcon(GestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
-//		labelImage_1.setIcon(new ImageIcon(Diseño.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage_1.setIcon(new ImageIcon(PanelGestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
+//		labelImage_1.setIcon(new ImageIcon(Diseï¿½o.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
 		
@@ -181,8 +181,21 @@ public class GestionDeEventos extends JPanel {
 		btnhvrConvocatoriaDeEvento.setText("Convocatoria de Evento");
 		btnhvrConvocatoriaDeEvento.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrConvocatoriaDeEvento.setBackground(new Color(0, 112, 192));
-		btnhvrConvocatoriaDeEvento.setBounds(236, 609, 227, 33);
+		btnhvrConvocatoriaDeEvento.setBounds(10, 601, 227, 33);
 		add(btnhvrConvocatoriaDeEvento);
+		
+		RSButtonHover btnhvrAsistenciaAEventos = new RSButtonHover();
+		btnhvrAsistenciaAEventos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameAsistenciaAEvento frameAsistenciaAEvento= new FrameAsistenciaAEvento();
+				frameAsistenciaAEvento.setVisible(true);
+			}
+		});
+		btnhvrAsistenciaAEventos.setText("Asistencia a Evento");
+		btnhvrAsistenciaAEventos.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrAsistenciaAEventos.setBackground(new Color(0, 112, 192));
+		btnhvrAsistenciaAEventos.setBounds(344, 601, 227, 33);
+		add(btnhvrAsistenciaAEventos);
 		
 	}
 }

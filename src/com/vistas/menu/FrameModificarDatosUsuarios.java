@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 
-public class ModificarDatosUsuarios extends JFrame {
+public class FrameModificarDatosUsuarios extends JFrame {
 
-	private static ModificarDatosUsuarios instancia=new ModificarDatosUsuarios();
+	private static FrameModificarDatosUsuarios instancia=new FrameModificarDatosUsuarios();
 	
 	public PanelModificarDatosUsuarios panelDatosUsuario = new PanelModificarDatosUsuarios();
 	/**
@@ -18,7 +18,7 @@ public class ModificarDatosUsuarios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarDatosUsuarios frame = new ModificarDatosUsuarios();
+					FrameModificarDatosUsuarios frame = new FrameModificarDatosUsuarios();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,11 +30,11 @@ public class ModificarDatosUsuarios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	private ModificarDatosUsuarios() {
+	private FrameModificarDatosUsuarios() {
 		JPanel panelCargarDatosUsuario = new JPanel();
 		panelCargarDatosUsuario.setLayout(null);
 		add(panelCargarDatosUsuario);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarDatosUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarDatosUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar datos de usuario");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 680, 546);
@@ -51,7 +51,7 @@ public class ModificarDatosUsuarios extends JFrame {
 	}
 	
 	
-	public static ModificarDatosUsuarios getInstancia() {
+	public static FrameModificarDatosUsuarios getInstancia() {
 		return instancia;
 	}
 }

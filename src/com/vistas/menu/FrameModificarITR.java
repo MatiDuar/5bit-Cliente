@@ -16,7 +16,7 @@ import rojerusan.RSComboBox;
 import rojeru_san.complementos.RSButtonHover;
 import javax.swing.ImageIcon;
 
-public class ModificarITR extends JFrame {
+public class FrameModificarITR extends JFrame {
 
 	private JPanel contentPane;
 
@@ -27,7 +27,7 @@ public class ModificarITR extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarITR frame = new ModificarITR();
+					FrameModificarITR frame = new FrameModificarITR();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,8 +39,8 @@ public class ModificarITR extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModificarITR() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
+	public FrameModificarITR() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar ITR");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 325, 281);
@@ -57,7 +57,7 @@ public class ModificarITR extends JFrame {
 		contentPane.add(lblModificarItr);
 		
 		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon(ModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage.setIcon(new ImageIcon(FrameModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		

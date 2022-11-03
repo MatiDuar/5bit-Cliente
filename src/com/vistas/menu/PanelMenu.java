@@ -27,7 +27,7 @@ public class PanelMenu extends JPanel {
 	
 //	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante()
 
-	GestionDeEventos panelGestionDeEventos=new GestionDeEventos();
+	PanelGestionDeEventos panelGestionDeEventos=new PanelGestionDeEventos();
 
 	/**
 	 * Create the panel.

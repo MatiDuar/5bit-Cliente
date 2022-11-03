@@ -16,12 +16,12 @@ import rojerusan.RSCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListadoEventos extends JPanel {
+public class PanelListadoEventos extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public ListadoEventos() {
+	public PanelListadoEventos() {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();

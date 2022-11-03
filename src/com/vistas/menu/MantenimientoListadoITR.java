@@ -140,7 +140,7 @@ public class MantenimientoListadoITR extends JFrame {
 		btnhvrAgregarITR.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AgregarITR agregarITR = new AgregarITR();
+				FameAgregarITR agregarITR = new FameAgregarITR();
 				agregarITR.setVisible(true);
 			}
 		});
