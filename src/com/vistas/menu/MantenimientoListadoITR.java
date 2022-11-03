@@ -134,8 +134,8 @@ public class MantenimientoListadoITR extends JFrame {
 				
 				try {
 					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
-					ModificarITR.itr=itr;
-					ModificarITR modificarITR = new ModificarITR();
+					FrameModificarITR.itr=itr;
+					FrameModificarITR modificarITR = new FrameModificarITR();
 					modificarITR.setVisible(true);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
@@ -154,7 +154,7 @@ public class MantenimientoListadoITR extends JFrame {
 		btnhvrAgregarITR.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FameAgregarITR agregarITR = new FameAgregarITR();
+				FrameAgregarITR agregarITR = new FrameAgregarITR();
 				agregarITR.setVisible(true);
 			}
 		});
@@ -217,6 +217,7 @@ public class MantenimientoListadoITR extends JFrame {
 					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
 					JOptionPane.showMessageDialog(null, "Se realizo la baja logica del itr seleccionada", "Aviso",
 							JOptionPane.INFORMATION_MESSAGE);
+					PanelGestionUsuarios.getInstancia().cargarComboBox();
 					comboBoxEstadoITR.setSelectedIndex(0);
 				
 				} catch (ServicesException e1) {
@@ -243,6 +244,7 @@ public class MantenimientoListadoITR extends JFrame {
 					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
 					JOptionPane.showMessageDialog(null, "Se reactivo el itr seleccionada", "Aviso",
 							JOptionPane.INFORMATION_MESSAGE);
+					PanelGestionUsuarios.getInstancia().cargarComboBox();
 					comboBoxEstadoITR.setSelectedIndex(0);
 					
 				} catch (ServicesException e1) {

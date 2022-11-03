@@ -24,7 +24,7 @@ import rojerusan.RSComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class FameAgregarITR extends JFrame {
+public class FrameAgregarITR extends JFrame {
 
 	private JPanel contentPane;
 	
@@ -37,7 +37,7 @@ public class FameAgregarITR extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FameAgregarITR frame = new FameAgregarITR();
+					FrameAgregarITR frame = new FrameAgregarITR();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,8 +49,8 @@ public class FameAgregarITR extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FameAgregarITR() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
+	public FrameAgregarITR() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Agregar ITR");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 281);
@@ -67,7 +67,7 @@ public class FameAgregarITR extends JFrame {
 		contentPane.add(lblTituloVentana);
 		
 		RSLabelImage labelImage = new RSLabelImage();
-		labelImage.setIcon(new ImageIcon(FameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage.setIcon(new ImageIcon(FrameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		

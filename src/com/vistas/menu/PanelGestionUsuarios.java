@@ -479,7 +479,9 @@ public class PanelGestionUsuarios extends JPanel {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("");
 		for (ITR itr : DAOGeneral.itrRemote.obtenerItrs()) {
-			modeloITR.addElement(itr.getNombre());
+			if(itr.getActivo()) {
+				modeloITR.addElement(itr.getNombre());
+			}
 		}
 	}
 

@@ -60,6 +60,7 @@ public class Login extends JFrame {
 	public Login() {
 		DAOGeneral dao = new DAOGeneral();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 374, 387);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
