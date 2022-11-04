@@ -238,7 +238,8 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						analistaRegistro.setNombreUsuario(splitNombreUsuario[0]);
-						
+						verificarExistenciaUsuario(splitNombreUsuario[0]);
+
 						analistaRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
 						analistaRegistro.setLocalidad(textLocalidad.getText());
 						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
@@ -248,7 +249,6 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-						
 						
 						
 						Registro.resetDatos();
@@ -280,7 +280,7 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelRegistroTutor.comboBoxRol.getSelectedItem().toString()));
 						
-						
+						verificarExistenciaUsuario(tutorRegistro.getNombreUsuario());
 						
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
 						
@@ -315,7 +315,10 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						System.out.println(estudianteRegistro);
 						
+						verificarExistenciaUsuario(estudianteRegistro.getNombreUsuario());
+						
 						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
+						
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						Registro.resetDatos();
@@ -387,7 +390,15 @@ public class PanelRegistroPag2 extends JPanel {
 		b.setNombreUsuario(a.getNombreUsuario());
 	}
 	
-	
+	public void verificarExistenciaUsuario(String nombreUsuario) throws ServicesException{
+
+			Usuario UsuarioBuscado=DAOGeneral.usuarioRemote.buscarNombre(nombreUsuario);
+			if(UsuarioBuscado!=null){
+				throw new ServicesException("Este usuario ya existe.");
+			}
+		
+		
+	}
 	
 	public static void reset() {
 		instancia=new PanelRegistroPag2();

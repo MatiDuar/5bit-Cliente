@@ -6,6 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.controlador.DAOGeneral;
+import com.controlador.DAOGenero;
+import com.entities.Funcionalidad;
+import com.entities.Rol;
+import com.exception.ServicesException;
+
 import javax.swing.JScrollPane;
 import rojerusan.RSTableMetro;
 import javax.swing.JLabel;
@@ -17,11 +24,26 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 import rojeru_san.complementos.RSButtonHover;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.table.DefaultTableModel;
+
 
 public class FrameAsignarFuncionalidad extends JFrame {
 
 	private JPanel contentPane;
+	public static Rol rolSeleccionado;
+	private DefaultTableModel modeloAsignado;
+	private DefaultTableModel modeloNoAsignada;
+	
+	
+	List<Funcionalidad> asignadas=new ArrayList<>();
+	List<Funcionalidad> noAsignadas=new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -53,9 +75,14 @@ public class FrameAsignarFuncionalidad extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 84, 201, 284);
 		contentPane.add(scrollPane);
-		
-		RSTableMetro tableMetro = new RSTableMetro();
-		scrollPane.setViewportView(tableMetro);
+		modeloAsignado=new DefaultTableModel(
+				new Object[][] {
+						{ null },
+						},
+				new String[] { "Nombre"});
+		RSTableMetro tableFunAsignadas = new RSTableMetro();
+		tableFunAsignadas.setModel(modeloAsignado);
+		scrollPane.setViewportView(tableFunAsignadas);
 		
 		JLabel lblNewLabel = new JLabel("Funcionalidades Asignadas");
 		lblNewLabel.setBounds(22, 59, 165, 14);
@@ -69,28 +96,17 @@ public class FrameAsignarFuncionalidad extends JFrame {
 		scrollPane_1.setBounds(298, 84, 201, 284);
 		contentPane.add(scrollPane_1);
 		
-		RSTableMetro tableMetro_1 = new RSTableMetro();
-		scrollPane_1.setViewportView(tableMetro_1);
+		RSTableMetro tableFunNoAsignadas = new RSTableMetro();
+		modeloNoAsignada=new DefaultTableModel(
+				new Object[][] {
+						{ null },
+						},
+				new String[] { "Nombre"});
+		tableFunNoAsignadas.setModel(modeloNoAsignada);
+		scrollPane_1.setViewportView(tableFunNoAsignadas);
 		
-		RSButtonIconUno buttonIconUno = new RSButtonIconUno();
-		buttonIconUno.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		buttonIconUno.setIcons(ICONS.ARROW_BACK);
-		buttonIconUno.setBounds(234, 109, 40, 40);
-		contentPane.add(buttonIconUno);
 		
-		RSButtonIconUno buttonIconUno_1 = new RSButtonIconUno();
-		buttonIconUno_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		buttonIconUno_1.setIcons(ICONS.ARROW_FORWARD);
-		buttonIconUno_1.setBounds(234, 282, 40, 40);
-		contentPane.add(buttonIconUno_1);
+		
 		
 		JLabel lblNewLabel_2_1 = new JLabel("ELEGIR FUNCIONALIDAD");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
@@ -98,11 +114,125 @@ public class FrameAsignarFuncionalidad extends JFrame {
 		lblNewLabel_2_1.setBounds(136, 11, 237, 27);
 		contentPane.add(lblNewLabel_2_1);
 		
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(198, 384, 108, 33);
-		contentPane.add(btnhvrGuardar);
+		RSButtonHover btnGuardar = new RSButtonHover();
+		btnGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				rolSeleccionado.setFuncionalidades(asignadas);
+				try {
+					DAOGeneral.rolBean.modificarRol(rolSeleccionado);
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnGuardar.setText("Guardar");
+		btnGuardar.setFont(new Font("Lato", Font.BOLD, 14));
+		btnGuardar.setBackground(new Color(0, 112, 192));
+		btnGuardar.setBounds(198, 384, 108, 33);
+		contentPane.add(btnGuardar);
+		
+		
+		RSButtonIconUno btnAgregarFun = new RSButtonIconUno();
+		btnAgregarFun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Funcionalidad f=buscarNombre(noAsignadas, modeloNoAsignada.getValueAt(tableFunNoAsignadas.getSelectedRow(), 0).toString());
+				asignadas.add(f);
+				noAsignadas.remove(f);
+				
+				cargarTablaAsignado(asignadas);
+				cargarTablaNoAsignado(noAsignadas);
+			}
+		});
+		btnAgregarFun.setIcons(ICONS.ARROW_BACK);
+		btnAgregarFun.setBounds(234, 109, 40, 40);
+		contentPane.add(btnAgregarFun);
+		
+		RSButtonIconUno btnSacarFun = new RSButtonIconUno();
+		btnSacarFun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Funcionalidad f=buscarNombre(asignadas, modeloAsignado.getValueAt(tableFunAsignadas.getSelectedRow(), 0).toString());
+				noAsignadas.add(f);
+				asignadas.remove(f);
+				
+				cargarTablaAsignado(asignadas);
+				cargarTablaNoAsignado(noAsignadas);
+			}
+		});
+		btnSacarFun.setIcons(ICONS.ARROW_FORWARD);
+		btnSacarFun.setBounds(234, 282, 40, 40);
+		contentPane.add(btnSacarFun);
+		
+		try{
+			cargarTablaAsignado(obtenerAsignado());
+			cargarTablaNoAsignado(obtenerNoAsignada());
+			
+			
+			asignadas=obtenerAsignado();
+			noAsignadas=obtenerNoAsignada();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
+	
+	
+	public List<Funcionalidad> obtenerAsignado(){
+		ArrayList<Funcionalidad>asignadas=new ArrayList<>();
+		for(Funcionalidad f:rolSeleccionado.getFuncionalidades()){
+			asignadas.add(f);
+		}
+		return asignadas;
+	}
+	
+	public List<Funcionalidad> obtenerNoAsignada() throws ServicesException{
+		ArrayList<Funcionalidad>noAsignadas=new ArrayList<>();
+		for(Funcionalidad f:DAOGeneral.funcionalidadRemote.obtenerFuncionalidades()){
+			Boolean flag=false;
+			for(Funcionalidad j:DAOGeneral.rolBean.buscarNombre(rolSeleccionado.getNombre()).getFuncionalidades()){
+				if(f.getId()==j.getId()){
+					flag=true;
+				}
+			}
+			if(!flag){
+				noAsignadas.add(f);
+			}
+		}
+		return noAsignadas;
+	}
+	
+	
+	
+	public void cargarTablaAsignado(List<Funcionalidad>fun){
+		modeloAsignado.setRowCount(0);
+		for(Funcionalidad f:fun){
+			Vector v=new Vector();
+			v.addElement(f.getNombre());
+			modeloAsignado.addRow(v);
+		}
+	}
+	
+	
+	public void cargarTablaNoAsignado(List<Funcionalidad>fun){
+		modeloNoAsignada.setRowCount(0);
+		for(Funcionalidad f:fun){
+			Vector v=new Vector();
+			v.addElement(f.getNombre());
+			modeloNoAsignada.addRow(v);
+		}
+	}
+	
+	public Funcionalidad buscarNombre(List<Funcionalidad>fun,String buscar){
+		for(Funcionalidad f:fun){
+			if(f.getNombre().equalsIgnoreCase(buscar)){
+				return f;
+			}
+		}
+		return null;
+	}
+	
 }

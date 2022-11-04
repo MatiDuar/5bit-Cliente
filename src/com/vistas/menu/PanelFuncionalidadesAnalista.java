@@ -104,8 +104,14 @@ public class PanelFuncionalidadesAnalista extends JPanel {
 		RSButtonHover btnhvrAsignarFuncionalidad = new RSButtonHover();
 		btnhvrAsignarFuncionalidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameAsignarFuncionalidad frameAsignarFuncionalidades  = new FrameAsignarFuncionalidad();
-				frameAsignarFuncionalidades.setVisible(true);
+				try {
+					FrameAsignarFuncionalidad.rolSeleccionado=DAOGeneral.rolBean.buscarNombre(modeloTabla.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+					FrameAsignarFuncionalidad frameAsignarFuncionalidades  = new FrameAsignarFuncionalidad();
+					frameAsignarFuncionalidades.setVisible(true);
+
+				}catch(Exception e1){
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnhvrAsignarFuncionalidad.setText("Asignar Funcionalidad");

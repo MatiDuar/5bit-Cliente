@@ -32,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class PanelFuncionalidades extends JPanel {
 	private DefaultComboBoxModel modeloCombo;
@@ -44,7 +45,7 @@ public class PanelFuncionalidades extends JPanel {
 		setBounds(0, 0, 700, 725);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 135, 666, 579);
+		scrollPane.setBounds(21, 135, 666, 537);
 		add(scrollPane);
 		modeloTabla=new DefaultTableModel(
 				new Object[][] {
@@ -56,13 +57,14 @@ public class PanelFuncionalidades extends JPanel {
 		tableMetro.setModel(modeloTabla);
 		scrollPane.setViewportView(tableMetro);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("GESTION DE EVENTOS");
+		JLabel lblNewLabel_2_1 = new JLabel("FUNCIONALIDADES");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(236, 23, 227, 27);
+		lblNewLabel_2_1.setBounds(251, 23, 197, 27);
 		add(lblNewLabel_2_1);
 		
 		RSLabelImage labelImage_1 = new RSLabelImage();
+		labelImage_1.setIcon(new ImageIcon(PanelFuncionalidades.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(636, 11, 51, 53);
 		add(labelImage_1);
 		
