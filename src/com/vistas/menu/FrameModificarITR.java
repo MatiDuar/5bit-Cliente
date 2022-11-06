@@ -54,7 +54,7 @@ public class FrameModificarITR extends JFrame {
 	public FrameModificarITR() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar ITR");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 281);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

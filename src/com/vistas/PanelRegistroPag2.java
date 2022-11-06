@@ -381,7 +381,7 @@ public class PanelRegistroPag2 extends JPanel {
 		b.setLocalidad(a.getLocalidad());
 		b.setMail(b.getMail());
 		b.setMailInstitucional(a.getMailInstitucional());
-		b.setNombre1(a.getNombre2());
+		b.setNombre1(a.getNombre1());
 		b.setNombre2(a.getNombre2());
 		b.setTelefono(a.getTelefono());
 		b.setNombreUsuario(a.getNombreUsuario());
