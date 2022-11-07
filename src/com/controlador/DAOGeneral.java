@@ -4,8 +4,10 @@ import javax.naming.InitialContext;
 
 import com.services.AnalistaBeanRemote;
 import com.services.AreaTutorBeanRemote;
+import com.services.ConvocatoriaAsistenciaBeanRemote;
 import com.services.DepartamentoBeanRemote;
 import com.services.EstadosEventosBeanRemote;
+import com.services.EstudianteBeanRemote;
 import com.services.EventoBeanRemote;
 import com.services.GeneracionBeanRemote;
 import com.services.GeneroBeanRemote;
@@ -31,6 +33,8 @@ public class DAOGeneral {
 	public static GeneracionBeanRemote generacionRemote;
 	public static EstadosEventosBeanRemote estadosEventoRemote;
 	public static ModalidadesEventosBeanRemote modalidadEventoRemote;
+	public static ConvocatoriaAsistenciaBeanRemote conAsistenciaBean;
+	public static EstudianteBeanRemote estudianteBean;
 	
 	public DAOGeneral ( ) {
 		try {
@@ -47,7 +51,10 @@ public class DAOGeneral {
 			generacionRemote=(GeneracionBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/GeneracionBean!com.services.GeneracionBeanRemote");
 			estadosEventoRemote=(EstadosEventosBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/EstadosEventosBean!com.services.EstadosEventosBeanRemote");
 			modalidadEventoRemote=(ModalidadesEventosBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/ModalidadesEventosBean!com.services.ModalidadesEventosBeanRemote");
-			
+			conAsistenciaBean = (ConvocatoriaAsistenciaBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/ConvocatoriaAsistenciaBean!com.services.ConvocatoriaAsistenciaBeanRemote");
+			estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/EstudianteBean!com.services.EstudianteBeanRemote");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

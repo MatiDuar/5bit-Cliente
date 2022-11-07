@@ -39,6 +39,9 @@ public class MantenimientoListadoITR extends JFrame {
 	private static MantenimientoListadoITR instancia=new MantenimientoListadoITR();
 	private JPanel contentPane;
 	private DefaultTableModel modeloItr;
+	
+	
+	public static ArrayList<ITR>itrsActivos;
 
 	/**
 	 * Launch the application.
@@ -262,7 +265,9 @@ public class MantenimientoListadoITR extends JFrame {
 		contentPane.add(btnhvrReactivarITR);
 		
 		try {
+			itrsActivos=(ArrayList<ITR>) DAOGeneral.itrRemote.obtenerItrs();
 			cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+			
 		} catch (ServicesException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

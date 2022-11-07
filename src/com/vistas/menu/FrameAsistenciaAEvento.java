@@ -1,13 +1,12 @@
 package com.vistas.menu;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,20 +15,25 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+
+import com.controlador.DAOGeneral;
+import com.entities.ConvocatoriaAsistencia;
+import com.entities.Estudiante;
+import com.entities.Evento;
+import com.exception.ServicesException;
 
 import rojeru_san.complementos.RSButtonHover;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class FrameAsistenciaAEvento extends JFrame {
 
 	private JPanel contentPane;
 	private RSTableMetro table;
+	
+	private DefaultTableModel modeloTabla;
+	public static Evento eventeSeleccionado;
 
 	/**
 	 * Launch the application.
@@ -51,8 +55,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameAsistenciaAEvento() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 565, 603);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 565, 654);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,24 +76,26 @@ public class FrameAsistenciaAEvento extends JFrame {
 		
 		table = new RSTableMetro();
 		
-		RSComboBox comboBox_2 = new RSComboBox();
-		comboBox_2.setSelectedIndex(1);
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Sin Registrar", "Asistencia ", "Media Asistencia", "Matutina", "Vespertina ", "Ausencia", "Ausencia Justificada"}));
-			
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, comboBox_2.getSelectedItem()},
-				{null, null, null, null, comboBox_2.getSelectedItem()},
-				{null, null, null, null, comboBox_2.getSelectedItem()},
-			},
-			new String[] {
-				"Nombre", "Apellido", "Cedula", "A\u00F1o Ingreso", "Asistencia"
-			}
-		));
-		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(4).setPreferredWidth(180);
+		RSComboBox comboBoxEstadoTabla = new RSComboBox();
+		comboBoxEstadoTabla.setSelectedIndex(1);
+		comboBoxEstadoTabla.setModel(new DefaultComboBoxModel(new String[] {"Sin Registrar", "Asistencia ", "Media Asistencia", "Matutina", "Vespertina ", "Ausencia", "Ausencia Justificada"}));
 		
-		table.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboBox_2));
+		modeloTabla=new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null },
+					{null, null, null, null},
+					{null, null, null, null},
+				},
+				new String[] {
+					"Nombre",  "Cedula", "A\u00F1o Ingreso", "Asistencia"
+				}
+			);
+		table.setModel(modeloTabla);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(3).setPreferredWidth(180);
+		
+		table.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboBoxEstadoTabla));
+		
 
 		for(int i=0;i<table.getColumnCount();i++) {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
@@ -99,18 +105,18 @@ public class FrameAsistenciaAEvento extends JFrame {
 		
      
 		
-		RSComboBox comboBox = new RSComboBox();
-		comboBox.setBounds(15, 94, 121, 32);
-		contentPane.add(comboBox);
+		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setBounds(15, 94, 121, 32);
+		contentPane.add(comboBoxITR);
 		
 		JLabel lblNewLabel = new JLabel("ITR");
 		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblNewLabel.setBounds(15, 77, 45, 13);
 		contentPane.add(lblNewLabel);
 		
-		RSComboBox comboBox_1 = new RSComboBox();
-		comboBox_1.setBounds(151, 94, 121, 32);
-		contentPane.add(comboBox_1);
+		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setBounds(151, 94, 121, 32);
+		contentPane.add(comboBoxEstado);
 		
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -124,10 +130,12 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
 		
-		RSComboBox comboBox_2_1 = new RSComboBox();
-		comboBox_2_1.setModel(new DefaultComboBoxModel(new String[] {"Sin Asignar", "Asistencia ", "Media Asistencia", "Matutina", "Vespertina ", "Ausencia", "Ausencia Justificada"}));
-		comboBox_2_1.setBounds(287, 94, 121, 32);
-		contentPane.add(comboBox_2_1);
+		RSComboBox comboBoxGen = new RSComboBox();
+		comboBoxGen.setModel(new DefaultComboBoxModel(new String[] 
+				{"Sin Asignar", "Asistencia ", "Media Asistencia", "Matutina", "Vespertina ", "Ausencia", "Ausencia Justificada"
+						}));
+		comboBoxGen.setBounds(287, 94, 121, 32);
+		contentPane.add(comboBoxGen);
 		
 		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00f3n");
 		lblGeneracionEstudiante.setHorizontalAlignment(SwingConstants.LEFT);
@@ -141,6 +149,42 @@ public class FrameAsistenciaAEvento extends JFrame {
 		lblNewLabel_2_1_1.setBounds(10, 136, 281, 27);
 		contentPane.add(lblNewLabel_2_1_1);
 		
+		RSButtonHover btnhvrCancelar = new RSButtonHover();
+		btnhvrCancelar.setText("Cancelar");
+		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBounds(106, 571, 108, 33);
+		contentPane.add(btnhvrCancelar);
 		
+		RSButtonHover btnhvrGuardar = new RSButtonHover();
+		btnhvrGuardar.setText("Guardar");
+		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBounds(321, 571, 108, 33);
+		contentPane.add(btnhvrGuardar);
+		
+		try {
+			cargarTabla();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void cargarTabla() throws ServicesException {
+//		"Nombre", "Cedula", "A\u00F1o Ingreso", "Asistencia"
+
+		modeloTabla.setColumnCount(0);
+		for(Estudiante e:DAOGeneral.conAsistenciaBean.buscarPorEvento(eventeSeleccionado)) {
+			Vector v=new Vector();
+			v.addElement(e.getNombre1()+" "+e.getApellido1());
+			v.addElement(e.getDocumento());
+			v.addElement(e.getAnoIngreso());
+			ConvocatoriaAsistencia ca=DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(e, eventeSeleccionado);
+			modeloTabla.setValueAt(ca.getEstadoAsistencia().getNombre(), modeloTabla.getRowCount()-1, 3);
+			
+			modeloTabla.addRow(v);
+		}
 	}
 }
