@@ -50,7 +50,7 @@ public class PanelRegistroPag2 extends JPanel {
 	private RSRadioButton radioTutor;
 	private RSRadioButton radioEstudiante;
 	
-	 DefaultComboBoxModel modeloDep=new DefaultComboBoxModel<>();;
+	 DefaultComboBoxModel modeloDep=new DefaultComboBoxModel<>();
 	 RSComboBox comboBoxDep;
 	 RSComboBox comboBoxITR;
 	 DefaultComboBoxModel modeloITR=new DefaultComboBoxModel<>();
@@ -354,7 +354,6 @@ public class PanelRegistroPag2 extends JPanel {
 
 		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
 			modeloDep.addElement(d.getNombre());
-			System.out.println(d.getNombre());
 		}
 	}
 	

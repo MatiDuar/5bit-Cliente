@@ -6,6 +6,7 @@ import com.services.AnalistaBeanRemote;
 import com.services.AreaTutorBeanRemote;
 import com.services.ConvocatoriaAsistenciaBeanRemote;
 import com.services.DepartamentoBeanRemote;
+import com.services.EstadoAsistenciaBeanRemote;
 import com.services.EstadosEventosBeanRemote;
 import com.services.EstudianteBeanRemote;
 import com.services.EventoBeanRemote;
@@ -35,6 +36,7 @@ public class DAOGeneral {
 	public static ModalidadesEventosBeanRemote modalidadEventoRemote;
 	public static ConvocatoriaAsistenciaBeanRemote conAsistenciaBean;
 	public static EstudianteBeanRemote estudianteBean;
+	public static EstadoAsistenciaBeanRemote estadoAsistenciaBean;
 	
 	public DAOGeneral ( ) {
 		try {
@@ -55,6 +57,9 @@ public class DAOGeneral {
 					"ejb:/Proyecto-5bit/ConvocatoriaAsistenciaBean!com.services.ConvocatoriaAsistenciaBeanRemote");
 			estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup(
 					"ejb:/Proyecto-5bit/EstudianteBean!com.services.EstudianteBeanRemote");
+			estadoAsistenciaBean = (EstadoAsistenciaBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/EstadoAsistenciaBean!com.services.EstadoAsistenciaBeanRemote");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

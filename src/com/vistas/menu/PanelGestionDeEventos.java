@@ -76,7 +76,7 @@ public class PanelGestionDeEventos extends JPanel {
 		scrollPane.setBounds(10, 233, 561, 357);
 		add(scrollPane);
 		modeloTabla = new DefaultTableModel(new Object[][] {},
-				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado","Id" });
+				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" });
 
 		table = new RSTableMetro();
 		table.setModel(modeloTabla);
@@ -199,31 +199,33 @@ public class PanelGestionDeEventos extends JPanel {
 					} else {
 						for (Iterator<Evento> iter = eventosFilt2.iterator(); iter.hasNext();) {
 							Evento u = iter.next();
-							if(u.getEstado().getNombre().equalsIgnoreCase(comboBoxEstado.getSelectedItem().toString())) {
+							if (u.getEstado().getNombre()
+									.equalsIgnoreCase(comboBoxEstado.getSelectedItem().toString())) {
 								eventosFilt3.add(u);
 							}
 
 						}
 					}
-					ArrayList<Evento>eventosFilt4=new ArrayList<>();
-					if(comboBoxITR.getSelectedItem().toString()=="") {
-						eventosFilt4=eventosFilt3;
-					}else {
+					ArrayList<Evento> eventosFilt4 = new ArrayList<>();
+					if (comboBoxITR.getSelectedItem().toString() == "") {
+						eventosFilt4 = eventosFilt3;
+					} else {
 						for (Iterator<Evento> iter = eventosFilt3.iterator(); iter.hasNext();) {
 							Evento u = iter.next();
-							if(u.getItr().getNombre().equalsIgnoreCase(comboBoxITR.getSelectedItem().toString())) {
+							if (u.getItr().getNombre().equalsIgnoreCase(comboBoxITR.getSelectedItem().toString())) {
 								eventosFilt4.add(u);
 							}
 
 						}
 					}
-					ArrayList<Evento>eventosFilt5=new ArrayList<>();
-					if(comboBoxModalidad.getSelectedItem().toString()=="") {
-						eventosFilt5=eventosFilt4;
-					}else {
+					ArrayList<Evento> eventosFilt5 = new ArrayList<>();
+					if (comboBoxModalidad.getSelectedItem().toString() == "") {
+						eventosFilt5 = eventosFilt4;
+					} else {
 						for (Iterator<Evento> iter = eventosFilt4.iterator(); iter.hasNext();) {
 							Evento u = iter.next();
-							if(u.getModalidad().getNombre().equalsIgnoreCase(comboBoxModalidad.getSelectedItem().toString())) {
+							if (u.getModalidad().getNombre()
+									.equalsIgnoreCase(comboBoxModalidad.getSelectedItem().toString())) {
 								eventosFilt5.add(u);
 							}
 
@@ -231,8 +233,7 @@ public class PanelGestionDeEventos extends JPanel {
 					}
 					cargarTabla(eventosFilt5);
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -276,14 +277,15 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrConvocatoriaDeEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					FrameConvocatoriaEvento.eventoSeleccionado=DAOGeneral.eventoRemote.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
+					FrameConvocatoriaEvento.eventoSeleccionado = DAOGeneral.eventoRemote
+							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
 					FrameConvocatoriaEvento frameConvocatoriaEvento = new FrameConvocatoriaEvento();
 					frameConvocatoriaEvento.setVisible(true);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnhvrConvocatoriaDeEvento.setText("Convocatoria de Evento");
@@ -295,8 +297,16 @@ public class PanelGestionDeEventos extends JPanel {
 		RSButtonHover btnhvrAsistenciaAEventos = new RSButtonHover();
 		btnhvrAsistenciaAEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameAsistenciaAEvento frameAsistenciaAEvento = new FrameAsistenciaAEvento();
-				frameAsistenciaAEvento.setVisible(true);
+				try {
+					FrameAsistenciaAEvento.eventeSeleccionado = DAOGeneral.eventoRemote
+							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
+					FrameAsistenciaAEvento frame = new FrameAsistenciaAEvento();
+					frame.setVisible(true);
+
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnhvrAsistenciaAEventos.setText("Asistencia a Evento");
