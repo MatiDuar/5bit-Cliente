@@ -11,6 +11,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -65,6 +66,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 	public FrameAsistenciaAEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 565, 654);
+		setLocationRelativeTo(getParent());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -106,6 +108,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 
 		
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setDisabledIdex("");
 		comboBoxITR.setModel(modeloItr);
 		comboBoxITR.setBounds(15, 94, 121, 32);
 		contentPane.add(comboBoxITR);
@@ -118,6 +121,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 		modeloEstado=new DefaultComboBoxModel();
 		
 		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setDisabledIdex("");
+
 		comboBoxEstado.setModel(modeloEstado);
 		comboBoxEstado.setBounds(151, 94, 121, 32);
 		contentPane.add(comboBoxEstado);
@@ -133,6 +138,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
+		
 		DefaultComboBoxModel modeloGen=new DefaultComboBoxModel();
 		RSComboBox comboBoxGen = new RSComboBox();
 		comboBoxGen.setModel(modeloGen);
@@ -156,6 +162,23 @@ public class FrameAsistenciaAEvento extends JFrame {
 		contentPane.add(lblNewLabel_2_1_1);
 
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
+		
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					 int input = JOptionPane.showConfirmDialog(getParent(), "Desea cancelar el registro de asistencias al evento \nLos datos no seran guardados", "Guardado...",
+								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					 if(input==0) {
+						 setVisible(false);
+					 }
+					 
+				}catch(Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(0, 112, 192));
@@ -167,11 +190,20 @@ public class FrameAsistenciaAEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					for(long i=0;i<table.getRowCount()-1;i++) {
-						ConvocatoriaAsistencia conAsis=DAOGeneral.conAsistenciaBean.buscarPorId((long)i);
-						conAsis.setEstadoAsistencia(DAOGeneral.estadoAsistenciaBean.obtenerPorNombre(modeloTabla.getValueAt((int) i, 3).toString()));
-						DAOGeneral.conAsistenciaBean.modificar(conAsis);
-					}
+					 int input = JOptionPane.showConfirmDialog(getParent(), "Desea confirmar la asistencia al evento", "Guardado...",
+								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					 if(input==0) {
+						 for(long i=0;i<table.getRowCount();i++) {
+							ConvocatoriaAsistencia conAsis=DAOGeneral.conAsistenciaBean.buscarPorId((long)modeloTabla.getValueAt((int) i, 4));
+							conAsis.setEstadoAsistencia(DAOGeneral.estadoAsistenciaBean.obtenerPorNombre(modeloTabla.getValueAt((int) i, 3).toString()));
+							DAOGeneral.conAsistenciaBean.modificar(conAsis);
+						 }
+						 
+						 JOptionPane.showMessageDialog(null, "Se guardo correctamente la asistencia al evento seleccionado", "Guardado...",
+									JOptionPane.INFORMATION_MESSAGE);
+						 
+						 setVisible(false);
+					 }
 				}catch(Exception e1) {
 					e1.printStackTrace();
 				}

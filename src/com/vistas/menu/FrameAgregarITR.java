@@ -9,11 +9,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.controlador.DAOGeneral;
 import com.entities.Departamento;
+import com.entities.ITR;
 import com.exception.ServicesException;
 
 import RSMaterialComponent.RSTextFieldIconUno;
@@ -106,13 +108,31 @@ public class FrameAgregarITR extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					DAOGeneral.itrRemote.crearITR(textNombre.getText(),DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()), true);
-					PanelGestionUsuarios.getInstancia().cargarComboBox();
-					MantenimientoListadoITR.getInstancia().cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+					if(textNombre.getText()=="") {
+						throw new Exception("Debe indicar un nombre de ITR");
+					}
+					if(comboBoxDep.getSelectedIndex()==-1) {
+						throw new Exception("Debe seleccionar un departamento");
+					}
+					if(DAOGeneral.itrRemote.obtenerItrPorNombre(textNombre.getText())!=null) {
+						throw new Exception("El ITR espesificado ya esta registrado en el sistema");
+					}
+					int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el ITR", "Guardado...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					
+					if(input==0) {
+						DAOGeneral.itrRemote.crearITR(textNombre.getText(),DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()), true);
+						PanelGestionUsuarios.getInstancia().cargarComboBox();
+						MantenimientoListadoITR.getInstancia().cargarTabla(MantenimientoListadoITR.getInstancia().filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
+						MantenimientoListadoITR.getInstancia().comboBoxEstadoITR.setSelectedIndex(0);
+						JOptionPane.showMessageDialog(null, "Se creo correctamente el ITR.", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					
 				
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

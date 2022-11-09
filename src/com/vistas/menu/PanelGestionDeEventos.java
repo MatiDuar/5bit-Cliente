@@ -105,6 +105,8 @@ public class PanelGestionDeEventos extends JPanel {
 		add(lblNewLabel);
 		modeloTipo = new DefaultComboBoxModel();
 		RSComboBox comboBoxTipo = new RSComboBox();
+		comboBoxTipo.setDisabledIdex("");
+
 		comboBoxTipo.setModel(modeloTipo);
 		comboBoxTipo.setColorBoton(Color.WHITE);
 		comboBoxTipo.setBounds(17, 191, 121, 32);
@@ -117,6 +119,8 @@ public class PanelGestionDeEventos extends JPanel {
 
 		modeloEstado = new DefaultComboBoxModel();
 		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setDisabledIdex("");
+
 		comboBoxEstado.setModel(modeloEstado);
 		comboBoxEstado.setColorBoton(Color.WHITE);
 		comboBoxEstado.setBounds(155, 191, 121, 32);
@@ -125,12 +129,16 @@ public class PanelGestionDeEventos extends JPanel {
 		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboBoxITR = new RSComboBox();
 		comboBoxITR.setModel(modeloITR);
+		comboBoxITR.setDisabledIdex("");
+
 		comboBoxITR.setColorBoton(Color.WHITE);
 		comboBoxITR.setBounds(293, 191, 121, 32);
 		add(comboBoxITR);
 
 		modeloModalidad = new DefaultComboBoxModel();
 		RSComboBox comboBoxModalidad = new RSComboBox();
+		comboBoxModalidad.setDisabledIdex("");
+
 		comboBoxModalidad.setModel(modeloModalidad);
 		comboBoxModalidad.setColorBoton(Color.WHITE);
 		comboBoxModalidad.setBounds(431, 191, 121, 32);
@@ -277,13 +285,16 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrConvocatoriaDeEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(table.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un evento para realizar esta accion");
+					}
 					FrameConvocatoriaEvento.eventoSeleccionado = DAOGeneral.eventoRemote
 							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
 					FrameConvocatoriaEvento frameConvocatoriaEvento = new FrameConvocatoriaEvento();
 					frameConvocatoriaEvento.setVisible(true);
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					 JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+								JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -298,14 +309,17 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrAsistenciaAEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(table.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un evento para realizar esta accion");
+					}
 					FrameAsistenciaAEvento.eventeSeleccionado = DAOGeneral.eventoRemote
 							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
 					FrameAsistenciaAEvento frame = new FrameAsistenciaAEvento();
 					frame.setVisible(true);
 
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					 JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+								JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

@@ -158,6 +158,15 @@ public class Login extends JFrame {
 				Usuario usuarioIngresado;
 				try {
 					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+					if(usuarioIngresado==null) {
+						throw new Exception("Nombre de usuario o contraseña incorrecto.");
+					}
+					if(usuarioIngresado.getActivo() && !usuarioIngresado.getValido()) {
+						throw new Exception("La cuenta todavia no fue verificada.");
+					}
+					if(!usuarioIngresado.getActivo()) {
+						throw new Exception("La cuenta se encuentra incatvia en el sistema sistema.");
+					}
 					if (usuarioIngresado instanceof Tutor) {
 						
 						Menu.usuarioIngresado = usuarioIngresado;
@@ -178,13 +187,12 @@ public class Login extends JFrame {
 						menu.panelMenu.initUI();
 						menu.setVisible(true);
 						setVisible(false);
-					} else {
-						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
-								JOptionPane.ERROR_MESSAGE);
 					}
 
-				} catch (ServicesException e1) {
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
+					password.setText("");
 				}
 
 			}

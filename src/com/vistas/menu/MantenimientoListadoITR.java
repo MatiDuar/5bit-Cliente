@@ -26,6 +26,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
+import com.entities.ConvocatoriaAsistencia;
+import com.entities.Estudiante;
 import com.entities.ITR;
 import com.exception.ServicesException;
 
@@ -39,6 +41,7 @@ public class MantenimientoListadoITR extends JFrame {
 	private static MantenimientoListadoITR instancia=new MantenimientoListadoITR();
 	private JPanel contentPane;
 	private DefaultTableModel modeloItr;
+	public RSComboBox comboBoxEstadoITR;
 	
 	
 	public static ArrayList<ITR>itrsActivos;
@@ -169,9 +172,9 @@ public class MantenimientoListadoITR extends JFrame {
 
 		
 
-		RSComboBox comboBoxEstadoITR = new RSComboBox();
+		comboBoxEstadoITR = new RSComboBox();
 		comboBoxEstadoITR.setDisabledIdex("");
-		comboBoxEstadoITR.setModel(new DefaultComboBoxModel(new String[] { " ","Activo", "Inactivo" }));
+		comboBoxEstadoITR.setModel(new DefaultComboBoxModel(new String[] { "Activo","Inactivo", "Ambos" }));
 		comboBoxEstadoITR.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -194,7 +197,6 @@ public class MantenimientoListadoITR extends JFrame {
 					}
 					cargarTabla(itrsFil);
 				} catch (ServicesException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -214,18 +216,32 @@ public class MantenimientoListadoITR extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
-					itr.setActivo(false);
-					DAOGeneral.itrRemote.actualizarITR(itr);
-					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
-					JOptionPane.showMessageDialog(null, "Se realizo la baja logica del itr seleccionada", "Aviso",
-							JOptionPane.INFORMATION_MESSAGE);
-					PanelGestionUsuarios.getInstancia().cargarComboBox();
-					comboBoxEstadoITR.setSelectedIndex(0);
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un ITR para poder eliminarlo.");
+					}
+					
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea elminiar el ITR seleccionado", "Guardado...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if(input==0) {
+						ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+						if(!itr.getActivo()) {
+							throw new Exception("El ITR ya esta inhabilitado");
+						}
+						itr.setActivo(false);
+						DAOGeneral.itrRemote.actualizarITR(itr);
+						cargarTabla(filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
+						JOptionPane.showMessageDialog(null, "Se realizo la baja logica del itr seleccionado", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						PanelGestionUsuarios.getInstancia().cargarComboBox();
+						comboBoxEstadoITR.setSelectedIndex(0);
+					}
+					 				 
+					
 				
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -241,18 +257,27 @@ public class MantenimientoListadoITR extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
-					itr.setActivo(true);
-					DAOGeneral.itrRemote.actualizarITR(itr);
-					cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
-					JOptionPane.showMessageDialog(null, "Se reactivo el itr seleccionada", "Aviso",
-							JOptionPane.INFORMATION_MESSAGE);
-					PanelGestionUsuarios.getInstancia().cargarComboBox();
-					comboBoxEstadoITR.setSelectedIndex(0);
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un ITR para poder activarlo.");
+					}
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea activar el ITR seleccionado", "Guardado...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					if(input==0) {
+						ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
+						itr.setActivo(true);
+						DAOGeneral.itrRemote.actualizarITR(itr);
+						cargarTabla(filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
+						JOptionPane.showMessageDialog(null, "Se reactivo el itr seleccionado", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						PanelGestionUsuarios.getInstancia().cargarComboBox();
+						comboBoxEstadoITR.setSelectedIndex(0);
+					}
+					
+					
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 				
@@ -265,12 +290,12 @@ public class MantenimientoListadoITR extends JFrame {
 		contentPane.add(btnhvrReactivarITR);
 		
 		try {
-			itrsActivos=(ArrayList<ITR>) DAOGeneral.itrRemote.obtenerItrs();
-			cargarTabla(DAOGeneral.itrRemote.obtenerItrs());
+//			itrsActivos=(ArrayList<ITR>) DAOGeneral.itrRemote.obtenerItrs();
+			cargarTabla(filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
 			
 		} catch (ServicesException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -288,5 +313,25 @@ public class MantenimientoListadoITR extends JFrame {
 	}
 	public static void reset() {
 		instancia=new MantenimientoListadoITR();
+	}
+	
+	public List<ITR> filtrarITRActivo(List<ITR> itrs){
+		ArrayList<ITR>itrsFilt=new ArrayList<>();
+		for(ITR i:itrs) {
+			if(i.getActivo()) {
+				itrsFilt.add(i);
+			}
+		}
+		return itrsFilt;
+	}
+	
+	public List<ITR> filtrarITRInactivo(List<ITR> itrs){
+		ArrayList<ITR>itrsFilt=new ArrayList<>();
+		for(ITR i:itrs) {
+			if(!i.getActivo()) {
+				itrsFilt.add(i);
+			}
+		}
+		return itrsFilt;
 	}
 }

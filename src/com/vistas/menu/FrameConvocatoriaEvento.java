@@ -13,6 +13,7 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -302,36 +303,47 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					ArrayList<Estudiante> asginadosNueva = asignados;
-					for (Estudiante es : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
-						boolean flag = false;
-						for (Estudiante j : asignados) {
-							if (es.getId() == j.getId()) {
-								flag = true;
-								break;
+					
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea Guardar la convocatoria al evento seleccionado", "Guardado...",
+								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if(input==0) {
+						ArrayList<Estudiante> asginadosNueva = asignados;
+						for (Estudiante es : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
+							boolean flag = false;
+							for (Estudiante j : asignados) {
+								if (es.getId() == j.getId()) {
+									flag = true;
+									break;
+								}
+							}
+							if (!flag) {
+								DAOGeneral.conAsistenciaBean.borrar(es, eventoSeleccionado);
+								asginadosNueva.remove(es);
 							}
 						}
-						if (!flag) {
-							DAOGeneral.conAsistenciaBean.borrar(es, eventoSeleccionado);
-							asginadosNueva.remove(es);
-						}
-					}
 
-					for (Estudiante es : asginadosNueva) {
-						boolean flag = false;
-						for (Estudiante j : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
-							if (es.getId() == j.getId()) {
-								flag = true;
-								break;
+						for (Estudiante es : asginadosNueva) {
+							boolean flag = false;
+							for (Estudiante j : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
+								if (es.getId() == j.getId()) {
+									flag = true;
+									break;
+								}
+							}
+							if (!flag) {
+								ConvocatoriaAsistencia con = new ConvocatoriaAsistencia();
+								con.setEvento(eventoSeleccionado);
+								con.setEstudiante(es);
+								DAOGeneral.conAsistenciaBean.crear(con);
 							}
 						}
-						if (!flag) {
-							ConvocatoriaAsistencia con = new ConvocatoriaAsistencia();
-							con.setEvento(eventoSeleccionado);
-							con.setEstudiante(es);
-							DAOGeneral.conAsistenciaBean.crear(con);
-						}
-					}
+						 
+						 JOptionPane.showMessageDialog(null, "Se guardo la convocatoria al evento seleccionado", "Guardado...",
+									JOptionPane.INFORMATION_MESSAGE);
+						 
+						 setVisible(false);
+					 }
+					
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -343,6 +355,24 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrGuardar.setBackground(new Color(0, 112, 192));
 		btnhvrGuardar.setBounds(413, 669, 108, 33);
 		contentPane.add(btnhvrGuardar);
+		
+		RSButtonHover btnhvrCancelar = new RSButtonHover();
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int input = JOptionPane.showConfirmDialog(getParent(), "Desea cancelar la convocatoria al evento seleccionado\nLos datos no seran guardados", "Guardado...",
+						JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if(input==0) {
+					setVisible(false);
+				}
+			}
+		});
+		btnhvrCancelar.setText("Cancelar");
+		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBounds(164, 669, 108, 33);
+		contentPane.add(btnhvrCancelar);
 
 		try {
 			asignados = (ArrayList<Estudiante>) estudianteAsignados();
