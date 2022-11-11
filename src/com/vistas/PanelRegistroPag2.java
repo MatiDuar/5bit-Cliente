@@ -299,7 +299,22 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
 						
-						tutorRegistro.setLocalidad(textLocalidad.getText());
+						String localidad =textLocalidad.getText();
+						if(textLocalidad.getText().equalsIgnoreCase("")) {
+							throw new Exception("El campo localidad no puede ser vacio");
+						}
+						
+						if( (!localidad.matches("\\w.*") ) ){
+							throw new Exception("El campo localidad debe contener letras");
+							
+						}
+						
+						if(localidad.length()>50){
+							throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
+						} 
+
+						
+						tutorRegistro.setLocalidad(localidad);
 						
 						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
 						
@@ -364,7 +379,22 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
 						
-						estudianteRegistro.setLocalidad(textLocalidad.getText());
+						String localidad =textLocalidad.getText();
+						if(textLocalidad.getText().equalsIgnoreCase("")) {
+							throw new Exception("El campo localidad no puede ser vacio");
+						}
+						
+						if( (!localidad.matches("\\w.*") ) ){
+							throw new Exception("El campo localidad debe contener letras");
+							
+						}
+						
+						if(localidad.length()>50){
+							throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
+						} 
+
+						
+						estudianteRegistro.setLocalidad(localidad);
 						
 						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
 						
@@ -391,7 +421,7 @@ public class PanelRegistroPag2 extends JPanel {
 						if (fechaObtenida <= fechaActualDATE.getYear()) {
 							estudianteRegistro.setAnoIngreso(fechaObtenida);
 						} else {
-								throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+								throw new Exception("Fecha invï¿½lida, introduzca una fecha menor a la actual.");
 						}
 						
 						

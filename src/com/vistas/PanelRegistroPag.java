@@ -169,18 +169,43 @@ public class PanelRegistroPag extends JPanel {
 					usuarioRegistro = new Analista();
 
 					usuarioRegistro.setActivo(false);
-
-					usuarioRegistro.setApellido1(textApellido1.getText());
-
-					usuarioRegistro.setApellido2(textApellido2.getText());
+				
+					String apellido1=textApellido1.getText();
+					
+					if(apellido1.length()>50) {
+						throw new Exception("El campo primer apellido debe contener menos de 50 caracteres.");
+					}
+					
+					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+					if(!apellido1.matches("^[a-zA-Z]+$")) {
+						throw new Exception("El campo primer apellido no puede ser vacÃ­o y debe contener solo letras.");
+					}
+					
+					usuarioRegistro.setApellido1(apellido1);
+					
+					String apellido2=textApellido2.getText();
+					
+					if(apellido2.length()>50) {
+						throw new Exception("El campo segundo apellido debe contener menos de 50 caracteres.");
+					}
+					
+					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+					if(!apellido2.matches("^[a-zA-Z]+$")) {
+						throw new Exception("El campo segundo apellido no puede ser vacÃ­o y debe contener solo letras.");
+					}
+					
+					usuarioRegistro.setApellido2(apellido2);
 					
 					String doc = textdOCUMENTO.getText();
 				
 					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
-						throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
-					}else{
-						usuarioRegistro.setDocumento(doc);
+						throw new Exception("Formato de documento invï¿½lido, debe contener 8 dï¿½gitos numericos");
 					}
+					
+					usuarioRegistro.setDocumento(doc);
+					
 					
 
 					usuarioRegistro.setValidado(true);
@@ -202,7 +227,7 @@ public class PanelRegistroPag extends JPanel {
 						java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
 						usuarioRegistro.setFechaNacimiento(sqlDate);
 					} else {
-						throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+						throw new Exception("Fecha invï¿½lida, introduzca una fecha menor a la actual.");
 					}
 
 //				    if(mailPersonal.contains("@")){
@@ -219,12 +244,77 @@ public class PanelRegistroPag extends JPanel {
 //					}else{
 //						throw new Exception("Formato de email institucional incorrecto");
 //					}
-
-					usuarioRegistro.setNombre1(textNombre1.getText());
-
-					usuarioRegistro.setNombre2(textNombre2.getText());
-
-					usuarioRegistro.setTelefono(textTelefono.getText());
+						
+					
+					String nombre1=textNombre1.getText();
+					
+					if(nombre1.length()>50) {
+						throw new Exception("El campo primer nombre debe contener menos de 50 caracteres.");
+					}
+					
+					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+					if(!nombre1.matches("^[a-zA-Z]+$")) {
+						throw new Exception("El campo primer nombre no puede ser vacÃ­o y debe contener solo letras.");
+					}
+					
+					
+					usuarioRegistro.setNombre1(nombre1);		
+					
+					
+					
+					String nombre2=textNombre2.getText();
+					
+					if(nombre2.length()>50) {
+						throw new Exception("El campo segundo nombre debe contener menos de 50 caracteres.");
+					}
+					
+					//primero checkeo si el string no es vacio (puede contener solo espacios), despues hago
+					//string.trim().length() > 0 y saco todos los espacios del string y
+					//si la longitud es igual a 0  es porque era solo espacios
+					System.out.println("hola"+nombre2+"hola");
+					//
+					//^[a-zA-Z]+(?:\\s[a-zA-Z]+)?
+					
+					
+					if((nombre2.matches("^[0-9 ]*$")) && (!nombre2.isEmpty())){
+						throw new Exception("El campo segundo nombre no puede contener numeros");
+					}
+					
+					if(nombre2.isBlank()) {
+						throw new Exception("El campo segundo nombre no puede ser solo espacios");
+					}
+					
+//					if(nombre2.matches("[a-zA-Z ]+")) {
+//						if(nombre2.length()>0 && nombre2.trim().length() == 0) {
+//							throw new Exception("El campo segundo nombre no puede ser solo espacios");
+//						}
+//					}
+//					
+					
+					
+					
+					
+					usuarioRegistro.setNombre2(nombre2);
+					
+//					String doc = textdOCUMENTO.getText();
+//					
+//					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
+//						throw new Exception("Formato de documento invï¿½lido, debe contener 8 dï¿½gitos numericos");
+//					}else{
+//						usuarioRegistro.setDocumento(doc);
+//					}
+					
+					
+					
+					String tel = textTelefono.getText();
+					
+					if(!esNumerico(tel)) {
+						throw new Exception("Ingrese un telÃ©fono vÃ¡lido");
+					}
+						
+					usuarioRegistro.setTelefono(tel);
+					
 					usuarioRegistro.setContrasena(password.getText());
 
 //					String[] splitNombreUsuario=textTelefono.getText().split("@");
