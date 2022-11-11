@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -22,14 +23,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
+import com.entities.Analista;
+import com.entities.ConvocatoriaAsistencia;
 import com.entities.EstadosEventos;
 import com.entities.Evento;
 import com.entities.ITR;
 import com.entities.ModalidadesEventos;
 import com.entities.TipoActividad;
+import com.entities.Tutor;
 import com.exception.ServicesException;
 
 import rojeru_san.complementos.RSButtonHover;
@@ -55,9 +60,13 @@ public class PanelGestionDeEventos extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelGestionDeEventos() {
-		setBounds(0, 0, 700, 705);
+		setBounds(0, 0, 700, 725);
 		setLayout(null);
 
+		JPanel panelMantenimientoAnalista = new JPanel();
+		panelMantenimientoAnalista.setBounds(570, 257, 127, 348);
+		add(panelMantenimientoAnalista);
+		
 		JLabel lblNewLabel_2_1 = new JLabel("GESTION DE EVENTOS");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -73,7 +82,7 @@ public class PanelGestionDeEventos extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 233, 561, 357);
+		scrollPane.setBounds(17, 233, 561, 357);
 		add(scrollPane);
 		modeloTabla = new DefaultTableModel(new Object[][] {},
 				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" });
@@ -86,7 +95,7 @@ public class PanelGestionDeEventos extends JPanel {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
 		}
 		table.getColumnModel().getColumn(0).setMinWidth(120);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
 
 		dateChooserFechaInicio = new RSDateChooser();
@@ -254,20 +263,47 @@ public class PanelGestionDeEventos extends JPanel {
 		lblEstado_1.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblEstado_1.setBounds(431, 175, 52, 13);
 		add(lblEstado_1);
+		panelMantenimientoAnalista.setLayout(null);
 
 		RSButtonHover btnhvrModificar = new RSButtonHover();
 		btnhvrModificar.setText("Modificar");
 		btnhvrModificar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrModificar.setBackground(new Color(0, 112, 192));
-		btnhvrModificar.setBounds(581, 435, 108, 33);
-		add(btnhvrModificar);
+		btnhvrModificar.setBounds(10, 66, 108, 33);
+		panelMantenimientoAnalista.add(btnhvrModificar);
 
 		RSButtonHover btnhvrEliminar = new RSButtonHover();
+		btnhvrEliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Evento eventoEliminar = DAOGeneral.eventoRemote
+							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
+					if (table.getSelectedRowCount() == -1) {
+						throw new Exception("Debe seleccionar un evento para poder eliminarlo");
+					}
+					if (!DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoEliminar).isEmpty()) {
+						throw new Exception("Para poder eliminar el evento no puede tener estudiantes convocados");
+					}
+
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea Eliminar el evento seleccionado",
+							"Aviso...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (input == 0) {
+						DAOGeneral.eventoRemote.borrarEvento(eventoEliminar.getId());
+						cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+						JOptionPane.showMessageDialog(null, "Se Elimino correctamente el evento seleccionado",
+								"Aviso...", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnhvrEliminar.setText("Eliminar");
 		btnhvrEliminar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrEliminar.setBackground(new Color(0, 112, 192));
-		btnhvrEliminar.setBounds(581, 557, 108, 33);
-		add(btnhvrEliminar);
+		btnhvrEliminar.setBounds(10, 117, 108, 33);
+		panelMantenimientoAnalista.add(btnhvrEliminar);
 
 		JLabel lblFechaDeInicio = new JLabel("Fecha de Inicio");
 		lblFechaDeInicio.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -278,14 +314,14 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrAlta.setText("Alta");
 		btnhvrAlta.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrAlta.setBackground(new Color(0, 112, 192));
-		btnhvrAlta.setBounds(581, 313, 108, 33);
-		add(btnhvrAlta);
+		btnhvrAlta.setBounds(10, 11, 108, 33);
+		panelMantenimientoAnalista.add(btnhvrAlta);
 
 		RSButtonHover btnhvrConvocatoriaDeEvento = new RSButtonHover();
 		btnhvrConvocatoriaDeEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(table.getSelectedRow()==-1) {
+					if (table.getSelectedRow() == -1) {
 						throw new Exception("Debe seleccionar un evento para realizar esta accion");
 					}
 					FrameConvocatoriaEvento.eventoSeleccionado = DAOGeneral.eventoRemote
@@ -293,8 +329,7 @@ public class PanelGestionDeEventos extends JPanel {
 					FrameConvocatoriaEvento frameConvocatoriaEvento = new FrameConvocatoriaEvento();
 					frameConvocatoriaEvento.setVisible(true);
 				} catch (Exception e1) {
-					 JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
-								JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -302,14 +337,14 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrConvocatoriaDeEvento.setText("Convocatoria de Evento");
 		btnhvrConvocatoriaDeEvento.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrConvocatoriaDeEvento.setBackground(new Color(0, 112, 192));
-		btnhvrConvocatoriaDeEvento.setBounds(10, 601, 227, 33);
+		btnhvrConvocatoriaDeEvento.setBounds(89, 636, 227, 33);
 		add(btnhvrConvocatoriaDeEvento);
 
 		RSButtonHover btnhvrAsistenciaAEventos = new RSButtonHover();
 		btnhvrAsistenciaAEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(table.getSelectedRow()==-1) {
+					if (table.getSelectedRow() == -1) {
 						throw new Exception("Debe seleccionar un evento para realizar esta accion");
 					}
 					FrameAsistenciaAEvento.eventeSeleccionado = DAOGeneral.eventoRemote
@@ -318,40 +353,81 @@ public class PanelGestionDeEventos extends JPanel {
 					frame.setVisible(true);
 
 				} catch (Exception e1) {
-					 JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
-								JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		btnhvrAsistenciaAEventos.setText("Asistencia a Evento");
 		btnhvrAsistenciaAEventos.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrAsistenciaAEventos.setBackground(new Color(0, 112, 192));
-		btnhvrAsistenciaAEventos.setBounds(344, 601, 227, 33);
+		btnhvrAsistenciaAEventos.setBounds(384, 636, 227, 33);
 		add(btnhvrAsistenciaAEventos);
+
+		JLabel lblMantenimiento = new JLabel("Mantenimiento");
+		lblMantenimiento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMantenimiento.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblMantenimiento.setBounds(10,204, 108, 13);
+		panelMantenimientoAnalista.add(lblMantenimiento);
+
+		RSButtonHover btnhvrModalidades = new RSButtonHover();
+		btnhvrModalidades.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnhvrModalidades.setText("Modalidades");
+		btnhvrModalidades.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrModalidades.setBackground(new Color(0, 112, 192));
+		btnhvrModalidades.setBounds(10, 228, 108, 33);
+		panelMantenimientoAnalista.add(btnhvrModalidades);
+
+		RSButtonHover btnhvrEstados = new RSButtonHover();
+		btnhvrEstados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnhvrEstados.setText("Estados");
+		btnhvrEstados.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrEstados.setBackground(new Color(0, 112, 192));
+		btnhvrEstados.setBounds(10, 279, 108, 33);
+		panelMantenimientoAnalista.add(btnhvrEstados);
+		
+		
 		try {
+			if(Menu.getUsuario() instanceof Tutor) {
+				btnhvrConvocatoriaDeEvento.setVisible(false);
+				btnhvrAsistenciaAEventos.setLocation(236, 636);
+				panelMantenimientoAnalista.setVisible(false);
+//				scrollPane.setBounds(10, 233, 561, 357);
+				scrollPane.setSize(672, 357);
+			}
 			cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
 			cargarCombo();
 			table.removeColumn(table.getColumnModel().getColumn(6));
-		} catch (ServicesException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
 
-	public void cargarTabla(List<Evento> eventos) throws ServicesException {
+	public void cargarTabla(List<Evento> eventos) throws Exception {
 //		"Titulo", "Tipo","Fec Inc", "ITR", "Modalidad", "Estado"
 		modeloTabla.setRowCount(0);
+		
 		for (Evento e : eventos) {
-			Vector v = new Vector();
-			v.addElement(e.getTitulo());
-			v.addElement(e.getTipoActividad().getNombre());
-			v.addElement(e.getFechaInicio());
-			v.addElement(e.getItr().getNombre());
-			v.addElement(e.getModalidad().getNombre());
-			v.addElement(e.getEstado().getNombre());
-			v.addElement(e.getId());
-
-			modeloTabla.addRow(v);
+			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), e.getTutores()))) {
+				Vector v = new Vector();
+				v.addElement(e.getTitulo());
+				v.addElement(e.getTipoActividad().getNombre());
+				v.addElement(e.getFechaInicio());
+				v.addElement(e.getItr().getNombre());
+				v.addElement(e.getModalidad().getNombre());
+				v.addElement(e.getEstado().getNombre());
+				v.addElement(e.getId());
+	
+				modeloTabla.addRow(v);
+			}
 		}
 	}
 
@@ -425,5 +501,14 @@ public class PanelGestionDeEventos extends JPanel {
 		for (TipoActividad t : DAOGeneral.tipoActividadRemote.obtenerTipoActividad()) {
 			modeloTipo.addElement(t.getNombre());
 		}
+	}
+	
+	public boolean contieneTutor(Tutor buscar,Set<Tutor>tutores) {
+		for(Tutor t:tutores) {
+			if(t.getId()==buscar.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

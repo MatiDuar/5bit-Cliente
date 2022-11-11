@@ -9,6 +9,7 @@ import java.awt.Cursor;
 import rojeru_san.rslabel.RSLabelImage;
 import javax.swing.SwingConstants;
 
+import com.controlador.DAOGeneral;
 import com.vistas.Login;
 
 import RSMaterialComponent.RSButtonMaterialIconUno;
@@ -27,7 +28,7 @@ public class PanelMenu extends JPanel {
 	
 //	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante()
 
-	PanelGestionDeEventos panelGestionDeEventos=new PanelGestionDeEventos();
+	PanelGestionDeEventos panelGestionDeEventos;
 
 	/**
 	 * Create the panel.
@@ -57,18 +58,13 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
-		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
+		lblNombreUsuario.setText(Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
 		lblNombreUsuario.setBounds(10, 194, 227, 30);
 		menuUsuario.add(lblNombreUsuario);
 		
-		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
-		buttonGestionEventos.setIcons(ICONS.DATE_RANGE);
-		buttonGestionEventos.setText("EVENTOS                             ");
-		buttonGestionEventos.setBounds(25, 340, 200, 40);
-		menuUsuario.add(buttonGestionEventos);
 		
 		RSButtonMaterialIconUno buttonGestionConstancias = new RSButtonMaterialIconUno();
 		buttonGestionConstancias.addActionListener(new ActionListener() {
@@ -140,7 +136,7 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Menu.usuarioIngresado=null;
+				Menu.setUsuario(null);
 				Menu.getInstancia().setVisible(false);
 				
 				Login log=new Login();
@@ -164,6 +160,26 @@ public class PanelMenu extends JPanel {
 //				}
 //			}
 		});
+		
+		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
+		buttonGestionEventos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelGestionDeEventos=new PanelGestionDeEventos();
+				panelDinamico.removeAll();
+				panelGestionDeEventos.setSize(945, 725);
+				panelGestionDeEventos.setLocation(0, 0);
+				panelDinamico.add(panelGestionDeEventos);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+
+			}
+		});
+		buttonGestionEventos.setIcons(ICONS.DATE_RANGE);
+		buttonGestionEventos.setText("EVENTOS                             ");
+		buttonGestionEventos.setBounds(25, 340, 200, 40);
+		menuUsuario.add(buttonGestionEventos);
+		
 	}
 	public void initUI() {
 		
@@ -199,7 +215,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
-		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
+		lblNombreUsuario.setText(Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1());
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
@@ -269,7 +285,7 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Menu.usuarioIngresado=null;
+				Menu.setUsuario(null);
 				Menu.getInstancia().setVisible(false);
 				
 				Login log=new Login();
@@ -302,7 +318,7 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
-		lblNombreUsuario.setText(Menu.usuarioIngresado.getNombre1()+" "+Menu.usuarioIngresado.getApellido1());
+		lblNombreUsuario.setText(Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
@@ -373,6 +389,8 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
 		buttonGestionEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelGestionDeEventos=new PanelGestionDeEventos();
+
 				panelDinamico.removeAll();
 				panelGestionDeEventos.setSize(945, 725);
 				panelGestionDeEventos.setLocation(0, 0);
@@ -426,7 +444,7 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Menu.usuarioIngresado=null;
+				Menu.setUsuario(null);
 				Menu.getInstancia().setVisible(false);
 				
 				Login log=new Login();

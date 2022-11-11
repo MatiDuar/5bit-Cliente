@@ -155,13 +155,13 @@ public class Login extends JFrame {
 				String nombreUsuario = textUsuario.getText();
 				String pswd = password.getText();
 
-				Usuario usuarioIngresado;
+
 				try {
-					usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+					Usuario usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
 					if(usuarioIngresado==null) {
 						throw new Exception("Nombre de usuario o contraseña incorrecto.");
 					}
-					if(usuarioIngresado.getActivo() && !usuarioIngresado.getValido()) {
+					if(usuarioIngresado.getActivo() && !usuarioIngresado.getValidado()) {
 						throw new Exception("La cuenta todavia no fue verificada.");
 					}
 					if(!usuarioIngresado.getActivo()) {
@@ -169,7 +169,7 @@ public class Login extends JFrame {
 					}
 					if (usuarioIngresado instanceof Tutor) {
 						
-						Menu.usuarioIngresado = usuarioIngresado;
+						Menu.setUsuario(usuarioIngresado);
 
 						menu.panelMenu.initUITutor();
 
@@ -177,13 +177,13 @@ public class Login extends JFrame {
 						setVisible(false);
 					} else if (usuarioIngresado instanceof Analista) {
 						
-						Menu.usuarioIngresado = usuarioIngresado;
+						Menu.setUsuario(usuarioIngresado);
 						menu.panelMenu.initUIAnalista();
 						menu.setVisible(true);
 						setVisible(false);
 					} else if (usuarioIngresado instanceof Estudiante) {
 						
-						Menu.usuarioIngresado = usuarioIngresado;
+						Menu.setUsuario(usuarioIngresado);
 						menu.panelMenu.initUI();
 						menu.setVisible(true);
 						setVisible(false);

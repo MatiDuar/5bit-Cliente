@@ -175,6 +175,7 @@ public class PanelRegistroPag extends JPanel {
 					usuarioRegistro.setApellido2(textApellido2.getText());
 
 					usuarioRegistro.setDocumento(textdOCUMENTO.getText());
+					usuarioRegistro.setValidado(true);
 
 					// LocalDate localDate = LocalDate.of(1999, 04, 01);
 					// Date date= Date.valueOf(localDate);

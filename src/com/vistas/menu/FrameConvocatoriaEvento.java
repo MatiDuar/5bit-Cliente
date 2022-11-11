@@ -197,6 +197,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(tableNoAsignado.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un estudiante de la lista No Asignados, para poder Agregarlo.");
+					}
 					Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote.buscarUsuarioPorId(
 							(Long) modeloNoAsignados.getValueAt(tableNoAsignado.getSelectedRow(), 4));
 					Estudiante estudianteLista = buscarEstudiante(noAsignados, estudianteTabla);
@@ -206,9 +209,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 					cargarTablaAsignado(asignados);
 					cargarTablaNoAsignado(noAsignados);
 
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -225,6 +227,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(tableAsignado.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un estudiante de la lista Asignados, para poder quitarlo de la misma.");
+					}
 					Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
 							.buscarUsuarioPorId((Long) modeloAsignados.getValueAt(tableAsignado.getSelectedRow(), 4));
 					Estudiante estudianteLista = buscarEstudiante(asignados, estudianteTabla);
@@ -234,9 +239,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 					cargarTablaAsignado(asignados);
 					cargarTablaNoAsignado(noAsignados);
 
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

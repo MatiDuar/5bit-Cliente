@@ -79,8 +79,8 @@ public class PanelEditarPerfilExtra extends JPanel {
 		add(lblRol);
 		cargarComboBox();
 		
-		comboBoxAreaTutor.setSelectedItem(((Tutor) Menu.usuarioIngresado).getAreaTutor().getNombre());
-		comboBoxRolTutor.setSelectedItem(((Tutor) Menu.usuarioIngresado).getTipoTutor().getNombre());
+		comboBoxAreaTutor.setSelectedItem(((Tutor) Menu.getUsuario()).getAreaTutor().getNombre());
+		comboBoxRolTutor.setSelectedItem(((Tutor) Menu.getUsuario()).getTipoTutor().getNombre());
 
 	}
 	

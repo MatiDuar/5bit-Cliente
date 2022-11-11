@@ -1,6 +1,5 @@
 package com.vistas.menu;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
@@ -8,13 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.entities.Analista;
 import com.entities.Usuario;
 
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
 	public PanelMenu panelMenu=new PanelMenu();
-	public static Usuario usuarioIngresado;
+	private static Usuario usuarioIngresado;
 	private static Menu instancia=new Menu();
 
 	/**
@@ -53,5 +53,13 @@ public class Menu extends JFrame {
 	public static Menu getInstancia() {
 		return instancia;
 	}
-
+	
+	
+	public static void setUsuario(Usuario user) {
+		usuarioIngresado=user;
+	}
+	
+	public static Usuario getUsuario() {
+		return usuarioIngresado;
+	}
 }

@@ -59,7 +59,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textNombre1 = new RSTextFull();
 		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre1.setBounds(101, 96, 250, 42);
-		textNombre1.setText(Menu.usuarioIngresado.getNombre1());
+		textNombre1.setText(Menu.getUsuario().getNombre1());
 		add(textNombre1);
 		
 		JLabel lblNombre2 = new JLabel("Segundo Nombre");
@@ -70,7 +70,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textNombre2 = new RSTextFull();
 		textNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre2.setBounds(447, 96, 250, 42);
-		textNombre2.setText(Menu.usuarioIngresado.getNombre2());
+		textNombre2.setText(Menu.getUsuario().getNombre2());
 		add(textNombre2);
 		
 		JLabel lblPrimerApellido = new JLabel("Primer Apellido*");
@@ -81,7 +81,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textApellido1 = new RSTextFull();
 		textApellido1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido1.setBounds(101, 143, 250, 42);
-		textApellido1.setText(Menu.usuarioIngresado.getApellido1());
+		textApellido1.setText(Menu.getUsuario().getApellido1());
 		add(textApellido1);
 		
 		JLabel lblApellido2 = new JLabel("Segundo Apellido");
@@ -92,7 +92,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textApellido2 = new RSTextFull();
 		textApellido2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido2.setBounds(447, 143, 250, 42);
-		textApellido2.setText(Menu.usuarioIngresado.getApellido2());
+		textApellido2.setText(Menu.getUsuario().getApellido2());
 		add(textApellido2);
 		
 		JLabel lblCedula = new JLabel("Cédula*");
@@ -104,12 +104,12 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textCedula = new RSTextFull();
 		textCedula.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textCedula.setBounds(101, 195, 250, 42);
-		textCedula.setText(Menu.usuarioIngresado.getDocumento());
+		textCedula.setText(Menu.getUsuario().getDocumento());
 		add(textCedula);
 		
 		RSDateChooser FechaNacimiento = new RSDateChooser();
 		FechaNacimiento.setBounds(447, 195, 250, 42);
-		FechaNacimiento.setDatoFecha(Menu.usuarioIngresado.getFechaNacimiento());
+		FechaNacimiento.setDatoFecha(Menu.getUsuario().getFechaNacimiento());
 		add(FechaNacimiento);
 		
 		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento*");
@@ -126,7 +126,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textEmailPersonal = new RSTextFull();
 		textEmailPersonal.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailPersonal.setBounds(101, 247, 250, 42);
-		textEmailPersonal.setText(Menu.usuarioIngresado.getMail());
+		textEmailPersonal.setText(Menu.getUsuario().getMail());
 		add(textEmailPersonal);
 		
 		JLabel lblTelefonoDeContacto = new JLabel("Teléfono de");
@@ -138,7 +138,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textTelefonoContacto = new RSTextFull();
 		textTelefonoContacto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textTelefonoContacto.setBounds(447, 247, 250, 42);
-		textTelefonoContacto.setText(Menu.usuarioIngresado.getTelefono());
+		textTelefonoContacto.setText(Menu.getUsuario().getTelefono());
 		add(textTelefonoContacto);
 		
 		JLabel lblTelefonoDeContacto_1 = new JLabel("Contacto *");
@@ -167,7 +167,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textLocalidad = new RSTextFull();
 		textLocalidad.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textLocalidad.setBounds(447, 299, 250, 42);
-		textLocalidad.setText(Menu.usuarioIngresado.getLocalidad());
+		textLocalidad.setText(Menu.getUsuario().getLocalidad());
 		add(textLocalidad);
 		
 		JLabel lblEmailUTEC = new JLabel("Email UTEC*");
@@ -179,7 +179,7 @@ public class PanelEditarPerfil extends JPanel {
 		RSTextFull textEmailUtec = new RSTextFull();
 		textEmailUtec.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailUtec.setBounds(101, 351, 250, 42);
-		textEmailUtec.setText(Menu.usuarioIngresado.getMailInstitucional());
+		textEmailUtec.setText(Menu.getUsuario().getMailInstitucional());
 		add(textEmailUtec);
 		
 		JLabel lblContrasenia = new JLabel("Contraseña*");
@@ -190,7 +190,7 @@ public class PanelEditarPerfil extends JPanel {
 		
 		RSPassword password = new RSPassword();
 		password.setBounds(447, 351, 250, 42);
-		password.setText(Menu.usuarioIngresado.getContrasena());
+		password.setText(Menu.getUsuario().getContrasena());
 		add(password);
 		
 		JLabel lblITR = new JLabel("ITR *");
@@ -210,14 +210,14 @@ public class PanelEditarPerfil extends JPanel {
 		cargaComboBox();
 		
 		
-		comboBoxITR.setSelectedItem(Menu.usuarioIngresado.getItr().getNombre());
-		comboBoxDepartamento.setSelectedItem(Menu.usuarioIngresado.getDepartamento().getNombre());
+		comboBoxITR.setSelectedItem(Menu.getUsuario().getItr().getNombre());
+		comboBoxDepartamento.setSelectedItem(Menu.getUsuario().getDepartamento().getNombre());
 		
 		//
 		
-		if(Menu.usuarioIngresado instanceof Estudiante) {
+		if(Menu.getUsuario() instanceof Estudiante) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();
-		}else if(Menu.usuarioIngresado instanceof Tutor){
+		}else if(Menu.getUsuario() instanceof Tutor){
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
 		}
 		add(panelDinamicoEditarPerfilPorTipoUsuarios);
@@ -227,7 +227,7 @@ public class PanelEditarPerfil extends JPanel {
 		btnhvrGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-				Usuario usuarioMod=Menu.usuarioIngresado;
+				Usuario usuarioMod=Menu.getUsuario();
 				usuarioMod.setApellido1(textApellido1.getText());
 				usuarioMod.setApellido2(textApellido2.getText());
 				usuarioMod.setNombre1(textNombre1.getText());
