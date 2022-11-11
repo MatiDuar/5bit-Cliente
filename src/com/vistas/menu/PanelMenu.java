@@ -23,12 +23,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 public class PanelMenu extends JPanel {
-	private JLabel lblCerrarSesion;
 //	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
 	
 //	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante()
 
-	PanelGestionDeEventos panelGestionDeEventos;
 
 	/**
 	 * Create the panel.
@@ -45,7 +43,8 @@ public class PanelMenu extends JPanel {
 		
 		setBounds(0,0,955, 725);
 		setLayout(null);
-		
+		JPanel panelDinamico = new JPanel();
+
 		JPanel menuUsuario = new JPanel();
 		menuUsuario.setBounds(0, 0, 246, 725);
 		menuUsuario.setBackground(new Color(177, 192, 207));
@@ -67,8 +66,17 @@ public class PanelMenu extends JPanel {
 		
 		
 		RSButtonMaterialIconUno buttonGestionConstancias = new RSButtonMaterialIconUno();
-		buttonGestionConstancias.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		buttonGestionConstancias.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelReportesAnalistaTutor ventana=new PanelReportesAnalistaTutor();
+
+				panelDinamico.removeAll();
+				ventana.setSize(945, 725);
+				ventana.setLocation(0, 0);
+				panelDinamico.add(ventana);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
 			}
 		});
 		buttonGestionConstancias.setIcons(ICONS.ASSESSMENT);
@@ -92,7 +100,6 @@ public class PanelMenu extends JPanel {
 		labelImage.setBounds(639, 10, 51, 53);
 		panelTituloSistema.add(labelImage);
 		
-		JPanel panelDinamico = new JPanel();
 		panelDinamico.setBounds(245, 0, 700, 725);
 		add(panelDinamico);
 		panelDinamico.setLayout(null);
@@ -125,7 +132,7 @@ public class PanelMenu extends JPanel {
 		
 		
 		menuUsuario.add(lblEditarPerfil);
-		lblCerrarSesion=new JLabel("Cerrar sesion");
+		JLabel lblCerrarSesion=new JLabel("Cerrar sesion");
 		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -165,7 +172,7 @@ public class PanelMenu extends JPanel {
 		buttonGestionEventos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelGestionDeEventos=new PanelGestionDeEventos();
+				PanelGestionDeEventos panelGestionDeEventos=PanelGestionDeEventos.getInstancia();
 				panelDinamico.removeAll();
 				panelGestionDeEventos.setSize(945, 725);
 				panelGestionDeEventos.setLocation(0, 0);
@@ -273,8 +280,23 @@ public class PanelMenu extends JPanel {
 		buttonReportes.setIcons(ICONS.ASSESSMENT);
 		buttonReportes.setHorizontalAlignment(SwingConstants.TRAILING);
 		buttonReportes.setBounds(25, 390, 200, 40);
-		menuUsuario.add(buttonReportes);
+		buttonReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelReportesEstudiante ventana=new PanelReportesEstudiante();
+
+				panelDinamico.removeAll();
+				ventana.setSize(945, 725);
+				ventana.setLocation(0, 0);
+				panelDinamico.add(ventana);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
 		
+		
+		menuUsuario.add(buttonReportes);
+		JLabel lblCerrarSesion=new JLabel("Cerrar sesión");
 		lblCerrarSesion.addMouseMotionListener(new MouseMotionAdapter() {
 //			@Override
 //			public void mouseMoved(MouseEvent e) {
@@ -389,7 +411,7 @@ public class PanelMenu extends JPanel {
 		RSButtonMaterialIconUno buttonGestionEventos = new RSButtonMaterialIconUno();
 		buttonGestionEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelGestionDeEventos=new PanelGestionDeEventos();
+				PanelGestionDeEventos panelGestionDeEventos=PanelGestionDeEventos.getInstancia();
 
 				panelDinamico.removeAll();
 				panelGestionDeEventos.setSize(945, 725);
@@ -416,6 +438,20 @@ public class PanelMenu extends JPanel {
 		buttonReportes.setText("REPORTES                            ");
 		buttonReportes.setBounds(25, 480, 200, 40);
 		menuUsuario.add(buttonReportes);
+		
+		buttonReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelReportesAnalistaTutor ventana=new PanelReportesAnalistaTutor();
+
+				panelDinamico.removeAll();
+				ventana.setSize(945, 725);
+				ventana.setLocation(0, 0);
+				panelDinamico.add(ventana);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
 		
 		
 		

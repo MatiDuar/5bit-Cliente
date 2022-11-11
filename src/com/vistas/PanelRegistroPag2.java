@@ -1,5 +1,16 @@
 package com.vistas;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.controlador.DAOGeneral;
@@ -10,32 +21,11 @@ import com.entities.ITR;
 import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exception.ServicesException;
-import com.vistas.menu.PanelEditarPerfilExtra;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import java.awt.Font;
 
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsfield.RSTextFull;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ActionEvent;
-import rojeru_san.rsfield.RSPassword;
 import rojerusan.RSComboBox;
-import rojerusan.RSCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Vector;
-
 import rojerusan.RSRadioButton;
-import RSMaterialComponent.RSPanelMaterial;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 
 public class PanelRegistroPag2 extends JPanel {
 	
@@ -229,6 +219,7 @@ public class PanelRegistroPag2 extends JPanel {
 		
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 				if(radioAnalista.isSelected()) {
 					try {
 						Analista analistaRegistro=(Analista) PanelRegistroPag.usuarioRegistro;
@@ -239,10 +230,40 @@ public class PanelRegistroPag2 extends JPanel {
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						analistaRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
-						analistaRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
-						analistaRegistro.setLocalidad(textLocalidad.getText());
-						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						String valorCBDepString = comboBoxDep.getSelectedItem().toString();
 						
+						if(valorCBDepString==""){
+							throw new Exception("Debe seleccionar un Departamento");
+						}
+						
+						analistaRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
+						
+						String localidad =textLocalidad.getText();
+						if(textLocalidad.getText().equalsIgnoreCase("")) {
+							throw new Exception("El campo localidad no puede ser vacio");
+						}
+						
+						if( (!localidad.matches("\\w.*") ) ){
+							throw new Exception("El campo localidad debe contener letras");
+							
+						}
+						
+						if(localidad.length()>50){
+							throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
+						} 
+
+						
+						analistaRegistro.setLocalidad(localidad);
+						
+						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
+						
+						if(valorCBITRString==""){
+							throw new Exception("Debe seleccionar un ITR");
+						}
+							
+						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
+						
+												
 						
 						DAOGeneral.usuarioRemote.crearUsuario(analistaRegistro);
 						
@@ -270,16 +291,44 @@ public class PanelRegistroPag2 extends JPanel {
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						tutorRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
-						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
+						String valorCBDepString = comboBoxDep.getSelectedItem().toString();
+						
+						if(valorCBDepString==""){
+							throw new Exception("Debe seleccionar un Departamento");
+						}
+						
+						tutorRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
+						
 						tutorRegistro.setLocalidad(textLocalidad.getText());
-						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						
+						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
+						
+						if(valorCBITRString==""){
+							throw new Exception("Debe seleccionar un ITR");
+						}
+							
+						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
+												
 						
 						//no se si va hacer un comboBox o un textField
-						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString()));
+						String valorCBAreaTutorString = PanelRegistroTutor.comboBoxArea.getSelectedItem().toString();
+						
+						if(valorCBAreaTutorString==""){
+							throw new Exception("Debe seleccionar un area para el tutor");
+						}
+							
+						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(valorCBAreaTutorString));
+						
+						
 
+						String valorCBRolTutorString = PanelRegistroTutor.comboBoxRol.getSelectedItem().toString();
 						
-						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelRegistroTutor.comboBoxRol.getSelectedItem().toString()));
-						
+						if(valorCBRolTutorString==""){
+							throw new Exception("Debe seleccionar un rol para el tutor");
+						}
+
+						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(valorCBRolTutorString));
+	
 						
 						
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
@@ -307,11 +356,45 @@ public class PanelRegistroPag2 extends JPanel {
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						estudianteRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
-						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()));
-						estudianteRegistro.setLocalidad(textLocalidad.getText());
-						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));						
+						String valorCBDepString = comboBoxDep.getSelectedItem().toString();
 						
-						estudianteRegistro.setAnoIngreso(PanelRegistroEstudiante.yearDate.getYear());
+						if(valorCBDepString==""){
+							throw new Exception("Debe seleccionar un Departamento");
+						}
+						
+						estudianteRegistro.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
+						
+						estudianteRegistro.setLocalidad(textLocalidad.getText());
+						
+						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
+						
+						if(valorCBITRString==""){
+							throw new Exception("Debe seleccionar un ITR");
+						}
+							
+						estudianteRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
+						
+												
+						
+						int fechaObtenida = PanelRegistroEstudiante.yearDate.getYear();
+						
+						LocalDate fechaActualLD = LocalDate.now();
+						
+						//IF(FECHAACTUALLD.GETYEAR() < PANELREGISTROESTUDIANTE.YEARDATE.GETYEAR()) {
+						//	
+						//}
+						
+						java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+						
+						java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+
+						if (fechaObtenida <= fechaActualDATE.getYear()) {
+							estudianteRegistro.setAnoIngreso(fechaObtenida);
+						} else {
+								throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+						}
+						
+						
 						
 						System.out.println(estudianteRegistro);
 						
@@ -322,12 +405,22 @@ public class PanelRegistroPag2 extends JPanel {
 						Registro.getInstancia().setVisible(false);
 						Login login = new Login();
 						login.setVisible(true);
-					} catch (ServicesException e1) {
+				
+					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 					
+				
 					
+					
+				}else {
+					try {
+						throw new Exception("Debe seleccionar un tipo de usuario");
+					}catch(Exception e2) {
+						JOptionPane.showMessageDialog(null, e2.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});

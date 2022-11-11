@@ -233,7 +233,15 @@ public class PanelEditarPerfil extends JPanel {
 				usuarioMod.setNombre1(textNombre1.getText());
 				usuarioMod.setNombre2(textNombre2.getText());
 				usuarioMod.setContrasena(password.getText());
-				usuarioMod.setDocumento(textCedula.getText());
+				
+				String doc = textCedula.getText();
+				
+				if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
+					throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
+				}else{
+					usuarioMod.setDocumento(doc);
+				}
+					
 				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
 
 
@@ -326,5 +334,13 @@ public class PanelEditarPerfil extends JPanel {
 		for(ITR itr:DAOGeneral.itrRemote.obtenerItrs()) {
 			modeloITR.addElement(itr.getNombre());
 		}
+	}
+	
+	//	si usa un numero que no sea entre 0 y 9
+	//  se te va a romper porque la parte "d+" solo trabaja 
+	// con numeros arabicos.
+
+	public static boolean esNumerico(String str) {
+ 	 return str.matches("-?\\d+(\\.\\d+)?");
 	}
 }

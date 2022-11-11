@@ -21,14 +21,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
 import com.entities.Analista;
-import com.entities.ConvocatoriaAsistencia;
 import com.entities.EstadosEventos;
 import com.entities.Evento;
 import com.entities.ITR;
@@ -47,6 +45,8 @@ import rojerusan.RSTableMetro;
 public class PanelGestionDeEventos extends JPanel {
 	private RSTableMetro table;
 
+	private static PanelGestionDeEventos instancia=new PanelGestionDeEventos();
+	
 	private DefaultTableModel modeloTabla;
 	private DefaultComboBoxModel modeloITR;
 	private DefaultComboBoxModel modeloTipo;
@@ -59,7 +59,7 @@ public class PanelGestionDeEventos extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestionDeEventos() {
+	private PanelGestionDeEventos() {
 		setBounds(0, 0, 700, 725);
 		setLayout(null);
 
@@ -373,6 +373,9 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrModalidades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				MantenimientoModalidadesEvento es=MantenimientoModalidadesEvento.getInstancia();
+				es.setVisible(true);
+				
 			}
 		});
 		btnhvrModalidades.setText("Modalidades");
@@ -385,6 +388,10 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrEstados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
+				
+				mod.setVisible(true);
+				
 			}
 		});
 		btnhvrEstados.setText("Estados");
@@ -510,5 +517,9 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		}
 		return false;
+	}
+	
+	public static PanelGestionDeEventos getInstancia() {
+		return instancia;
 	}
 }

@@ -173,8 +173,16 @@ public class PanelRegistroPag extends JPanel {
 					usuarioRegistro.setApellido1(textApellido1.getText());
 
 					usuarioRegistro.setApellido2(textApellido2.getText());
+					
+					String doc = textdOCUMENTO.getText();
+				
+					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
+						throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
+					}else{
+						usuarioRegistro.setDocumento(doc);
+					}
+					
 
-					usuarioRegistro.setDocumento(textdOCUMENTO.getText());
 					usuarioRegistro.setValidado(true);
 
 					// LocalDate localDate = LocalDate.of(1999, 04, 01);
@@ -253,6 +261,14 @@ public class PanelRegistroPag extends JPanel {
 	
 	public static void reset() {
 		instancia=new PanelRegistroPag();
+	}
+	
+	//	si usa un numero que no sea entre 0 y 9
+	//  se te va a romper porque la parte "d+" solo trabaja 
+	// con numeros arabicos.
+
+	public static boolean esNumerico(String str) {
+ 	 return str.matches("-?\\d+(\\.\\d+)?");
 	}
 
 }
