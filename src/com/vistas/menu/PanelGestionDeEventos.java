@@ -316,6 +316,18 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrAlta.setBackground(new Color(0, 112, 192));
 		btnhvrAlta.setBounds(10, 11, 108, 33);
 		panelMantenimientoAnalista.add(btnhvrAlta);
+		
+		btnhvrAlta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					FrameNuevoEvento ventana=new FrameNuevoEvento();
+					ventana.setVisible(true);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 
 		RSButtonHover btnhvrConvocatoriaDeEvento = new RSButtonHover();
 		btnhvrConvocatoriaDeEvento.addActionListener(new ActionListener() {

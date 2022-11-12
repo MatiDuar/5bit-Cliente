@@ -253,7 +253,7 @@ public class PanelRegistroPag2 extends JPanel {
 						} 
 
 						
-						analistaRegistro.setLocalidad(localidad);
+						analistaRegistro.setLocalidad(localidad.replaceAll("\\s", ""));
 						
 						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
 						

@@ -3,6 +3,7 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,90 +25,133 @@ import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.complementos.TableMetro;
 import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PanelReportesAnalistaTutor extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	
+
 	private DefaultTableModel modeloTabla;
-	
+
 	private DefaultComboBoxModel modeloITR;
 	private DefaultComboBoxModel modeloGen;
-	
-	
+
 	public PanelReportesAnalistaTutor() {
 		setLayout(null);
-		setBounds(0,0,700,725);
+		setBounds(0, 0, 700, 725);
 		JLabel lblTituloVentana = new JLabel("REPORTES");
 		lblTituloVentana.setForeground(new Color(58, 69, 75));
 		lblTituloVentana.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		lblTituloVentana.setBounds(300, 22, 102, 27);
 		add(lblTituloVentana);
-		
+
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(PanelReportesAnalistaTutor.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(642, 10, 51, 53);
 		add(labelImage);
-		
-		RSTextFieldIconUno textFieldIconUno = new RSTextFieldIconUno();
-		textFieldIconUno.setPlaceholder("Ingrese Nombre y Apellido");
-		textFieldIconUno.setBounds(10, 102, 303, 33);
-		add(textFieldIconUno);
-		
+
+		RSTextFieldIconUno textBuscar = new RSTextFieldIconUno();
+		textBuscar.setPlaceholder("Ingrese Nombre y Apellido");
+		textBuscar.setBounds(10, 102, 303, 33);
+		add(textBuscar);
+
+		modeloITR = new DefaultComboBoxModel();
+		RSComboBox comboITR = new RSComboBox();
+		comboITR.setModel(modeloITR);
+		comboITR.setBounds(323, 103, 121, 32);
+		add(comboITR);
+
+		modeloGen = new DefaultComboBoxModel();
+		RSComboBox comboGen = new RSComboBox();
+		comboGen.setModel(modeloGen);
+		comboGen.setBounds(454, 103, 121, 32);
+		add(comboGen);
+
+		modeloGen.addElement("");
+		for (int i = 2012; i < 2023; i++) {
+			modeloGen.addElement(i);
+		}
+
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
+		btnhvrFiltrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					ArrayList<Estudiante> estudiantesFilt1 = new ArrayList<>();
+					if (comboITR.getSelectedItem().toString() != "") {
+						for (Estudiante es : DAOGeneral.estudianteBean.obtenerEstudiantes()) {
+							if (es.getItr().getNombre().equalsIgnoreCase(comboITR.getSelectedItem().toString())) {
+								estudiantesFilt1.add(es);
+							}
+						}
+					} else {
+
+						estudiantesFilt1 = (ArrayList<Estudiante>) DAOGeneral.estudianteBean.obtenerEstudiantes();
+
+					}
+					ArrayList<Estudiante> estudiantesFilt2 = new ArrayList<>();
+					if (comboGen.getSelectedItem().toString() != "") {
+						for(Estudiante es:estudiantesFilt1) {
+							if(es.getAnoIngreso()==Integer.parseInt(comboGen.getSelectedItem().toString())) {
+								estudiantesFilt2.add(es);
+							}
+						}
+					} else {
+						estudiantesFilt2 = estudiantesFilt1;
+					}
+					
+					ArrayList<Estudiante>estudiantesFilt3=new ArrayList<>();
+					
+					if(textBuscar.getText()!="") {
+						for(Estudiante es:estudiantesFilt2) {
+							if((es.getNombre1()+" "+es.getApellido1()).toLowerCase().startsWith(textBuscar.getText().toLowerCase())) {
+								estudiantesFilt3.add(es);
+							}
+						}
+					}else {
+						estudiantesFilt3=estudiantesFilt2;
+					}
+					cargarTabla(estudiantesFilt3);
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnhvrFiltrar.setText("Filtrar");
 		btnhvrFiltrar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
 		btnhvrFiltrar.setBounds(585, 102, 108, 33);
 		add(btnhvrFiltrar);
-		modeloITR=new DefaultComboBoxModel();
-		RSComboBox comboITR = new RSComboBox();
-		comboITR.setModel(modeloITR);
-		comboITR.setBounds(323, 103, 121, 32);
-		add(comboITR);
-		
-		modeloGen=new DefaultComboBoxModel();
-		RSComboBox comboGen = new RSComboBox();
-		comboGen.setModel(modeloGen);
-		comboGen.setBounds(454, 103, 121, 32);
-		add(comboGen);
-		
-		modeloGen.addElement("");
-		for(int i=2012;i<2023;i++) {
-			modeloGen.addElement(i);
-		}
-		
+
 		JLabel lblITR = new JLabel("ITR");
 		lblITR.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblITR.setBounds(323, 91, 45, 13);
 		add(lblITR);
-		
+
 		JLabel lblGeneracion = new JLabel("Generación");
 		lblGeneracion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblGeneracion.setBounds(454, 91, 69, 13);
 		add(lblGeneracion);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 145, 683, 486);
 		add(scrollPane);
-		
+
 		TableMetro tableMetro = new TableMetro();
-		modeloTabla=new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null, null, null},
-				},
-				new String[] {
-					"Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "C\u00E9dula", "ITR", "Generaci\u00F3n", "Email UTEC", "Tel\u00E9fono"
-				}
-			);
+		modeloTabla = new DefaultTableModel(
+				new Object[][] { { null, null, null, null, null, null, null, null, null },
+						{ null, null, null, null, null, null, null, null, null },
+						{ null, null, null, null, null, null, null, null, null },
+						{ null, null, null, null, null, null, null, null, null },
+						{ null, null, null, null, null, null, null, null, null }, },
+				new String[] { "Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "C\u00E9dula",
+						"ITR", "Generaci\u00F3n", "Email UTEC", "Tel\u00E9fono" });
 		tableMetro.setModel(modeloTabla);
 		tableMetro.setIntercellSpacing(new Dimension(0, 0));
 		tableMetro.setFuenteFilasSelect(new Font("Tahoma", Font.BOLD, 11));
@@ -133,7 +177,7 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		tableMetro.getColumnModel().getColumn(7).setMinWidth(130);
 		tableMetro.getColumnModel().getColumn(8).setMinWidth(75);
 		scrollPane.setViewportView(tableMetro);
-		
+
 		RSButtonHover btnhvrEscolaridad = new RSButtonHover();
 		btnhvrEscolaridad.setText("Escolaridad");
 		btnhvrEscolaridad.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -147,13 +191,13 @@ public class PanelReportesAnalistaTutor extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
-	public void cargarTabla(List<Estudiante>estudiantes) {
+
+	public void cargarTabla(List<Estudiante> estudiantes) {
 //		"Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "C\u00E9dula", "ITR", "Generaci\u00F3n", "Email UTEC", "Tel\u00E9fono"
 
 		modeloTabla.setRowCount(0);
-		for(Estudiante e:estudiantes) {
-			Vector v=new Vector();
+		for (Estudiante e : estudiantes) {
+			Vector v = new Vector();
 			v.addElement(e.getNombre1());
 			v.addElement(e.getNombre2());
 			v.addElement(e.getApellido1());
@@ -163,17 +207,16 @@ public class PanelReportesAnalistaTutor extends JPanel {
 			v.addElement(e.getAnoIngreso());
 			v.addElement(e.getMailInstitucional());
 			v.addElement(e.getTelefono());
-			
+
 			modeloTabla.addRow(v);
 		}
 	}
-	
-	
+
 	public void cargarComboBox() throws ServicesException {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("");
-		for(ITR i: DAOGeneral.itrRemote.obtenerItrs()){
-			if(i.getActivo()) {
+		for (ITR i : DAOGeneral.itrRemote.obtenerItrs()) {
+			if (i.getActivo()) {
 				modeloITR.addElement(i.getNombre());
 			}
 		}

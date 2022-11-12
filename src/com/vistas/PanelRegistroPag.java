@@ -192,10 +192,11 @@ public class PanelRegistroPag extends JPanel {
 					
 					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
 					
-					if(!apellido2.matches("^[a-zA-Z]+$")) {
-						throw new Exception("El campo segundo apellido no puede ser vacío y debe contener solo letras.");
+					if(!apellido2.isEmpty()){
+						if(!apellido2.matches("^[a-zA-Z]+$")) {
+							throw new Exception("El campo segundo apellido no puede ser vacío y debe contener solo letras.");
+						}
 					}
-					
 					usuarioRegistro.setApellido2(apellido2);
 					
 					String doc = textdOCUMENTO.getText();
@@ -269,42 +270,24 @@ public class PanelRegistroPag extends JPanel {
 						throw new Exception("El campo segundo nombre debe contener menos de 50 caracteres.");
 					}
 					
-					//primero checkeo si el string no es vacio (puede contener solo espacios), despues hago
-					//string.trim().length() > 0 y saco todos los espacios del string y
-					//si la longitud es igual a 0  es porque era solo espacios
-					System.out.println("hola"+nombre2+"hola");
-					//
-					//^[a-zA-Z]+(?:\\s[a-zA-Z]+)?
 					
-					
-					if((nombre2.matches("^[0-9 ]*$")) && (!nombre2.isEmpty())){
-						throw new Exception("El campo segundo nombre no puede contener numeros");
+					if(!textNombre2.getText().isEmpty()) {
+						if(nombre2.isBlank()) {
+							throw new Exception("El campo segundo nombre no puede ser solo espacios");
+						}
+						if((nombre2.matches("^[0-9]*$"))){
+							throw new Exception("El campo segundo nombre no puede contener numeros");
+						}
+						if(nombre2.contains(" ")) {
+							throw new Exception("No puede contener espacios vacios");
+						}
 					}
 					
-					if(nombre2.isBlank()) {
-						throw new Exception("El campo segundo nombre no puede ser solo espacios");
-					}
-					
-//					if(nombre2.matches("[a-zA-Z ]+")) {
-//						if(nombre2.length()>0 && nombre2.trim().length() == 0) {
-//							throw new Exception("El campo segundo nombre no puede ser solo espacios");
-//						}
-//					}
-//					
-					
-					
-					
+				
 					
 					usuarioRegistro.setNombre2(nombre2);
 					
-//					String doc = textdOCUMENTO.getText();
-//					
-//					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
-//						throw new Exception("Formato de documento inv�lido, debe contener 8 d�gitos numericos");
-//					}else{
-//						usuarioRegistro.setDocumento(doc);
-//					}
-					
+
 					
 					
 					String tel = textTelefono.getText();

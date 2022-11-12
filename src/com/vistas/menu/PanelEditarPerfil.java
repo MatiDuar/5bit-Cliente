@@ -217,8 +217,15 @@ public class PanelEditarPerfil extends JPanel {
 		
 		if(Menu.getUsuario() instanceof Estudiante) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();
+			panelDinamicoEditarPerfilPorTipoUsuarios.yearDate.setEnabled(false);
+			comboBoxITR.setEnabled(false);
 		}else if(Menu.getUsuario() instanceof Tutor){
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
+			panelDinamicoEditarPerfilPorTipoUsuarios.comboBoxAreaTutor.setEditable(false);
+			panelDinamicoEditarPerfilPorTipoUsuarios.comboBoxRolTutor.setEditable(false);
+			comboBoxITR.setEnabled(false);
+
+
 		}
 		add(panelDinamicoEditarPerfilPorTipoUsuarios);
 
@@ -228,11 +235,101 @@ public class PanelEditarPerfil extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 				Usuario usuarioMod=Menu.getUsuario();
-				usuarioMod.setApellido1(textApellido1.getText());
-				usuarioMod.setApellido2(textApellido2.getText());
-				usuarioMod.setNombre1(textNombre1.getText());
-				usuarioMod.setNombre2(textNombre2.getText());
-				usuarioMod.setContrasena(password.getText());
+				
+				String apellido1=textApellido1.getText();
+				
+				if(apellido1.length()>50) {
+					throw new Exception("El campo primer apellido debe contener menos de 50 caracteres.");
+				}
+					
+				//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+				if(!apellido1.matches("^[a-zA-Z]+$")) {
+					throw new Exception("El campo primer apellido no puede ser vacío y debe contener solo letras.");
+				}
+				usuarioMod.setApellido1(apellido1);
+				
+				String apellido2=textApellido2.getText();
+					
+				if(apellido2.length()>50) {
+					throw new Exception("El campo segundo apellido debe contener menos de 50 caracteres.");
+				}
+					
+				//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+				if(!apellido2.isEmpty()){
+					if(!apellido2.matches("^[a-zA-Z]+$")) {
+						throw new Exception("El campo segundo apellido no puede ser vacío y debe contener solo letras.");
+					}
+				}
+				
+				
+				usuarioMod.setApellido2(apellido2);
+				
+				String nombre1=textNombre1.getText();
+					
+				if(nombre1.length()>50) {
+					throw new Exception("El campo primer nombre debe contener menos de 50 caracteres.");
+				}
+					
+				//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
+					
+				if(!nombre1.matches("^[a-zA-Z]+$")) {
+					throw new Exception("El campo primer nombre no puede ser vacío y debe contener solo letras.");
+				}
+				
+				usuarioMod.setNombre1(nombre1);
+				
+				
+				String nombre2=textNombre2.getText();
+					
+				if(nombre2.length()>50) {
+					throw new Exception("El campo segundo nombre debe contener menos de 50 caracteres.");
+				}
+					
+				
+				if(!textNombre2.getText().isEmpty()) {
+					if(nombre2.isBlank()) {
+						throw new Exception("El campo segundo nombre no puede ser solo espacios");
+					}
+					if((nombre2.matches("^[0-9]*$"))){
+						throw new Exception("El campo segundo nombre no puede contener numeros");
+					}
+					if(nombre2.contains(" ")) {
+						throw new Exception("No puede contener espacios vacios");
+					}
+				}
+				
+				usuarioMod.setNombre2(nombre2);
+				
+				String contrasena=password.getText();
+				
+				if(contrasena.length()>50 || contrasena.length()<8) {
+					throw new Exception("El campo contrase�a debe tener entre 8 y 50 caracteres.");
+				}
+				
+				boolean contieneNums= false;
+				boolean contieneLetras= false;
+				
+				for (int i = 0; i < contrasena.length(); i++) {
+           			 if (Character.isLetter(contrasena.charAt(i))) {
+              			  contieneLetras=true;
+              			  break;
+           			 }
+      			 }
+      			 
+				for (int i = 0; i < contrasena.length(); i++) {
+           			 if (Character.isDigit(contrasena.charAt(i))) {
+              			  contieneNums=true;
+              			  break;
+           			 }
+      			 }
+      			if(!contieneNums || !contieneLetras){
+					 throw new Exception("La contrasena debe contener numeros y letras"); 
+				 }
+				
+				
+				usuarioMod.setContrasena(contrasena);
 				
 				String doc = textCedula.getText();
 				
@@ -241,8 +338,15 @@ public class PanelEditarPerfil extends JPanel {
 				}else{
 					usuarioMod.setDocumento(doc);
 				}
+				
+				String valorCBDepString = comboBoxDepartamento.getSelectedItem().toString();
+						
+				if(valorCBDepString==""){
+					throw new Exception("Debe seleccionar un Departamento");
+				}
+						
 					
-				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
+				usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
 
 
 				java.util.Date fecha= FechaNacimiento.getDatoFecha();
@@ -260,20 +364,66 @@ public class PanelEditarPerfil extends JPanel {
 				}
 				
 				usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long)1));
-				usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
-				usuarioMod.setLocalidad(textLocalidad.getText());
-				usuarioMod.setMail(textEmailPersonal.getText());
-				usuarioMod.setMailInstitucional(textEmailUtec.getText());
-				usuarioMod.setTelefono(textTelefonoContacto.getText());
 				
-				if(usuarioMod instanceof Tutor) {
-					
-					((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(PanelEditarPerfilExtra.comboBoxAreaTutor.getSelectedItem().toString()));
-					((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelEditarPerfilExtra.comboBoxRolTutor.getSelectedItem().toString()));
-					
-				}else if(usuarioMod instanceof Estudiante) {
-					((Estudiante) usuarioMod).setAnoIngreso(PanelEditarPerfilExtra.yearDate.getYear());
+				String valorCBITRString = comboBoxITR.getSelectedItem().toString();
+						
+				if(valorCBITRString==""){
+					throw new Exception("Debe seleccionar un ITR");
 				}
+				
+				usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
+				
+				String localidad =textLocalidad.getText();
+				
+				if(textLocalidad.getText().equalsIgnoreCase("")) {
+					throw new Exception("El campo localidad no puede ser vacio");
+				}
+						
+				if( (!localidad.matches("\\w.*") ) ){
+					throw new Exception("El campo localidad debe contener letras");		
+				}
+						
+				if(localidad.length()>50){
+					throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
+				} 
+				
+				
+				
+				usuarioMod.setLocalidad(localidad.replaceAll("\\s", ""));
+				
+				String mailPersonal= textEmailPersonal.getText();
+				
+				if(!mailPersonal.contains("@")){
+					throw new Exception("Formato de email personal incorrecto");
+				}
+				
+				
+				usuarioMod.setMail(mailPersonal);
+				
+				String mailInstitucional= textEmailUtec.getText();
+				
+				if(!mailInstitucional.contains("@")){
+					throw new Exception("Formato de email institucional incorrecto");
+				}
+				
+				usuarioMod.setMailInstitucional(mailInstitucional);
+				
+				String tel = textTelefonoContacto.getText();
+					
+				if(!esNumerico(tel)) {
+					throw new Exception("Ingrese un teléfono válido");
+				}
+				
+				usuarioMod.setTelefono(tel);
+				
+//				if(usuarioMod instanceof Tutor) {
+//					
+//					((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(PanelEditarPerfilExtra.comboBoxAreaTutor.getSelectedItem().toString()));
+//					((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(PanelEditarPerfilExtra.comboBoxRolTutor.getSelectedItem().toString()));
+//					
+//				}else if(usuarioMod instanceof Estudiante) {
+//					((Estudiante) usuarioMod).setAnoIngreso(Integer.parseInt(PanelEditarPerfilExtra.yearDate.getText()));
+//				}
 				
 				DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
 				
@@ -343,4 +493,6 @@ public class PanelEditarPerfil extends JPanel {
 	public static boolean esNumerico(String str) {
  	 return str.matches("-?\\d+(\\.\\d+)?");
 	}
+	
+	
 }

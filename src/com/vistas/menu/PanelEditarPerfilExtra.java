@@ -1,39 +1,43 @@
 package com.vistas.menu;
 
-import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import java.awt.Font;
-import rojeru_san.rsdate.RSYearDate;
-import rojerusan.RSComboBox;
-
-import java.awt.Color;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.controlador.DAOGeneral;
 import com.entities.AreaTutor;
+import com.entities.Estudiante;
 import com.entities.TipoTutor;
 import com.entities.Tutor;
-import com.entities.Estudiante;
 import com.exception.ServicesException;
+
+import rojeru_san.rsfield.RSTextFull;
+import rojerusan.RSComboBox;
 
 public class PanelEditarPerfilExtra extends JPanel {
 	
 	DefaultComboBoxModel modeloAreaTutor=new DefaultComboBoxModel();
 	DefaultComboBoxModel modeloTipoTutor=new DefaultComboBoxModel();
-	static public RSYearDate yearDate;
+	static public RSTextFull yearDate;
 	static public RSComboBox comboBoxAreaTutor;
 	static public RSComboBox comboBoxRolTutor;
 	public PanelEditarPerfilExtra() {
-
+		initUIEstudiante();
 	}
 	public void initUIEstudiante() {
 		removeAll();
 		setLayout(null);
 		
-		yearDate = new RSYearDate();
-		yearDate.setColorBackground(new Color(52, 152, 219));
+		yearDate = new RSTextFull();
+		yearDate.setMostrarBoton(false);
+		yearDate.setHorizontalAlignment(SwingConstants.CENTER);
+//		yearDate.setBackground(new Color(52, 152, 219));
 		yearDate.setBounds(98, 10, 250, 42);
+		yearDate.setText(((((Estudiante) Menu.getUsuario()).getAnoIngreso())+""));
 //		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getAnoIngreso());
 		add(yearDate);
 		
@@ -49,6 +53,8 @@ public class PanelEditarPerfilExtra extends JPanel {
 		lblTelefonoDeContacto_1.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblTelefonoDeContacto_1.setBounds(10, 32, 86, 14);
 		add(lblTelefonoDeContacto_1);
+		
+		yearDate.setEnabled(false);
 	}
 	
 	public void initUITutor() {
@@ -81,6 +87,9 @@ public class PanelEditarPerfilExtra extends JPanel {
 		
 		comboBoxAreaTutor.setSelectedItem(((Tutor) Menu.getUsuario()).getAreaTutor().getNombre());
 		comboBoxRolTutor.setSelectedItem(((Tutor) Menu.getUsuario()).getTipoTutor().getNombre());
+		comboBoxAreaTutor.setEditable(false);
+		comboBoxRolTutor.setEditable(false);
+
 
 	}
 	

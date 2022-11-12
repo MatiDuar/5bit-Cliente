@@ -26,6 +26,7 @@ import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.vistas.menu.Menu;
 
+
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsfield.RSPassword;
 import rojeru_san.rsfield.RSTextFull;
@@ -140,6 +141,7 @@ public class Login extends JFrame {
 			public void mouseMoved(MouseEvent e) {
 				lblRegistrarse.setForeground(Color.BLUE);
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
+				
 			}
 		});
 
