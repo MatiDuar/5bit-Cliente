@@ -266,6 +266,20 @@ public class PanelGestionDeEventos extends JPanel {
 		panelMantenimientoAnalista.setLayout(null);
 
 		RSButtonHover btnhvrModificar = new RSButtonHover();
+		btnhvrModificar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					FrameModificarEvento.eventoSeleccionado=DAOGeneral.eventoRemote.buscarEventoPorId((long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+					FrameModificarEvento frame=new FrameModificarEvento();
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnhvrModificar.setText("Modificar");
 		btnhvrModificar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrModificar.setBackground(new Color(0, 112, 192));
@@ -435,10 +449,11 @@ MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 		modeloTabla.setRowCount(0);
 		
 		for (Evento e : eventos) {
-			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), e.getTutores()))) {
+			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), (Set<Tutor>) e.getTutores()))) {
 				Vector v = new Vector();
 				v.addElement(e.getTitulo());
 				v.addElement(e.getTipoActividad().getNombre());
+				String Fecha=e.getFechaInicio().getDay()+"-"+e.getFechaInicio().getMonth()+"-"+e.getFechaInicio().getYear();
 				v.addElement(e.getFechaInicio());
 				v.addElement(e.getItr().getNombre());
 				v.addElement(e.getModalidad().getNombre());

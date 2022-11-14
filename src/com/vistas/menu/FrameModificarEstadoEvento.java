@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.controlador.DAOGeneral;
 import com.entities.EstadosEventos;
+import com.entities.Evento;
 import com.entities.ModalidadesEventos;
 
 import RSMaterialComponent.RSTextFieldIconUno;

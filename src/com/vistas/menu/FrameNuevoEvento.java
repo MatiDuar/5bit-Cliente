@@ -3,20 +3,26 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
+import com.entities.Evento;
 import com.entities.ITR;
 import com.entities.ModalidadesEventos;
 import com.entities.TipoActividad;
+import com.entities.Tutor;
 import com.exception.ServicesException;
 
 import rojeru_san.complementos.RSButtonHover;
@@ -24,7 +30,6 @@ import rojeru_san.rsdate.RSDateChooser;
 import rojeru_san.rsfield.RSTextFull;
 import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
-import rojerusan.RSTableMetro;
 
 public class FrameNuevoEvento extends JFrame {
 
@@ -32,6 +37,8 @@ public class FrameNuevoEvento extends JFrame {
 	private DefaultComboBoxModel modeloTipoEvento;
 	private DefaultComboBoxModel modeloModalidad;
 	private DefaultComboBoxModel modeloITR;
+
+	public static ArrayList<Tutor> tutoresAsignados;
 
 	/**
 	 * Launch the application.
@@ -54,7 +61,7 @@ public class FrameNuevoEvento extends JFrame {
 	 */
 	public FrameNuevoEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 717, 690);
+		setBounds(100, 100, 717, 554);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -116,7 +123,7 @@ public class FrameNuevoEvento extends JFrame {
 		fechaFin.setBounds(94, 196, 250, 42);
 		contentPane.add(fechaFin);
 
-		modeloTipoEvento=new DefaultComboBoxModel();
+		modeloTipoEvento = new DefaultComboBoxModel();
 		RSComboBox comboBoxTipoEvento = new RSComboBox();
 		comboBoxTipoEvento.setModel(modeloTipoEvento);
 		comboBoxTipoEvento.setBounds(440, 96, 250, 42);
@@ -132,7 +139,7 @@ public class FrameNuevoEvento extends JFrame {
 		lblModalidad.setBounds(27, 263, 62, 14);
 		contentPane.add(lblModalidad);
 
-		modeloModalidad=new DefaultComboBoxModel();
+		modeloModalidad = new DefaultComboBoxModel();
 		RSComboBox comboBoxModalidad = new RSComboBox();
 		comboBoxModalidad.setModel(modeloModalidad);
 		comboBoxModalidad.setBounds(94, 249, 250, 42);
@@ -143,8 +150,8 @@ public class FrameNuevoEvento extends JFrame {
 		lblItr.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblItr.setBounds(364, 262, 71, 14);
 		contentPane.add(lblItr);
-		
-		modeloITR=new DefaultComboBoxModel();
+
+		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboBoxITR = new RSComboBox();
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(440, 248, 250, 42);
@@ -163,45 +170,12 @@ public class FrameNuevoEvento extends JFrame {
 		lblLocalizacion.setBounds(18, 316, 66, 14);
 		contentPane.add(lblLocalizacion);
 
-		RSTextFull textTitulo_1 = new RSTextFull();
-		textTitulo_1.setText((String) null);
-		textTitulo_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textTitulo_1.setBounds(94, 302, 250, 42);
-		contentPane.add(textTitulo_1);
+		RSTextFull textLocalicacion = new RSTextFull();
+		textLocalicacion.setText((String) null);
+		textLocalicacion.setFont(new Font("Tahoma", Font.BOLD, 11));
+		textLocalicacion.setBounds(94, 302, 250, 42);
+		contentPane.add(textLocalicacion);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(334, 392, 349, 195);
-		contentPane.add(scrollPane);
-
-		RSTableMetro tableMetro = new RSTableMetro();
-		tableMetro.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
-		scrollPane.setViewportView(tableMetro);
-
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(237, 608, 227, 33);
-		contentPane.add(btnhvrGuardar);
-
-		JLabel lblSeleccionarTutor = new JLabel("Seleccionar Tutor");
-		lblSeleccionarTutor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSeleccionarTutor.setFont(new Font("Lato", Font.PLAIN, 17));
-		lblSeleccionarTutor.setBounds(18, 374, 232, 14);
-		contentPane.add(lblSeleccionarTutor);
 		DefaultComboBoxModel modeloInicio = new DefaultComboBoxModel();
 		RSComboBox comboBoxHoraInicio = new RSComboBox();
 		comboBoxHoraInicio.setModel(modeloInicio);
@@ -213,29 +187,7 @@ public class FrameNuevoEvento extends JFrame {
 		comboBoxHoraFin.setModel(modeloFin);
 		comboBoxHoraFin.setBounds(440, 196, 250, 42);
 		contentPane.add(comboBoxHoraFin);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(28, 392, 296, 195);
-		contentPane.add(scrollPane_1);
-		
-		RSTableMetro tableMetro_1 = new RSTableMetro();
-		tableMetro_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
-		scrollPane_1.setViewportView(tableMetro_1);
+
 		// se agregan las horas en el ComboBox
 		for (int j = 0; j < 24; j++) {
 			for (int i = 0; i < 31; i += 30) {
@@ -263,28 +215,106 @@ public class FrameNuevoEvento extends JFrame {
 			}
 		}
 
+		RSButtonHover btnhvrGuardar = new RSButtonHover();
+		btnhvrGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Evento eventoNuevo = new Evento();
+					eventoNuevo.setTitulo(textTitulo.getText());
+					
+					//falta campos pero no lo pide el requerimiento
+					eventoNuevo.setCreditos(0);
+					eventoNuevo.setSemestre(1);
+
+					
+					eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
+					eventoNuevo
+							.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+					eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
+							.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
+					eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
+							.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
+					eventoNuevo.setTutores(tutoresAsignados);
+					SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+
+//					// fecha de evento inicio
+					Timestamp dateInicio =  new Timestamp(fechaInicio.getDatoFecha().getTime());
+					String horaMinIncio[]=comboBoxHoraInicio.getSelectedItem().toString().split(":");
+					dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
+					dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
+					eventoNuevo.setFechaInicio(dateInicio);
+					
+					// fecha de evento fin
+
+					Timestamp dateFin=new Timestamp(fechaFin.getDatoFecha().getTime());
+					String[] horaMinFin=comboBoxHoraFin.getSelectedItem().toString().split(":");
+					dateFin.setHours(Integer.parseInt(horaMinFin[0]));
+					dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
+
+					
+					eventoNuevo.setFechaFin(dateFin);
+					eventoNuevo.setLocalizacion(textLocalicacion.getText());
+					eventoNuevo.setSemestre(1);
+					
+					DAOGeneral.eventoRemote.crearEvento(eventoNuevo);
+					PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnhvrGuardar.setText("Guardar");
+		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBounds(226, 448, 227, 33);
+		contentPane.add(btnhvrGuardar);
+
+		JLabel lblSeleccionarTutor = new JLabel("Seleccionar Tutor");
+		lblSeleccionarTutor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSeleccionarTutor.setFont(new Font("Lato", Font.PLAIN, 17));
+		lblSeleccionarTutor.setBounds(18, 374, 232, 14);
+		contentPane.add(lblSeleccionarTutor);
+
+		RSButtonHover btnhvrAsignarTutor = new RSButtonHover();
+		btnhvrAsignarTutor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FrameAsignarTutores.asignados=tutoresAsignados;
+				FrameAsignarTutores.esNuevo=true;
+				FrameAsignarTutores frame = new FrameAsignarTutores();
+				frame.setVisible(true);
+			}
+		});
+		btnhvrAsignarTutor.setText("Asignar tutores");
+		btnhvrAsignarTutor.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrAsignarTutor.setBackground(new Color(0, 112, 192));
+		btnhvrAsignarTutor.setBounds(179, 366, 227, 33);
+		contentPane.add(btnhvrAsignarTutor);
+
 	}
-	
+
 	public void cargarComboBox() throws ServicesException {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("");
-		for(ITR itr:DAOGeneral.itrRemote.obtenerItrs()) {
-			if(itr.getActivo()){
+		for (ITR itr : DAOGeneral.itrRemote.obtenerItrs()) {
+			if (itr.getActivo()) {
 				modeloITR.addElement(itr.getNombre());
 			}
 		}
-		
+
 		modeloModalidad.removeAllElements();
 		modeloModalidad.addElement("");
-		for(ModalidadesEventos m:DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()) {
-			if(m.getActivo()) {
+		for (ModalidadesEventos m : DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()) {
+			if (m.getActivo()) {
 				modeloModalidad.addElement(m.getNombre());
 			}
 		}
-		
+
 		modeloTipoEvento.removeAllElements();
 		modeloTipoEvento.addElement("");
-		for(TipoActividad t:DAOGeneral.tipoActividadRemote.obtenerTipoActividad()) {
+		for (TipoActividad t : DAOGeneral.tipoActividadRemote.obtenerTipoActividad()) {
 			modeloTipoEvento.addElement(t.getNombre());
 		}
 	}

@@ -137,7 +137,7 @@ public class MantenimientoEstadosEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					FrameModificarEstadoEvento.estadoSeleccionado=DAOGeneral.estadosEventoRemote.buscarEstadoEventoPorId((long)modeloModalidad.getValueAt(tableMetro.getSelectedRow(), 1));
+					FrameModificarEstadoEvento.estadoSeleccionado=(EstadosEventos) DAOGeneral.estadosEventoRemote.buscarEstadoEventoPorId((long)modeloModalidad.getValueAt(tableMetro.getSelectedRow(), 1));
 					FrameModificarEstadoEvento mod=new FrameModificarEstadoEvento();
 					mod.setVisible(true);
 				} catch (ServicesException e1) {
