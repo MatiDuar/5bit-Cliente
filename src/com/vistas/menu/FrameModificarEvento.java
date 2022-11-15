@@ -8,10 +8,12 @@ import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -39,7 +41,7 @@ public class FrameModificarEvento extends JFrame {
 	private DefaultComboBoxModel modeloITR;
 	private DefaultComboBoxModel modeloEstado;
 
-	public static ArrayList<Tutor> tutoresAsignados;
+	public static List<Tutor> tutoresAsignados;
 
 	public static Evento eventoSeleccionado;
 
@@ -124,9 +126,8 @@ public class FrameModificarEvento extends JFrame {
 		contentPane.add(lblHoraFin);
 
 		RSDateChooser fechaFin = new RSDateChooser();
-		fechaFin.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaFin().getYear(), 
-				eventoSeleccionado.getFechaFin().getMonth()
-				, eventoSeleccionado.getFechaFin().getDay()));
+		fechaFin.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaFin().getYear(),
+				eventoSeleccionado.getFechaFin().getMonth(), eventoSeleccionado.getFechaFin().getDay()));
 		fechaFin.setBounds(94, 196, 250, 42);
 		contentPane.add(fechaFin);
 
@@ -137,9 +138,8 @@ public class FrameModificarEvento extends JFrame {
 		contentPane.add(comboBoxTipoEvento);
 
 		RSDateChooser fechaInicio = new RSDateChooser();
-		fechaInicio.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaInicio().getYear(), 
-				eventoSeleccionado.getFechaInicio().getMonth()
-				, eventoSeleccionado.getFechaInicio().getDay()));
+		fechaInicio.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaInicio().getYear(),
+				eventoSeleccionado.getFechaInicio().getMonth(), eventoSeleccionado.getFechaInicio().getDay()));
 		fechaInicio.setBounds(94, 143, 250, 42);
 		contentPane.add(fechaInicio);
 
@@ -192,6 +192,12 @@ public class FrameModificarEvento extends JFrame {
 		comboBoxHoraFin.setBounds(440, 196, 250, 42);
 		contentPane.add(comboBoxHoraFin);
 
+		RSComboBox comboBoxEstado = new RSComboBox();
+		modeloEstado = new DefaultComboBoxModel();
+		comboBoxEstado.setModel(modeloEstado);
+		comboBoxEstado.setBounds(440, 302, 250, 42);
+		contentPane.add(comboBoxEstado);
+
 		// se agregan las horas en el ComboBox
 		for (int j = 0; j < 24; j++) {
 			for (int i = 0; i < 31; i += 30) {
@@ -224,53 +230,65 @@ public class FrameModificarEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Evento eventoNuevo = new Evento();
-					eventoNuevo.setTitulo(textTitulo.getText());
+					int input = JOptionPane.showConfirmDialog(getParent(),
+							"Estas seguro de modificar los datos del evento Seleccionado", "Guardado...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-					// falta campos pero no lo pide el requerimiento
-					eventoNuevo.setCreditos(0);
-					eventoNuevo.setSemestre(1);
+					if (input == 0) {
 
-					eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
-					eventoNuevo
-							.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
-					eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
-							.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
-					eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
-							.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
-					eventoNuevo.setTutores(tutoresAsignados);
-					SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+						Evento eventoNuevo = eventoSeleccionado;
+						eventoNuevo.setTitulo(textTitulo.getText());
+
+						// falta campos pero no lo pide el requerimiento
+						eventoNuevo.setCreditos(0);
+						eventoNuevo.setSemestre(1);
+
+						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote
+								.buscarNombreEstadoEvento(comboBoxEstado.getSelectedItem().toString()));
+						eventoNuevo.setItr(
+								DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+						eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
+								.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
+						eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
+								.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
+						eventoNuevo.setTutores(tutoresAsignados);
 
 //					// fecha de evento inicio
-					Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
-					String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
-					dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
-					dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
-					eventoNuevo.setFechaInicio(dateInicio);
 
-					// fecha de evento fin
+						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
+						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
+						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
+						dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
+						eventoNuevo.setFechaInicio(dateInicio);
 
-					Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
-					String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
-					dateFin.setHours(Integer.parseInt(horaMinFin[0]));
-					dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
+						// fecha de evento fin
 
-					eventoNuevo.setFechaFin(dateFin);
+						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
+						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
+						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
+						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
 
-					eventoNuevo.setSemestre(1);
+						eventoNuevo.setFechaFin(dateFin);
 
-					DAOGeneral.eventoRemote.crearEvento(eventoNuevo);
-					PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+						eventoNuevo.setSemestre(1);
 
+						DAOGeneral.eventoRemote.modificarEvento(eventoNuevo);
+						PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+
+						JOptionPane.showMessageDialog(null, "Se modifico correctamente el Evento.", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false);
+					}
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(226, 448, 227, 33);
+		btnhvrGuardar.setBounds(386, 440, 227, 33);
 		contentPane.add(btnhvrGuardar);
 
 		JLabel lblSeleccionarTutor = new JLabel("Seleccionar Tutor");
@@ -284,7 +302,7 @@ public class FrameModificarEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				FrameAsignarTutores.asignados = tutoresAsignados;
-				FrameAsignarTutores.esNuevo=false;
+				FrameAsignarTutores.esNuevo = false;
 				FrameAsignarTutores frame = new FrameAsignarTutores();
 				frame.setVisible(true);
 			}
@@ -295,12 +313,6 @@ public class FrameModificarEvento extends JFrame {
 		btnhvrAsignarTutor.setBounds(179, 366, 227, 33);
 		contentPane.add(btnhvrAsignarTutor);
 
-		RSComboBox comboBoxEstado = new RSComboBox();
-		modeloEstado=new DefaultComboBoxModel();
-		comboBoxEstado.setModel(modeloEstado);
-		comboBoxEstado.setBounds(440, 302, 250, 42);
-		contentPane.add(comboBoxEstado);
-
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEstado.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -310,6 +322,7 @@ public class FrameModificarEvento extends JFrame {
 		// se cargan todos los comboBox
 		try {
 			cargarComboBox();
+			tutoresAsignados = eventoSeleccionado.getTutores();
 		} catch (ServicesException e) {
 			e.printStackTrace();
 		}
@@ -320,31 +333,49 @@ public class FrameModificarEvento extends JFrame {
 		comboBoxEstado.setSelectedItem(eventoSeleccionado.getEstado().getNombre());
 		String horasInicio;
 		String minutosInicio;
-		if(eventoSeleccionado.getFechaInicio().getHours()<10) {
-			horasInicio="0"+eventoSeleccionado.getFechaInicio().getHours();
-		}else {
-			horasInicio="0"+eventoSeleccionado.getFechaInicio().getHours();
+		if (eventoSeleccionado.getFechaInicio().getHours() < 10) {
+			horasInicio = "0" + eventoSeleccionado.getFechaInicio().getHours();
+		} else {
+			horasInicio = "0" + eventoSeleccionado.getFechaInicio().getHours();
 		}
-		if(eventoSeleccionado.getFechaInicio().getMinutes()==0) {
-			minutosInicio="00";
-		}else {
-			minutosInicio="30";
+		if (eventoSeleccionado.getFechaInicio().getMinutes() == 0) {
+			minutosInicio = "00";
+		} else {
+			minutosInicio = "30";
 		}
-		comboBoxHoraInicio.setSelectedItem(horasInicio+":"+minutosInicio);
-		
+		comboBoxHoraInicio.setSelectedItem(horasInicio + ":" + minutosInicio);
+
 		String horasFin;
 		String minutosFin;
-		if(eventoSeleccionado.getFechaFin().getHours()<10) {
-			horasFin="0"+eventoSeleccionado.getFechaFin().getHours();
-		}else {
-			horasFin="0"+eventoSeleccionado.getFechaFin().getHours();
+		if (eventoSeleccionado.getFechaFin().getHours() < 10) {
+			horasFin = "0" + eventoSeleccionado.getFechaFin().getHours();
+		} else {
+			horasFin = "0" + eventoSeleccionado.getFechaFin().getHours();
 		}
-		if(eventoSeleccionado.getFechaFin().getMinutes()==0) {
-			minutosFin="00";
-		}else {
-			minutosFin="30";
+		if (eventoSeleccionado.getFechaFin().getMinutes() == 0) {
+			minutosFin = "00";
+		} else {
+			minutosFin = "30";
 		}
-		comboBoxHoraFin.setSelectedItem(horasFin+":"+minutosFin);
+		comboBoxHoraFin.setSelectedItem(horasFin + ":" + minutosFin);
+		
+		RSButtonHover btnhvrCancel = new RSButtonHover();
+		btnhvrCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de cancelar, los datos no seran guardados.",
+						"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					setVisible(false);
+				}
+			}
+		});
+		btnhvrCancel.setText("Cancelar");
+		btnhvrCancel.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrCancel.setBackground(new Color(0, 112, 192));
+		btnhvrCancel.setBounds(94, 440, 227, 33);
+		contentPane.add(btnhvrCancel);
 
 	}
 
@@ -370,11 +401,11 @@ public class FrameModificarEvento extends JFrame {
 		for (TipoActividad t : DAOGeneral.tipoActividadRemote.obtenerTipoActividad()) {
 			modeloTipoEvento.addElement(t.getNombre());
 		}
-		
+
 		modeloEstado.removeAllElements();
 		modeloEstado.addElement("");
-		for(EstadosEventos e:DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()) {
-			if(e.getActivo()) {
+		for (EstadosEventos e : DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()) {
+			if (e.getActivo()) {
 				modeloEstado.addElement(e.getNombre());
 			}
 		}

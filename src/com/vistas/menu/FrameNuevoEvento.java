@@ -5,14 +5,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -38,7 +38,7 @@ public class FrameNuevoEvento extends JFrame {
 	private DefaultComboBoxModel modeloModalidad;
 	private DefaultComboBoxModel modeloITR;
 
-	public static ArrayList<Tutor> tutoresAsignados;
+	public static List<Tutor> tutoresAsignados;
 
 	/**
 	 * Launch the application.
@@ -220,46 +220,49 @@ public class FrameNuevoEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Evento eventoNuevo = new Evento();
-					eventoNuevo.setTitulo(textTitulo.getText());
-					
-					//falta campos pero no lo pide el requerimiento
-					eventoNuevo.setCreditos(0);
-					eventoNuevo.setSemestre(1);
+					int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el Evento?.",
+							"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-					
-					eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
-					eventoNuevo
-							.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
-					eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
-							.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
-					eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
-							.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
-					eventoNuevo.setTutores(tutoresAsignados);
-					SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+					if (input == 0) {
+						Evento eventoNuevo = new Evento();
+						eventoNuevo.setTitulo(textTitulo.getText());
+
+						// falta campos pero no lo pide el requerimiento
+						eventoNuevo.setCreditos(0);
+						eventoNuevo.setSemestre(1);
+
+						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
+						eventoNuevo.setItr(
+								DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+						eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
+								.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
+						eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
+								.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
+						eventoNuevo.setTutores(tutoresAsignados);
+						SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 
 //					// fecha de evento inicio
-					Timestamp dateInicio =  new Timestamp(fechaInicio.getDatoFecha().getTime());
-					String horaMinIncio[]=comboBoxHoraInicio.getSelectedItem().toString().split(":");
-					dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
-					dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
-					eventoNuevo.setFechaInicio(dateInicio);
-					
-					// fecha de evento fin
+						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
+						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
+						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
+						dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
+						eventoNuevo.setFechaInicio(dateInicio);
 
-					Timestamp dateFin=new Timestamp(fechaFin.getDatoFecha().getTime());
-					String[] horaMinFin=comboBoxHoraFin.getSelectedItem().toString().split(":");
-					dateFin.setHours(Integer.parseInt(horaMinFin[0]));
-					dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
+						// fecha de evento fin
 
-					
-					eventoNuevo.setFechaFin(dateFin);
-					eventoNuevo.setLocalizacion(textLocalicacion.getText());
-					eventoNuevo.setSemestre(1);
-					
-					DAOGeneral.eventoRemote.crearEvento(eventoNuevo);
-					PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
+						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
+						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
+						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
 
+						eventoNuevo.setFechaFin(dateFin);
+						eventoNuevo.setLocalizacion(textLocalicacion.getText());
+						eventoNuevo.setSemestre(1);
+
+						DAOGeneral.eventoRemote.crearEvento(eventoNuevo);
+						PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+						setVisible(false);
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -268,7 +271,7 @@ public class FrameNuevoEvento extends JFrame {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(226, 448, 227, 33);
+		btnhvrGuardar.setBounds(409, 447, 227, 33);
 		contentPane.add(btnhvrGuardar);
 
 		JLabel lblSeleccionarTutor = new JLabel("Seleccionar Tutor");
@@ -281,8 +284,8 @@ public class FrameNuevoEvento extends JFrame {
 		btnhvrAsignarTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FrameAsignarTutores.asignados=tutoresAsignados;
-				FrameAsignarTutores.esNuevo=true;
+				FrameAsignarTutores.asignados = tutoresAsignados;
+				FrameAsignarTutores.esNuevo = true;
 				FrameAsignarTutores frame = new FrameAsignarTutores();
 				frame.setVisible(true);
 			}
@@ -292,6 +295,24 @@ public class FrameNuevoEvento extends JFrame {
 		btnhvrAsignarTutor.setBackground(new Color(0, 112, 192));
 		btnhvrAsignarTutor.setBounds(179, 366, 227, 33);
 		contentPane.add(btnhvrAsignarTutor);
+		
+		RSButtonHover btnhvrCancelar = new RSButtonHover();
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de cancelar, los datos no seran guardados.",
+						"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					setVisible(false);
+				}
+			}
+		});
+		btnhvrCancelar.setText("Cancelar");
+		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBounds(94, 447, 227, 33);
+		contentPane.add(btnhvrCancelar);
 
 	}
 

@@ -270,7 +270,8 @@ public class PanelGestionDeEventos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					FrameModificarEvento.eventoSeleccionado=DAOGeneral.eventoRemote.buscarEventoPorId((long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+					Evento eventoSeleccionado=DAOGeneral.eventoRemote.buscarEventoPorId((long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+					FrameModificarEvento.eventoSeleccionado=eventoSeleccionado;
 					FrameModificarEvento frame=new FrameModificarEvento();
 					frame.setVisible(true);
 				} catch (Exception e1) {
@@ -335,6 +336,7 @@ public class PanelGestionDeEventos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					FrameNuevoEvento.tutoresAsignados=null;
 					FrameNuevoEvento ventana=new FrameNuevoEvento();
 					ventana.setVisible(true);
 				} catch (Exception e1) {
