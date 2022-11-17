@@ -26,7 +26,6 @@ public class PanelEditarPerfilExtra extends JPanel {
 	static public RSComboBox comboBoxAreaTutor;
 	static public RSComboBox comboBoxRolTutor;
 	public PanelEditarPerfilExtra() {
-		initUIEstudiante();
 	}
 	public void initUIEstudiante() {
 		removeAll();
