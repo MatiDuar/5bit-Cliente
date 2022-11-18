@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="lib/RojeruSan.full_9.6.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-core-5.3.28.Final.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-client.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

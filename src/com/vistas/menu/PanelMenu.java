@@ -1,26 +1,26 @@
 package com.vistas.menu;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
 import java.awt.Cursor;
-
-import rojeru_san.rslabel.RSLabelImage;
-import javax.swing.SwingConstants;
-
-import com.controlador.DAOGeneral;
-import com.vistas.Login;
-
-import RSMaterialComponent.RSButtonMaterialIconUno;
-import rojeru_san.efectos.ValoresEnum.ICONS;
-import javax.swing.ImageIcon;
-
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+
+import com.vistas.Login;
+
+import RSMaterialComponent.RSButtonMaterialIconUno;
+import rojeru_san.efectos.ValoresEnum.ICONS;
+import rojeru_san.rslabel.RSLabelImage;
 
 public class PanelMenu extends JPanel {
 //	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
@@ -43,8 +43,18 @@ public class PanelMenu extends JPanel {
 		
 		setBounds(0,0,955, 725);
 		setLayout(null);
-		JPanel panelDinamico = new JPanel();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(245, 0, 700, 725);
+		
+		JPanel panelDinamico = new JPanel();		
+		panelDinamico.setBounds(245, 0, 700, 725);		
+		panelDinamico.setLayout(null);
+		
+		scrollPane.add(panelDinamico);
 
+		
+		add(scrollPane);
 		JPanel menuUsuario = new JPanel();
 		menuUsuario.setBounds(0, 0, 246, 725);
 		menuUsuario.setBackground(new Color(177, 192, 207));
@@ -100,9 +110,7 @@ public class PanelMenu extends JPanel {
 		labelImage.setBounds(639, 10, 51, 53);
 		panelTituloSistema.add(labelImage);
 		
-		panelDinamico.setBounds(245, 0, 700, 725);
-		add(panelDinamico);
-		panelDinamico.setLayout(null);
+		
 		
 		JLabel lblEditarPerfil = new JLabel("Editar perfil");
 		lblEditarPerfil.addMouseListener(new MouseAdapter() {
@@ -188,16 +196,27 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(buttonGestionEventos);
 		
 	}
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////
+	
+	
 	public void initUI() {
 		
 		removeAll();
 		
 		setBounds(0,0,955, 725);
 		setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(245, 0, 700, 725);
+		
 		JPanel panelDinamico = new JPanel();
-		panelDinamico.setBounds(245, 0, 700, 725);
-		add(panelDinamico);
 		panelDinamico.setLayout(null);
+		
 		
 		JLabel lblNewLabel_2_1 = new JLabel("SISTEMA DE GESTIÓN");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
@@ -251,7 +270,6 @@ public class PanelMenu extends JPanel {
 				panelDinamico.removeAll();
 				panelEditarPerfil.setSize(945, 725);
 				panelEditarPerfil.setLocation(0, 0);
-				
 				panelDinamico.add(panelEditarPerfil);
 				panelDinamico.revalidate();
 				panelDinamico.repaint();
@@ -284,13 +302,16 @@ public class PanelMenu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PanelReportesEstudiante ventana=new PanelReportesEstudiante();
+				scrollPane.removeAll();
 
-				panelDinamico.removeAll();
-				ventana.setSize(945, 725);
-				ventana.setLocation(0, 0);
-				panelDinamico.add(ventana);
-				panelDinamico.revalidate();
-				panelDinamico.repaint();
+//				ventana.setSize(700, 800);
+//				ventana.setLocation(0, 0);
+
+				scrollPane.add(ventana);
+				scrollPane.setPreferredSize(new Dimension(700,500));
+				scrollPane.revalidate();
+				scrollPane.repaint();
+
 			}
 		});
 		
@@ -317,6 +338,9 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
+//		scrollPane.add(panelDinamico);
+		add(scrollPane);
+		
 	}
 	
 	
@@ -490,7 +514,6 @@ public class PanelMenu extends JPanel {
 		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCerrarSesion.setBounds(93, 600, 73, 13);
 		menuUsuario.add(lblCerrarSesion);
+		
 	}
-	
-	
 }

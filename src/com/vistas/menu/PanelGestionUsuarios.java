@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
+import com.controlador.EmailSender;
 import com.entities.Analista;
 import com.entities.Estudiante;
 import com.entities.ITR;
@@ -97,7 +98,13 @@ public class PanelGestionUsuarios extends JPanel {
 				new String[] { "Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "C\u00E9dula",
 						"Fecha de Nacimiento", "Tel\u00E9fono", "Localidad", "Departamento", "Email Personal",
 						"Email UTEC", "ITR", "Tipo Usuario", "Generaci\u00F3n Estudiante", "\u00C1rea Tutor",
-						"Rol Tutor", "Estado","Id" });
+						"Rol Tutor", "Estado","Id" }){
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 
 		tableMetro.setModel(modeloTablaMetro);
 		tableMetro.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -153,7 +160,8 @@ public class PanelGestionUsuarios extends JPanel {
 		comboEstado.setModel(modeloEstado);
 		modeloEstado.addElement("Activo");
 		modeloEstado.addElement("Inactivo");
-		modeloEstado.addElement("Ambos");
+		modeloEstado.addElement("Sin validar");
+		modeloEstado.addElement("Todos");
 
 		comboEstado.setBounds(155, 113, 121, 32);
 		add(comboEstado);
@@ -208,7 +216,9 @@ public class PanelGestionUsuarios extends JPanel {
 						listaFiltro=(ArrayList<Usuario>) filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
 					}else if(comboEstado.getSelectedItem().toString()=="Inactivo"){
 						listaFiltro=(ArrayList<Usuario>) filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
-					}else if(comboEstado.getSelectedItem().toString()=="Ambos"){
+					}else if(comboEstado.getSelectedItem().toString()=="Sin validar"){
+						listaFiltro=(ArrayList<Usuario>) filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
+					}else if(comboEstado.getSelectedItem().toString()=="Todos"){
 						listaFiltro=(ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios();
 					}
 					List<Usuario> listaFiltro2 = new ArrayList<>();
@@ -292,7 +302,7 @@ public class PanelGestionUsuarios extends JPanel {
 				try {
 					long idUsuarioSeleccionado=(long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
 					Usuario usuarioHa = DAOGeneral.usuarioRemote.buscarUsuarioPorId(idUsuarioSeleccionado);
-					if (usuarioHa.getActivo()) {
+					if (usuarioHa.getActivo() && usuarioHa.getValidado()) {
 						throw new Exception("Usuario ya esta habilitado");
 					}
 					int input = JOptionPane.showConfirmDialog(getParent(),
@@ -300,6 +310,8 @@ public class PanelGestionUsuarios extends JPanel {
 							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					if (input == 0) {
 						usuarioHa.setActivo(true);
+						usuarioHa.setValidado(true);
+
 						DAOGeneral.usuarioRemote.modificarUsuario(usuarioHa);
 						if(comboEstado.getSelectedItem().toString()=="Activo") {
 							cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
@@ -312,13 +324,18 @@ public class PanelGestionUsuarios extends JPanel {
 						JOptionPane.showMessageDialog(null, "Se habilito correctamente el usuario", "Aviso...",
 								JOptionPane.INFORMATION_MESSAGE);
 						
+						EmailSender email=new EmailSender();
+						email.setupServerProperties();
+						email.draftEmail(usuarioHa);
+						email.sendEmail();
+						
 					}
 				} catch (Exception m) {
 					JOptionPane.showMessageDialog(null, m.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		btnhvrHabilitarUsuario.setText("Habilitar");
+		btnhvrHabilitarUsuario.setText("Validar");
 		btnhvrHabilitarUsuario.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrHabilitarUsuario.setBackground(new Color(0, 112, 192));
 		btnhvrHabilitarUsuario.setBounds(585, 219, 108, 33);
@@ -394,22 +411,8 @@ public class PanelGestionUsuarios extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					long idUsuarioSeleccionado=(long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
-
-					Usuario usuarioMod = DAOGeneral.usuarioRemote.buscarUsuarioPorId(idUsuarioSeleccionado);
-					PanelModificarDatosUsuarios.usuarioLogeado = usuarioMod;
-
-					FrameModificarDatosUsuarios modificarDatosUsuario = FrameModificarDatosUsuarios.getInstancia();
-
-					if (usuarioMod instanceof Estudiante) {
-						modificarDatosUsuario.panelDatosUsuario.datosEstudiante();
-					} else if (usuarioMod instanceof Tutor) {
-						modificarDatosUsuario.panelDatosUsuario.datosTutor();
-					} else if (usuarioMod instanceof Analista) {
-						modificarDatosUsuario.panelDatosUsuario.datosAnalista();
-					}
-					modificarDatosUsuario.setVisible(true);
-
+					
+					modificarUsuario(Long.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
 				} catch (ServicesException e1) {
 					e1.printStackTrace();
 				}
@@ -422,6 +425,18 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrModificarUsuario.setBounds(585, 267, 108, 33);
 		add(btnhvrModificarUsuario);
 
+		tableMetro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.getClickCount() == 2 && tableMetro.getSelectedRow() != -1) {
+					try {
+						modificarUsuario(Long.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
+					} catch (ServicesException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		try {
 			cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
 			cargarComboBox();
@@ -471,9 +486,11 @@ public class PanelGestionUsuarios extends JPanel {
 				v.addElement("-");
 				v.addElement("-");
 			}
-			if (u.getActivo()) {
+			if (u.getActivo() && u.getValidado()) {
 				v.addElement("Activo");
-			} else {
+			} else if(u.getActivo() && !u.getValidado()){
+				v.addElement("Sin validar");
+			}else {
 				v.addElement("Inactivo");
 			}
 			v.addElement(u.getId());
@@ -501,7 +518,7 @@ public class PanelGestionUsuarios extends JPanel {
 		for (Iterator<Usuario> iter = usuarios.iterator(); iter
 				.hasNext();) {
 			Usuario u = iter.next();
-			if(u.getActivo()) {
+			if(u.getActivo() && u.getValidado()) {
 				listaFiltro.add(u);
 			}
 		}
@@ -518,5 +535,34 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		}
 		return listaFiltro;
+	}
+	
+	public List<Usuario> filtrarSinValidar(ArrayList<Usuario>usuarios){
+		ArrayList<Usuario>listaFiltro = new ArrayList<>();
+		for (Iterator<Usuario> iter = usuarios.iterator(); iter
+				.hasNext();) {
+			Usuario u = iter.next();
+			if((u.getActivo() && !u.getValidado())) {
+				listaFiltro.add(u);
+			}
+		}
+		return listaFiltro;
+	}
+	
+	
+	private void modificarUsuario(long id) throws ServicesException {
+		Usuario usuarioMod = DAOGeneral.usuarioRemote.buscarUsuarioPorId(id);
+		PanelModificarDatosUsuarios.usuarioLogeado = usuarioMod;
+
+		FrameModificarDatosUsuarios modificarDatosUsuario = FrameModificarDatosUsuarios.getInstancia();
+
+		if (usuarioMod instanceof Estudiante) {
+			modificarDatosUsuario.panelDatosUsuario.datosEstudiante();
+		} else if (usuarioMod instanceof Tutor) {
+			modificarDatosUsuario.panelDatosUsuario.datosTutor();
+		} else if (usuarioMod instanceof Analista) {
+			modificarDatosUsuario.panelDatosUsuario.datosAnalista();
+		}
+		modificarDatosUsuario.setVisible(true);
 	}
 }
