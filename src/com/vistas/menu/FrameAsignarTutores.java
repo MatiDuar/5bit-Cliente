@@ -87,7 +87,7 @@ public class FrameAsignarTutores extends JFrame {
 				return false;
 			}
 		};
-		;
+		
 
 		tableAsignados = new RSTableMetro();
 
@@ -128,8 +128,7 @@ public class FrameAsignarTutores extends JFrame {
 				return false;
 			}
 		};
-		;
-		;
+		
 		tableNoAsignados = new RSTableMetro();
 		tableNoAsignados.addMouseListener(new MouseAdapter() {
 			@Override

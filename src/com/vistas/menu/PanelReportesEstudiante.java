@@ -1,15 +1,19 @@
 package com.vistas.menu;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
-import rojeru_san.rslabel.RSLabelImage;
-import javax.swing.JScrollPane;
-import rojeru_san.complementos.TableMetro;
-import javax.swing.table.DefaultTableModel;
 import java.awt.Dimension;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.entities.Estudiante;
+
 import rojeru_san.complementos.RSButtonHover;
+import rojeru_san.complementos.TableMetro;
+import rojeru_san.rslabel.RSLabelImage;
 
 public class PanelReportesEstudiante extends JPanel {
 
@@ -18,6 +22,9 @@ public class PanelReportesEstudiante extends JPanel {
 	 */
 	public PanelReportesEstudiante() {
 		setLayout(null);
+		
+		setPreferredSize(new Dimension(700,725));
+		setSize(700,1500);
 		
 		JLabel lblTituloVentana = new JLabel("ESCOLARIDAD");
 		lblTituloVentana.setBounds(281, 22, 141, 27);
@@ -45,11 +52,24 @@ public class PanelReportesEstudiante extends JPanel {
 		add(lblNewLabel_1);
 		
 		JLabel lblNombrenombreapellidoapellido = new JLabel("NOMBRE1+NOMBRE2+APELLIDO1+APELLIDO2");
+		
+		String nombreCompleto=Menu.getUsuario().getNombre1();
+		if(Menu.getUsuario().getNombre2()!=null) {
+			nombreCompleto=nombreCompleto + " "+Menu.getUsuario().getNombre2();
+		}
+		nombreCompleto=nombreCompleto + " "+Menu.getUsuario().getApellido1();
+		if(Menu.getUsuario().getApellido2()!=null) {
+			nombreCompleto=nombreCompleto + " "+Menu.getUsuario().getApellido2();
+		}
+
+		lblNombrenombreapellidoapellido.setText(nombreCompleto);
+		
 		lblNombrenombreapellidoapellido.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNombrenombreapellidoapellido.setBounds(115, 91, 250, 13);
 		add(lblNombrenombreapellidoapellido);
 		
 		JLabel lblValorCedula = new JLabel("VALOR CEDULA");
+		lblValorCedula.setText(Menu.getUsuario().getDocumento());
 		lblValorCedula.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblValorCedula.setBounds(54, 107, 250, 13);
 		add(lblValorCedula);
@@ -60,6 +80,7 @@ public class PanelReportesEstudiante extends JPanel {
 		add(lblAnioIngreso);
 		
 		JLabel lblValorAnioIngreso = new JLabel("VALOR ANIO INGRESO");
+		lblValorAnioIngreso.setText(((Estudiante) Menu.getUsuario()).getAnoIngreso()+"");
 		lblValorAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblValorAnioIngreso.setBounds(88, 124, 250, 13);
 		add(lblValorAnioIngreso);
