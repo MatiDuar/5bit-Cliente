@@ -27,7 +27,7 @@ public class PanelReportesEstudiante extends JPanel {
 		setSize(700,1500);
 		
 		JLabel lblTituloVentana = new JLabel("ESCOLARIDAD");
-		lblTituloVentana.setBounds(281, 22, 141, 27);
+		lblTituloVentana.setBounds(279, 22, 174, 27);
 		lblTituloVentana.setForeground(new Color(58, 69, 75));
 		lblTituloVentana.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		add(lblTituloVentana);
@@ -37,17 +37,17 @@ public class PanelReportesEstudiante extends JPanel {
 		add(labelImage);
 		
 		JLabel lblNewLabel = new JLabel("DATOS ESTUDIANTE");
-		lblNewLabel.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblNewLabel.setBounds(10, 68, 141, 13);
 		add(lblNewLabel);
 		
 		JLabel lblNombres = new JLabel("Nombre y Apellidos:");
-		lblNombres.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNombres.setBounds(10, 91, 102, 13);
+		lblNombres.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblNombres.setBounds(10, 91, 120, 13);
 		add(lblNombres);
 		
 		JLabel lblNewLabel_1 = new JLabel("Cédula: ");
-		lblNewLabel_1.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblNewLabel_1.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(10, 107, 51, 13);
 		add(lblNewLabel_1);
 		
@@ -64,55 +64,55 @@ public class PanelReportesEstudiante extends JPanel {
 
 		lblNombrenombreapellidoapellido.setText(nombreCompleto);
 		
-		lblNombrenombreapellidoapellido.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNombrenombreapellidoapellido.setBounds(115, 91, 250, 13);
+		lblNombrenombreapellidoapellido.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblNombrenombreapellidoapellido.setBounds(123, 91, 250, 13);
 		add(lblNombrenombreapellidoapellido);
 		
 		JLabel lblValorCedula = new JLabel("VALOR CEDULA");
 		lblValorCedula.setText(Menu.getUsuario().getDocumento());
-		lblValorCedula.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblValorCedula.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblValorCedula.setBounds(54, 107, 250, 13);
 		add(lblValorCedula);
 		
 		JLabel lblAnioIngreso = new JLabel("Año de ingreso:");
-		lblAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblAnioIngreso.setBounds(10, 124, 84, 13);
 		add(lblAnioIngreso);
 		
 		JLabel lblValorAnioIngreso = new JLabel("VALOR ANIO INGRESO");
 		lblValorAnioIngreso.setText(((Estudiante) Menu.getUsuario()).getAnoIngreso()+"");
-		lblValorAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblValorAnioIngreso.setBounds(88, 124, 250, 13);
+		lblValorAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblValorAnioIngreso.setBounds(97, 124, 250, 13);
 		add(lblValorAnioIngreso);
 		
 		JLabel lblCarrera = new JLabel("Carrera: ");
-		lblCarrera.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblCarrera.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblCarrera.setBounds(10, 141, 84, 13);
 		add(lblCarrera);
 		
 		JLabel lblNombreCarrera = new JLabel("Licenciatura en Tecnologías de la Información");
-		lblNombreCarrera.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNombreCarrera.setBounds(54, 141, 250, 13);
+		lblNombreCarrera.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblNombreCarrera.setBounds(59, 141, 250, 13);
 		add(lblNombreCarrera);
 		
 		JLabel lblNroExpediente = new JLabel("Nro. Expediente: ");
-		lblNroExpediente.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblNroExpediente.setBounds(10, 158, 86, 13);
+		lblNroExpediente.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblNroExpediente.setBounds(10, 158, 120, 13);
 		add(lblNroExpediente);
 		
 		JLabel lblIdDelEstudiante = new JLabel("Id del estudiante??");
-		lblIdDelEstudiante.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblIdDelEstudiante.setBounds(95, 158, 102, 13);
+		lblIdDelEstudiante.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblIdDelEstudiante.setBounds(106, 158, 128, 13);
 		add(lblIdDelEstudiante);
 		
 		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEstado.setBounds(218, 158, 43, 13);
+		lblEstado.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblEstado.setBounds(212, 158, 51, 13);
 		add(lblEstado);
 		
 		JLabel lblEstadoExpediente = new JLabel("ABIERTO");
-		lblEstadoExpediente.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEstadoExpediente.setBounds(258, 158, 51, 13);
+		lblEstadoExpediente.setFont(new Font("Lato", Font.PLAIN, 12));
+		lblEstadoExpediente.setBounds(254, 158, 71, 13);
 		add(lblEstadoExpediente);
 		
 		JLabel lblAsignaturasDelExpediente = new JLabel("ASIGNATURAS DEL EXPEDIENTE");

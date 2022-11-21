@@ -34,6 +34,8 @@ import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojeru_san.rsfield.RSTextFull;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrameAsignarTutores extends JFrame {
 
@@ -76,9 +78,9 @@ public class FrameAsignarTutores extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 160, 201, 284);
-		contentPane.add(scrollPane);
+		JScrollPane scrollPaneTutoresAsignados = new JScrollPane();
+		scrollPaneTutoresAsignados.setBounds(10, 160, 201, 284);
+		contentPane.add(scrollPaneTutoresAsignados);
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Documento", "ITR", "Area", "Id" }) {
 
@@ -106,7 +108,7 @@ public class FrameAsignarTutores extends JFrame {
 		tableAsignados.setModel(modeloAsignados);
 		tableAsignados.removeColumn(tableAsignados.getColumnModel().getColumn(4));
 
-		scrollPane.setViewportView(tableAsignados);
+		scrollPaneTutoresAsignados.setViewportView(tableAsignados);
 
 		JLabel lblNewLabel = new JLabel("Tutores Asignados");
 		lblNewLabel.setBounds(22, 135, 165, 14);
@@ -116,9 +118,10 @@ public class FrameAsignarTutores extends JFrame {
 		lblFuncionalidadesNoAsignadas.setBounds(310, 135, 180, 14);
 		contentPane.add(lblFuncionalidadesNoAsignadas);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(298, 160, 201, 284);
-		contentPane.add(scrollPane_1);
+		JScrollPane scrollPanelTutoresNoAsignados = new JScrollPane();
+		scrollPanelTutoresNoAsignados.setBackground(new Color(52, 152, 219));
+		scrollPanelTutoresNoAsignados.setBounds(298, 160, 201, 284);
+		contentPane.add(scrollPanelTutoresNoAsignados);
 
 		modeloNoAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Documento", "ITR", "Area", "Id" }) {
@@ -145,7 +148,7 @@ public class FrameAsignarTutores extends JFrame {
 		tableNoAsignados.setModel(modeloNoAsignados);
 		tableNoAsignados.removeColumn(tableNoAsignados.getColumnModel().getColumn(4));
 
-		scrollPane_1.setViewportView(tableNoAsignados);
+		scrollPanelTutoresNoAsignados.setViewportView(tableNoAsignados);
 
 		JLabel lblNewLabel_2_1 = new JLabel("ASIGNAR TUTORES");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
@@ -173,11 +176,15 @@ public class FrameAsignarTutores extends JFrame {
 		});
 		btnGuardar.setText("Guardar");
 		btnGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnGuardar.setBackground(new Color(0, 112, 192));
+		btnGuardar.setBackground(new Color(52, 152, 219));
 		btnGuardar.setBounds(310, 481, 108, 33);
 		contentPane.add(btnGuardar);
 
 		RSButtonIconUno btnAgregarTutor = new RSButtonIconUno();
+		btnAgregarTutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAgregarTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -190,6 +197,7 @@ public class FrameAsignarTutores extends JFrame {
 			}
 		});
 		btnAgregarTutor.setIcons(ICONS.ARROW_BACK);
+		btnAgregarTutor.setBackground(new Color(52, 152, 219));
 		btnAgregarTutor.setBounds(234, 185, 40, 40);
 		contentPane.add(btnAgregarTutor);
 
@@ -206,16 +214,18 @@ public class FrameAsignarTutores extends JFrame {
 		});
 		btnSacarTutor.setIcons(ICONS.ARROW_FORWARD);
 		btnSacarTutor.setBounds(234, 358, 40, 40);
+		btnSacarTutor.setBackground(new Color(52, 152, 219));
 		contentPane.add(btnSacarTutor);
 
 		RSButtonHover btnCancelar = new RSButtonHover();
 		btnCancelar.setText("Cancelar");
 		btnCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnCancelar.setBackground(new Color(0, 112, 192));
+		btnCancelar.setBackground(new Color(52, 152, 219));
 		btnCancelar.setBounds(103, 481, 108, 33);
 		contentPane.add(btnCancelar);
 
 		RSTextFull textBuscar = new RSTextFull();
+		textBuscar.setBordeColorFocus(new Color(52, 152, 219));
 		textBuscar.setText((String) null);
 		textBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textBuscar.setBounds(10, 82, 218, 33);
@@ -223,6 +233,8 @@ public class FrameAsignarTutores extends JFrame {
 
 		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorBoton(Color.WHITE);
+		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setFont(new Font("Dialog", Font.BOLD, 12));
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(246, 82, 99, 33);
@@ -230,12 +242,19 @@ public class FrameAsignarTutores extends JFrame {
 
 		modeloArea = new DefaultComboBoxModel();
 		RSComboBox comboBoxArea = new RSComboBox();
+		comboBoxArea.setColorBoton(Color.WHITE);
+		comboBoxArea.setColorFondo(new Color(52, 152, 219));
 		comboBoxArea.setModel(modeloArea);
 		comboBoxArea.setFont(new Font("Dialog", Font.BOLD, 12));
 		comboBoxArea.setBounds(355, 82, 99, 33);
 		contentPane.add(comboBoxArea);
 
-		RSButtonHover btnhvrBuscar = new RSButtonHover();
+		RSButtonIconUno btnhvrBuscar = new RSButtonIconUno();
+		btnhvrBuscar.setIcons(ICONS.SEARCH);
+		btnhvrBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnhvrBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -314,7 +333,7 @@ public class FrameAsignarTutores extends JFrame {
 		});
 		btnhvrBuscar.setSelectedIcon(new ImageIcon(FrameAsignarTutores.class.getResource("/necesario/ver2.png")));
 		btnhvrBuscar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrBuscar.setBackground(new Color(0, 112, 192));
+		btnhvrBuscar.setBackground(new Color(52, 152, 219));
 		btnhvrBuscar.setBounds(464, 81, 35, 33);
 		contentPane.add(btnhvrBuscar);
 

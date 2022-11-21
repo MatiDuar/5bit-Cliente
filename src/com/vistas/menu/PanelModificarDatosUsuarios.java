@@ -127,7 +127,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(labelImage);
 
 		JLabel lblNewLabel_2 = new JLabel("MODIFICAR DATOS DEL USUARIO");
-		lblNewLabel_2.setBounds(174, 22, 327, 27);
+		lblNewLabel_2.setBounds(167, 22, 339, 27);
 		lblNewLabel_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		add(lblNewLabel_2);
@@ -173,12 +173,14 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblITR);
 
 		RSTextFull textNombre1 = new RSTextFull();
+		textNombre1.setBordeColorFocus(new Color(52, 152, 219));
 		textNombre1.setText(usuarioLogeado.getNombre1());
 		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre1.setBounds(101, 88, 214, 42);
 		add(textNombre1);
 
 		RSTextFull textApellido1 = new RSTextFull();
+		textApellido1.setBordeColorFocus(new Color(52, 152, 219));
 		textApellido1.setText(usuarioLogeado.getApellido1());
 
 		textApellido1.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -186,18 +188,21 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(textApellido1);
 
 		RSTextFull textCedula = new RSTextFull();
+		textCedula.setBordeColorFocus(new Color(52, 152, 219));
 		textCedula.setText(usuarioLogeado.getDocumento());
 		textCedula.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textCedula.setBounds(101, 187, 214, 42);
 		add(textCedula);
 
 		RSTextFull textEmailPersonal = new RSTextFull();
+		textEmailPersonal.setBordeColorFocus(new Color(52, 152, 219));
 		textEmailPersonal.setText(usuarioLogeado.getMail());
 		textEmailPersonal.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailPersonal.setBounds(101, 239, 214, 42);
 		add(textEmailPersonal);
 
 		RSComboBox comboBoxDepartamento = new RSComboBox();
+		comboBoxDepartamento.setColorBoton(Color.WHITE);
 		modeloDep = new DefaultComboBoxModel();
 		comboBoxDepartamento.setModel(modeloDep);
 		comboBoxDepartamento.setColorFondo(new Color(52, 152, 219));
@@ -205,12 +210,14 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(comboBoxDepartamento);
 
 		RSTextFull textEmailUtec = new RSTextFull();
+		textEmailUtec.setBordeColorFocus(new Color(52, 152, 219));
 		textEmailUtec.setText(usuarioLogeado.getMailInstitucional());
 		textEmailUtec.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailUtec.setBounds(101, 343, 214, 42);
 		add(textEmailUtec);
 
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorBoton(Color.WHITE);
 		modeloITR = new DefaultComboBoxModel();
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
@@ -223,6 +230,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblNombre2);
 
 		RSTextFull textNombre2 = new RSTextFull();
+		textNombre2.setBordeColorFocus(new Color(52, 152, 219));
 		textNombre2.setText(usuarioLogeado.getNombre2());
 		textNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre2.setBounds(420, 88, 214, 42);
@@ -234,6 +242,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblApellido2);
 
 		RSTextFull textApellido2 = new RSTextFull();
+		textApellido2.setBordeColorFocus(new Color(52, 152, 219));
 		textApellido2.setText(usuarioLogeado.getApellido2());
 		textApellido2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido2.setBounds(420, 135, 214, 42);
@@ -245,6 +254,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblFechaNacimiento);
 
 		RSDateChooser FechaNacimiento = new RSDateChooser();
+		FechaNacimiento.setColorBackground(new Color(52, 152, 219));
 		FechaNacimiento.setDatoFecha(usuarioLogeado.getFechaNacimiento());
 		FechaNacimiento.setBounds(420, 187, 214, 42);
 		add(FechaNacimiento);
@@ -262,6 +272,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblTelefonoDeContacto_1);
 
 		RSTextFull textTelefonoContacto = new RSTextFull();
+		textTelefonoContacto.setBordeColorFocus(new Color(52, 152, 219));
 		textTelefonoContacto.setText(usuarioLogeado.getTelefono());
 		textTelefonoContacto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textTelefonoContacto.setBounds(420, 239, 214, 42);
@@ -273,6 +284,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		add(lblLocalidad);
 
 		RSTextFull textLocalidad = new RSTextFull();
+		textLocalidad.setBordeColorFocus(new Color(52, 152, 219));
 		textLocalidad.setText(usuarioLogeado.getLocalidad());
 		textLocalidad.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textLocalidad.setBounds(420, 291, 214, 42);
@@ -280,9 +292,9 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
-		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
+		btnhvrCancelar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(12, 486, 172, 33);
+		btnhvrCancelar.setBounds(106, 486, 172, 33);
 		add(btnhvrCancelar);
 
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
@@ -468,9 +480,9 @@ public class PanelModificarDatosUsuarios extends JPanel {
 			}
 		});
 		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
+		btnhvrGuardar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(462, 486, 172, 33);
+		btnhvrGuardar.setBounds(384, 486, 172, 33);
 		add(btnhvrGuardar);
 
 		try {

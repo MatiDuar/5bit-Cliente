@@ -141,6 +141,7 @@ public class PanelGestionUsuarios extends JPanel {
 		tableMetro.removeColumn(tableMetro.getColumnModel().getColumn(17));
 
 		RSComboBox comboITR = new RSComboBox();
+		comboITR.setColorFondo(new Color(52, 152, 219));
 		comboITR.setDisabledIdex("");
 
 		modeloITR = new DefaultComboBoxModel();
@@ -149,11 +150,12 @@ public class PanelGestionUsuarios extends JPanel {
 		add(comboITR);
 
 		JLabel lblNewLabel = new JLabel("ITR");
-		lblNewLabel.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblNewLabel.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 96, 45, 13);
 		add(lblNewLabel);
 
 		RSComboBox comboEstado = new RSComboBox();
+		comboEstado.setColorFondo(new Color(52, 152, 219));
 		comboEstado.setDisabledIdex("");
 
 		modeloEstado = new DefaultComboBoxModel();
@@ -167,14 +169,16 @@ public class PanelGestionUsuarios extends JPanel {
 		add(comboEstado);
 
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Lato", Font.PLAIN, 11));
+		lblEstado.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblEstado.setBounds(158, 96, 45, 13);
 		add(lblEstado);
 
 		RSComboBox comboGeneracion = new RSComboBox();
+		comboGeneracion.setColorFondo(new Color(52, 152, 219));
 		comboGeneracion.setDisabledIdex("");
 
 		RSComboBox comboTipoUsuario = new RSComboBox();
+		comboTipoUsuario.setColorFondo(new Color(52, 152, 219));
 		comboTipoUsuario.setDisabledIdex("");
 
 		modeloTipoUsuario = new DefaultComboBoxModel();
@@ -202,8 +206,8 @@ public class PanelGestionUsuarios extends JPanel {
 		comboTipoUsuario.setBounds(303, 113, 121, 32);
 		add(comboTipoUsuario);
 		JLabel lblTipoUsuario = new JLabel("Tipo Usuario");
-		lblTipoUsuario.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblTipoUsuario.setBounds(306, 96, 78, 13);
+		lblTipoUsuario.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblTipoUsuario.setBounds(306, 96, 118, 13);
 		add(lblTipoUsuario);
 
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
@@ -274,8 +278,8 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		});
 		btnhvrFiltrar.setText("Filtrar");
-		btnhvrFiltrar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrar.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(582, 113, 108, 33);
 		add(btnhvrFiltrar);
 
@@ -291,8 +295,8 @@ public class PanelGestionUsuarios extends JPanel {
 
 		comboGeneracion.setVisible(false);
 		lblGeneracionEstudiante.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGeneracionEstudiante.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblGeneracionEstudiante.setBounds(454, 96, 78, 13);
+		lblGeneracionEstudiante.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblGeneracionEstudiante.setBounds(454, 96, 95, 13);
 		add(lblGeneracionEstudiante);
 
 		RSButtonHover btnhvrHabilitarUsuario = new RSButtonHover();
@@ -336,8 +340,8 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		});
 		btnhvrHabilitarUsuario.setText("Validar");
-		btnhvrHabilitarUsuario.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrHabilitarUsuario.setBackground(new Color(0, 112, 192));
+		btnhvrHabilitarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrHabilitarUsuario.setBackground(new Color(52, 152, 219));
 		btnhvrHabilitarUsuario.setBounds(585, 219, 108, 33);
 		add(btnhvrHabilitarUsuario);
 
@@ -376,8 +380,8 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		});
 		btnhvrEliminarUsuario.setText("Eliminar");
-		btnhvrEliminarUsuario.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrEliminarUsuario.setBackground(new Color(0, 112, 192));
+		btnhvrEliminarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrEliminarUsuario.setBackground(new Color(52, 152, 219));
 		btnhvrEliminarUsuario.setBounds(585, 315, 108, 33);
 		add(btnhvrEliminarUsuario);
 
@@ -390,19 +394,19 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		});
 		btnhvrMantenimientoListaItr.setText("Lista ITR");
-		btnhvrMantenimientoListaItr.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrMantenimientoListaItr.setBackground(new Color(0, 112, 192));
+		btnhvrMantenimientoListaItr.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrMantenimientoListaItr.setBackground(new Color(52, 152, 219));
 		btnhvrMantenimientoListaItr.setBounds(582, 634, 108, 33);
 		add(btnhvrMantenimientoListaItr);
 
 		JLabel lblUsuarios = new JLabel("Acciones Usuarios");
-		lblUsuarios.setFont(new Font("Lato", Font.BOLD, 11));
-		lblUsuarios.setBounds(585, 198, 108, 13);
+		lblUsuarios.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		lblUsuarios.setBounds(585, 198, 121, 13);
 		add(lblUsuarios);
 
 		JLabel lblMantenimiento = new JLabel("Mantenimiento");
-		lblMantenimiento.setFont(new Font("Lato", Font.BOLD, 11));
-		lblMantenimiento.setBounds(582, 613, 108, 13);
+		lblMantenimiento.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		lblMantenimiento.setBounds(582, 613, 124, 13);
 		add(lblMantenimiento);
 
 		lblGeneracionEstudiante.setVisible(false);
@@ -420,8 +424,8 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 		});
 		btnhvrModificarUsuario.setText("Modificar");
-		btnhvrModificarUsuario.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrModificarUsuario.setBackground(new Color(0, 112, 192));
+		btnhvrModificarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrModificarUsuario.setBackground(new Color(52, 152, 219));
 		btnhvrModificarUsuario.setBounds(585, 267, 108, 33);
 		add(btnhvrModificarUsuario);
 

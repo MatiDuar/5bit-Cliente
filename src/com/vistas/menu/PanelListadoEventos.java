@@ -29,11 +29,13 @@ public class PanelListadoEventos extends JPanel {
 		add(scrollPane);
 		
 		RSDateChooser dateChooserFechaInicio = new RSDateChooser();
+		dateChooserFechaInicio.setColorBackground(new Color(52, 152, 219));
 		dateChooserFechaInicio.setPlaceholder("Fecha desde");
 		dateChooserFechaInicio.setBounds(15, 43, 159, 32);
 		add(dateChooserFechaInicio);
 		
 		RSDateChooser dateChooserFechaHasta = new RSDateChooser();
+		dateChooserFechaHasta.setColorBackground(new Color(52, 152, 219));
 		dateChooserFechaHasta.setPlaceholder("Fecha hasta");
 		dateChooserFechaHasta.setBounds(184, 43, 150, 32);
 		add(dateChooserFechaHasta);
@@ -44,6 +46,8 @@ public class PanelListadoEventos extends JPanel {
 		add(lblNewLabel);
 		
 		RSComboBox comboBox = new RSComboBox();
+		comboBox.setColorFondo(new Color(52, 152, 219));
+		comboBox.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboBox.setColorBoton(Color.WHITE);
 		comboBox.setBounds(17, 118, 121, 32);
 		add(comboBox);
@@ -54,24 +58,30 @@ public class PanelListadoEventos extends JPanel {
 		add(lblEstado);
 		
 		RSComboBox comboBox_1 = new RSComboBox();
+		comboBox_1.setColorFondo(new Color(52, 152, 219));
+		comboBox_1.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboBox_1.setColorBoton(Color.WHITE);
 		comboBox_1.setBounds(155, 118, 121, 32);
 		add(comboBox_1);
 		
 		RSComboBox comboBox_2 = new RSComboBox();
+		comboBox_2.setColorFondo(new Color(52, 152, 219));
+		comboBox_2.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboBox_2.setColorBoton(Color.WHITE);
 		comboBox_2.setBounds(293, 118, 121, 32);
 		add(comboBox_2);
 		
 		RSComboBox comboBox_1_1 = new RSComboBox();
+		comboBox_1_1.setColorFondo(new Color(52, 152, 219));
+		comboBox_1_1.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboBox_1_1.setColorBoton(Color.WHITE);
 		comboBox_1_1.setBounds(431, 118, 121, 32);
 		add(comboBox_1_1);
 		
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
 		btnhvrFiltrar.setText("Filtrar");
-		btnhvrFiltrar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrar.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(581, 118, 108, 33);
 		add(btnhvrFiltrar);
 		
@@ -87,15 +97,15 @@ public class PanelListadoEventos extends JPanel {
 		
 		RSButtonHover btnhvrModificar = new RSButtonHover();
 		btnhvrModificar.setText("Modificar");
-		btnhvrModificar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrModificar.setBackground(new Color(0, 112, 192));
+		btnhvrModificar.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrModificar.setBackground(new Color(52, 152, 219));
 		btnhvrModificar.setBounds(581, 362, 108, 33);
 		add(btnhvrModificar);
 		
 		RSButtonHover btnhvrEliminar = new RSButtonHover();
 		btnhvrEliminar.setText("Eliminar");
-		btnhvrEliminar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrEliminar.setBackground(new Color(0, 112, 192));
+		btnhvrEliminar.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrEliminar.setBackground(new Color(52, 152, 219));
 		btnhvrEliminar.setBounds(581, 484, 108, 33);
 		add(btnhvrEliminar);
 		
@@ -105,6 +115,7 @@ public class PanelListadoEventos extends JPanel {
 		add(lblFechaDeInicio);
 		
 		RSCheckBox chckbxFechaExacta = new RSCheckBox();
+		chckbxFechaExacta.setColorUnCheck(new Color(52, 152, 219));
 		chckbxFechaExacta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -126,8 +137,8 @@ public class PanelListadoEventos extends JPanel {
 		
 		RSButtonHover btnhvrAlta = new RSButtonHover();
 		btnhvrAlta.setText("Alta");
-		btnhvrAlta.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrAlta.setBackground(new Color(0, 112, 192));
+		btnhvrAlta.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrAlta.setBackground(new Color(52, 152, 219));
 		btnhvrAlta.setBounds(581, 240, 108, 33);
 		add(btnhvrAlta);
 

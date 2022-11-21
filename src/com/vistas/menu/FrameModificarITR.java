@@ -79,6 +79,7 @@ public class FrameModificarITR extends JFrame {
 		contentPane.add(lblIngresarNombre);
 		
 		RSTextFieldIconUno textFieldNombreUno = new RSTextFieldIconUno();
+		textFieldNombreUno.setBorderColor(new Color(52, 152, 219));
 		textFieldNombreUno.setPlaceholder("Ingresar Nombre");
 		textFieldNombreUno.setText(itr.getNombre());
 		textFieldNombreUno.setIcons(ICONS.BUSINESS);
@@ -91,6 +92,8 @@ public class FrameModificarITR extends JFrame {
 		contentPane.add(lblDepartamento);
 		
 		RSComboBox comboBox = new RSComboBox();
+		comboBox.setColorBoton(Color.WHITE);
+		comboBox.setColorFondo(new Color(52, 152, 219));
 		modeloDep=new DefaultComboBoxModel();
 		comboBox.setModel(modeloDep);
 		comboBox.setBounds(10, 138, 291, 36);
@@ -107,7 +110,7 @@ public class FrameModificarITR extends JFrame {
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 200, 98, 30);
 		contentPane.add(btnhvrCancelar);
 		
@@ -132,7 +135,7 @@ public class FrameModificarITR extends JFrame {
 		});
 		btnhvrModificar.setText("Modificar");
 		btnhvrModificar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrModificar.setBackground(new Color(0, 112, 192));
+		btnhvrModificar.setBackground(new Color(52, 152, 219));
 		btnhvrModificar.setBounds(203, 200, 98, 30);
 		contentPane.add(btnhvrModificar);
 	}

@@ -65,7 +65,7 @@ public class FrameAgregarITR extends JFrame {
 		JLabel lblTituloVentana = new JLabel("AGREGAR ITR");
 		lblTituloVentana.setForeground(new Color(58, 69, 75));
 		lblTituloVentana.setFont(new Font("Lato Black", Font.PLAIN, 17));
-		lblTituloVentana.setBounds(100, 18, 110, 25);
+		lblTituloVentana.setBounds(100, 18, 154, 25);
 		contentPane.add(lblTituloVentana);
 		
 		RSLabelImage labelImage = new RSLabelImage();
@@ -74,6 +74,7 @@ public class FrameAgregarITR extends JFrame {
 		contentPane.add(labelImage);
 		
 		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre.setBorderColor(new Color(52, 152, 219));
 		textNombre.setIcons(ICONS.BUSINESS);
 		textNombre.setPlaceholder("Ingresar Nombre");
 		textNombre.setBounds(10, 76, 291, 36);
@@ -90,6 +91,8 @@ public class FrameAgregarITR extends JFrame {
 		contentPane.add(lblDepartamento);
 		
 		RSComboBox comboBoxDep = new RSComboBox();
+		comboBoxDep.setColorBoton(Color.WHITE);
+		comboBoxDep.setColorFondo(new Color(52, 152, 219));
 		modeloDep=new DefaultComboBoxModel();
 		comboBoxDep.setModel(modeloDep);
 		comboBoxDep.setBounds(10, 138, 291, 36);
@@ -98,7 +101,7 @@ public class FrameAgregarITR extends JFrame {
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 200, 98, 30);
 		contentPane.add(btnhvrCancelar);
 		
@@ -138,7 +141,7 @@ public class FrameAgregarITR extends JFrame {
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(203, 200, 98, 30);
 		contentPane.add(btnhvrGuardar);
 		

@@ -74,11 +74,11 @@ public class FrameConvocatoriaEvento extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel_2_1 = new JLabel("CONVOCATORIA DE EVENTO");
-		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(202, 10, 281, 27);
-		contentPane.add(lblNewLabel_2_1);
+		JLabel lblTitulo = new JLabel("CONVOCATORIA DE EVENTO");
+		lblTitulo.setForeground(new Color(58, 69, 75));
+		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
+		lblTitulo.setBounds(207, 10, 360, 27);
+		contentPane.add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -100,12 +100,16 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 		modeloITRN = new DefaultComboBoxModel();
 		RSComboBox comboBoxITRN= new RSComboBox();
+		comboBoxITRN.setColorBoton(Color.WHITE);
+		comboBoxITRN.setColorFondo(new Color(52, 152, 219));
 		comboBoxITRN.setModel(modeloITRN);
 		comboBoxITRN.setBounds(17, 73, 121, 32);
 		contentPane.add(comboBoxITRN);
 
 		modeloGenN = new DefaultComboBoxModel();
 		RSComboBox comboBoxGenN = new RSComboBox();
+		comboBoxGenN.setColorBoton(Color.WHITE);
+		comboBoxGenN.setColorFondo(new Color(52, 152, 219));
 		comboBoxGenN.setModel(modeloGenN);
 		comboBoxGenN.setBounds(151, 73, 121, 32);
 		contentPane.add(comboBoxGenN);
@@ -113,12 +117,16 @@ public class FrameConvocatoriaEvento extends JFrame {
 		
 		modeloITRA = new DefaultComboBoxModel();
 		RSComboBox comboBoxITRA = new RSComboBox();
+		comboBoxITRA.setColorBoton(Color.WHITE);
+		comboBoxITRA.setColorFondo(new Color(52, 152, 219));
 		comboBoxITRA.setModel(modeloITRA);
 		comboBoxITRA.setBounds(17, 379, 121, 32);
 		contentPane.add(comboBoxITRA);
 
 		modeloGenA = new DefaultComboBoxModel();
 		RSComboBox comboBoxGenA = new RSComboBox();
+		comboBoxGenA.setColorBoton(Color.WHITE);
+		comboBoxGenA.setColorFondo(new Color(52, 152, 219));
 		comboBoxGenA.setModel(modeloGenA);
 		comboBoxGenA.setBounds(151, 379, 121, 32);
 		contentPane.add(comboBoxGenA);
@@ -163,11 +171,11 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 		btnhvrFiltrarN.setText("Filtrar");
 		btnhvrFiltrarN.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrarN.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrarN.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrarN.setBounds(569, 73, 108, 33);
 		contentPane.add(btnhvrFiltrarN);
 
-		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00C3\u00B3n");
+		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00f3n");
 		lblGeneracionEstudiante.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGeneracionEstudiante.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblGeneracionEstudiante.setBounds(151, 56, 78, 13);
@@ -182,7 +190,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		JLabel lblNewLabel_2_1_2 = new JLabel("ESTUDIANTES CONVOCADOS");
 		lblNewLabel_2_1_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1_2.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1_2.setBounds(10, 422, 298, 27);
+		lblNewLabel_2_1_2.setBounds(10, 422, 360, 27);
 		contentPane.add(lblNewLabel_2_1_2);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -218,7 +226,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 		btnhvrAgregar.setText("Agregar");
 		btnhvrAgregar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrAgregar.setBackground(new Color(0, 112, 192));
+		btnhvrAgregar.setBackground(new Color(52, 152, 219));
 		btnhvrAgregar.setBounds(585, 222, 108, 33);
 		contentPane.add(btnhvrAgregar);
 
@@ -237,7 +245,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 		btnhvrQuitar.setText("Quitar");
 		btnhvrQuitar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrQuitar.setBackground(new Color(0, 112, 192));
+		btnhvrQuitar.setBackground(new Color(52, 152, 219));
 		btnhvrQuitar.setBounds(589, 533, 108, 33);
 		contentPane.add(btnhvrQuitar);
 
@@ -278,11 +286,11 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 		btnhvrFiltrarA.setText("Filtrar");
 		btnhvrFiltrarA.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrarA.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrarA.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrarA.setBounds(569, 379, 108, 33);
 		contentPane.add(btnhvrFiltrarA);
 
-		JLabel lblGeneracionEstudiante_1 = new JLabel("Generaci\u00C3\u00B3n");
+		JLabel lblGeneracionEstudiante_1 = new JLabel("Generaci\u00f3n");
 		lblGeneracionEstudiante_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGeneracionEstudiante_1.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblGeneracionEstudiante_1.setBounds(151, 362, 78, 13);
@@ -375,7 +383,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(413, 669, 108, 33);
 		contentPane.add(btnhvrGuardar);
 		
@@ -393,7 +401,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(164, 669, 108, 33);
 		contentPane.add(btnhvrCancelar);
 

@@ -34,6 +34,7 @@ import RSMaterialComponent.RSTextFieldIconUno;
 import rojeru_san.complementos.RSButtonHover;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class FrameAsistenciaAEvento extends JFrame {
 
@@ -75,11 +76,11 @@ public class FrameAsistenciaAEvento extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel_2_1 = new JLabel("ASISTENCIA A  EVENTO");
-		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(161, 10, 227, 27);
-		contentPane.add(lblNewLabel_2_1);
+		JLabel lblTitulo = new JLabel("ASISTENCIA A EVENTO");
+		lblTitulo.setForeground(new Color(58, 69, 75));
+		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
+		lblTitulo.setBounds(161, 10, 281, 27);
+		contentPane.add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -111,6 +112,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 
 		
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorBoton(Color.WHITE);
+		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setDisabledIdex("");
 		comboBoxITR.setModel(modeloItr);
 		comboBoxITR.setBounds(161, 94, 121, 32);
@@ -124,6 +127,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 		modeloEstado=new DefaultComboBoxModel();
 		
 		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setColorBoton(Color.WHITE);
+		comboBoxEstado.setColorFondo(new Color(52, 152, 219));
 		comboBoxEstado.setDisabledIdex("");
 
 		comboBoxEstado.setModel(modeloEstado);
@@ -169,7 +174,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		});
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(106, 571, 108, 33);
 		contentPane.add(btnhvrCancelar);
 
@@ -200,12 +205,15 @@ public class FrameAsistenciaAEvento extends JFrame {
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(321, 571, 108, 33);
 		contentPane.add(btnhvrGuardar);
 		
 		textBuscar = new RSTextFieldIconUno();
-		textBuscar.setBounds(10, 94, 141, 27);
+		textBuscar.setBorderColor(new Color(52, 152, 219));
+		textBuscar.setIcons(ICONS.SEARCH);
+		textBuscar.setPlaceholder("Busacar ...");
+		textBuscar.setBounds(10, 94, 141, 32);
 		contentPane.add(textBuscar);
 		textBuscar.setColumns(10);
 
@@ -260,7 +268,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		});
 		btnhvrFiltrar.setText("Filtrar");
 		btnhvrFiltrar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
 		

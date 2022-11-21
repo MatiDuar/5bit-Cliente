@@ -27,6 +27,7 @@ import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class PanelReportesAnalistaTutor extends JPanel {
 
@@ -45,7 +46,7 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		JLabel lblTituloVentana = new JLabel("REPORTES");
 		lblTituloVentana.setForeground(new Color(58, 69, 75));
 		lblTituloVentana.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblTituloVentana.setBounds(300, 22, 102, 27);
+		lblTituloVentana.setBounds(299, 22, 180, 27);
 		add(lblTituloVentana);
 
 		RSLabelImage labelImage = new RSLabelImage();
@@ -54,18 +55,25 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		add(labelImage);
 
 		RSTextFieldIconUno textBuscar = new RSTextFieldIconUno();
+		textBuscar.setBorderColor(new Color(52, 152, 219));
+		textBuscar.setIcons(ICONS.SEARCH);
+		textBuscar.setFont(new Font("Lato", Font.BOLD, 14));
 		textBuscar.setPlaceholder("Ingrese Nombre y Apellido");
 		textBuscar.setBounds(10, 102, 303, 33);
 		add(textBuscar);
 
 		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboITR = new RSComboBox();
+		comboITR.setColorFondo(new Color(52, 152, 219));
+		comboITR.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboITR.setModel(modeloITR);
 		comboITR.setBounds(323, 103, 121, 32);
 		add(comboITR);
 
 		modeloGen = new DefaultComboBoxModel();
 		RSComboBox comboGen = new RSComboBox();
+		comboGen.setColorFondo(new Color(52, 152, 219));
+		comboGen.setFont(new Font("Lato Black", Font.BOLD, 14));
 		comboGen.setModel(modeloGen);
 		comboGen.setBounds(454, 103, 121, 32);
 		add(comboGen);
@@ -122,19 +130,19 @@ public class PanelReportesAnalistaTutor extends JPanel {
 			}
 		});
 		btnhvrFiltrar.setText("Filtrar");
-		btnhvrFiltrar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
+		btnhvrFiltrar.setFont(new Font("Lato Black", Font.PLAIN, 14));
+		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(585, 102, 108, 33);
 		add(btnhvrFiltrar);
 
 		JLabel lblITR = new JLabel("ITR");
-		lblITR.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblITR.setBounds(323, 91, 45, 13);
+		lblITR.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblITR.setBounds(323, 87, 45, 13);
 		add(lblITR);
 
 		JLabel lblGeneracion = new JLabel("Generación");
-		lblGeneracion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblGeneracion.setBounds(454, 91, 69, 13);
+		lblGeneracion.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblGeneracion.setBounds(454, 87, 102, 13);
 		add(lblGeneracion);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -180,9 +188,9 @@ public class PanelReportesAnalistaTutor extends JPanel {
 
 		RSButtonHover btnhvrEscolaridad = new RSButtonHover();
 		btnhvrEscolaridad.setText("Escolaridad");
-		btnhvrEscolaridad.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrEscolaridad.setBackground(new Color(0, 112, 192));
-		btnhvrEscolaridad.setBounds(238, 641, 227, 33);
+		btnhvrEscolaridad.setFont(new Font("Lato Black", Font.PLAIN, 14));
+		btnhvrEscolaridad.setBackground(new Color(52, 152, 219));
+		btnhvrEscolaridad.setBounds(236, 641, 227, 33);
 		add(btnhvrEscolaridad);
 		try {
 			cargarTabla(DAOGeneral.estudianteBean.obtenerEstudiantes());

@@ -80,7 +80,7 @@ public class MantenimientoListadoITR extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("LISTADO DE ITRs");
 		lblNewLabel_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(100, 22, 145, 27);
+		lblNewLabel_2.setBounds(121, 22, 180, 27);
 		contentPane.add(lblNewLabel_2);
 
 		RSLabelImage labelImage = new RSLabelImage();
@@ -120,14 +120,14 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 		btnhvrCerrar.setText("Cerrar");
 		btnhvrCerrar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrCerrar.setBackground(new Color(0, 112, 192));
+		btnhvrCerrar.setBackground(new Color(52, 152, 219));
 		btnhvrCerrar.setBounds(26, 370, 108, 33);
 		contentPane.add(btnhvrCerrar);
 
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(254, 370, 108, 33);
 		contentPane.add(btnhvrGuardar);
 
@@ -152,7 +152,7 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 		btnhvrModificarITR.setText("Modificar");
 		btnhvrModificarITR.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrModificarITR.setBackground(new Color(0, 112, 192));
+		btnhvrModificarITR.setBackground(new Color(52, 152, 219));
 		btnhvrModificarITR.setBounds(254, 212, 108, 33);
 		contentPane.add(btnhvrModificarITR);
 
@@ -166,13 +166,15 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 		btnhvrAgregarITR.setText("Agregar");
 		btnhvrAgregarITR.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrAgregarITR.setBackground(new Color(0, 112, 192));
+		btnhvrAgregarITR.setBackground(new Color(52, 152, 219));
 		btnhvrAgregarITR.setBounds(254, 164, 108, 33);
 		contentPane.add(btnhvrAgregarITR);
 
 		
 
 		comboBoxEstadoITR = new RSComboBox();
+		comboBoxEstadoITR.setColorBoton(Color.WHITE);
+		comboBoxEstadoITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxEstadoITR.setDisabledIdex("");
 		comboBoxEstadoITR.setModel(new DefaultComboBoxModel(new String[] { "Activo","Inactivo", "Ambos" }));
 		comboBoxEstadoITR.addItemListener(new ItemListener() {
@@ -248,7 +250,7 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 		btnhvrEliminarITR_1.setText("Eliminar");
 		btnhvrEliminarITR_1.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrEliminarITR_1.setBackground(new Color(0, 112, 192));
+		btnhvrEliminarITR_1.setBackground(new Color(52, 152, 219));
 		btnhvrEliminarITR_1.setBounds(254, 308, 108, 33);
 		contentPane.add(btnhvrEliminarITR_1);
 		
@@ -285,7 +287,7 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 		btnhvrReactivarITR.setText("Reactivar");
 		btnhvrReactivarITR.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrReactivarITR.setBackground(new Color(0, 112, 192));
+		btnhvrReactivarITR.setBackground(new Color(52, 152, 219));
 		btnhvrReactivarITR.setBounds(254, 260, 108, 33);
 		contentPane.add(btnhvrReactivarITR);
 		

@@ -57,6 +57,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblPrimerNombre);
 		
 		RSTextFull textNombre1 = new RSTextFull();
+		textNombre1.setBordeColorFocus(new Color(52, 152, 219));
 		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre1.setBounds(101, 96, 250, 42);
 		textNombre1.setText(Menu.getUsuario().getNombre1());
@@ -68,6 +69,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblNombre2);
 		
 		RSTextFull textNombre2 = new RSTextFull();
+		textNombre2.setBordeColorFocus(new Color(52, 152, 219));
 		textNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre2.setBounds(447, 96, 250, 42);
 		textNombre2.setText(Menu.getUsuario().getNombre2());
@@ -79,6 +81,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblPrimerApellido);
 		
 		RSTextFull textApellido1 = new RSTextFull();
+		textApellido1.setBordeColorFocus(new Color(52, 152, 219));
 		textApellido1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido1.setBounds(101, 143, 250, 42);
 		textApellido1.setText(Menu.getUsuario().getApellido1());
@@ -90,6 +93,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblApellido2);
 		
 		RSTextFull textApellido2 = new RSTextFull();
+		textApellido2.setBordeColorFocus(new Color(52, 152, 219));
 		textApellido2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido2.setBounds(447, 143, 250, 42);
 		textApellido2.setText(Menu.getUsuario().getApellido2());
@@ -102,12 +106,14 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblCedula);
 		
 		RSTextFull textCedula = new RSTextFull();
+		textCedula.setBordeColorFocus(new Color(52, 152, 219));
 		textCedula.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textCedula.setBounds(101, 195, 250, 42);
 		textCedula.setText(Menu.getUsuario().getDocumento());
 		add(textCedula);
 		
 		RSDateChooser FechaNacimiento = new RSDateChooser();
+		FechaNacimiento.setColorBackground(new Color(52, 152, 219));
 		FechaNacimiento.setBounds(447, 195, 250, 42);
 		FechaNacimiento.setDatoFecha(Menu.getUsuario().getFechaNacimiento());
 		add(FechaNacimiento);
@@ -124,6 +130,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblEmailPersonal);
 		
 		RSTextFull textEmailPersonal = new RSTextFull();
+		textEmailPersonal.setBordeColorFocus(new Color(52, 152, 219));
 		textEmailPersonal.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailPersonal.setBounds(101, 247, 250, 42);
 		textEmailPersonal.setText(Menu.getUsuario().getMail());
@@ -136,6 +143,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblTelefonoDeContacto);
 		
 		RSTextFull textTelefonoContacto = new RSTextFull();
+		textTelefonoContacto.setBordeColorFocus(new Color(52, 152, 219));
 		textTelefonoContacto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textTelefonoContacto.setBounds(447, 247, 250, 42);
 		textTelefonoContacto.setText(Menu.getUsuario().getTelefono());
@@ -159,12 +167,14 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblDepartamento);
 		
 		comboBoxDepartamento = new RSComboBox();
+		comboBoxDepartamento.setColorBoton(Color.WHITE);
 		comboBoxDepartamento.setModel(modeloDep);
 		comboBoxDepartamento.setColorFondo(new Color(52, 152, 219));
 		comboBoxDepartamento.setBounds(101, 299, 250, 42);
 		add(comboBoxDepartamento);
 		
 		RSTextFull textLocalidad = new RSTextFull();
+		textLocalidad.setBordeColorFocus(new Color(52, 152, 219));
 		textLocalidad.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textLocalidad.setBounds(447, 299, 250, 42);
 		textLocalidad.setText(Menu.getUsuario().getLocalidad());
@@ -177,6 +187,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblEmailUTEC);
 		
 		RSTextFull textEmailUtec = new RSTextFull();
+		textEmailUtec.setBordeColorFocus(new Color(52, 152, 219));
 		textEmailUtec.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailUtec.setBounds(101, 351, 250, 42);
 		textEmailUtec.setText(Menu.getUsuario().getMailInstitucional());
@@ -189,6 +200,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblContrasenia);
 		
 		RSPassword password = new RSPassword();
+		password.setBordeColorFocus(new Color(52, 152, 219));
 		password.setBounds(447, 351, 250, 42);
 		password.setText(Menu.getUsuario().getContrasena());
 		add(password);
@@ -200,6 +212,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblITR);
 		
 		comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorBoton(Color.WHITE);
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setBounds(101, 403, 250, 42);
@@ -305,7 +318,7 @@ public class PanelEditarPerfil extends JPanel {
 				String contrasena=password.getText();
 				
 				if(contrasena.length()>50 || contrasena.length()<8) {
-					throw new Exception("El campo contraseña debe tener entre 8 y 50 caracteres.");
+					throw new Exception("El campo contraseï¿½a debe tener entre 8 y 50 caracteres.");
 				}
 				
 				boolean contieneNums= false;
@@ -334,7 +347,7 @@ public class PanelEditarPerfil extends JPanel {
 				String doc = textCedula.getText();
 				
 				if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
-					throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
+					throw new Exception("Formato de documento invï¿½lido, debe contener 8 dï¿½gitos numericos");
 				}else{
 					usuarioMod.setDocumento(doc);
 				}
@@ -360,7 +373,7 @@ public class PanelEditarPerfil extends JPanel {
 					java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
 				    usuarioMod.setFechaNacimiento(sqlDate);
 				}else{
-					throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+					throw new Exception("Fecha invï¿½lida, introduzca una fecha menor a la actual.");
 				}
 				
 				usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long)1));
@@ -451,7 +464,7 @@ public class PanelEditarPerfil extends JPanel {
 		JLabel lblNewLabel_2_1 = new JLabel("EDITAR PERFIL");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(301, 24, 146, 27);
+		lblNewLabel_2_1.setBounds(277, 24, 239, 27);
 		add(lblNewLabel_2_1);
 		
 		RSLabelImage labelImage_1 = new RSLabelImage();

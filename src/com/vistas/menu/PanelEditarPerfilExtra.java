@@ -25,13 +25,16 @@ public class PanelEditarPerfilExtra extends JPanel {
 	static public RSTextFull yearDate;
 	static public RSComboBox comboBoxAreaTutor;
 	static public RSComboBox comboBoxRolTutor;
+	
 	public PanelEditarPerfilExtra() {
+		initUITutor();
 	}
 	public void initUIEstudiante() {
 		removeAll();
 		setLayout(null);
 		
 		yearDate = new RSTextFull();
+		yearDate.setBordeColorFocus(new Color(52, 152, 219));
 		yearDate.setMostrarBoton(false);
 		yearDate.setHorizontalAlignment(SwingConstants.CENTER);
 //		yearDate.setBackground(new Color(52, 152, 219));
@@ -41,7 +44,7 @@ public class PanelEditarPerfilExtra extends JPanel {
 		add(yearDate);
 		
 		
-		JLabel lblAoDeIngreso = new JLabel("A;o de ingreso");
+		JLabel lblAoDeIngreso = new JLabel("A\u00f1o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblAoDeIngreso.setBounds(10, 17, 86, 14);
@@ -66,12 +69,14 @@ public class PanelEditarPerfilExtra extends JPanel {
 		add(lblAreaTutor);
 		
 		comboBoxRolTutor = new RSComboBox();
+		comboBoxRolTutor.setColorBoton(Color.WHITE);
 		comboBoxRolTutor.setModel(modeloTipoTutor);
 		comboBoxRolTutor.setBounds(93, 10, 250, 42);
 		comboBoxRolTutor.setColorFondo(new Color(52, 152, 219));
 		add(comboBoxRolTutor);
 		
 		comboBoxAreaTutor = new RSComboBox();
+		comboBoxAreaTutor.setColorBoton(Color.WHITE);
 		comboBoxAreaTutor.setModel(modeloAreaTutor);
 		comboBoxAreaTutor.setColorFondo(new Color(52, 152, 219));
 		comboBoxAreaTutor.setBounds(93, 62, 250, 42);

@@ -75,7 +75,7 @@ public class FrameModificarEvento extends JFrame {
 		JLabel lblNewLabel_2_1 = new JLabel("NUEVO EVENTO");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(280, 24, 160, 27);
+		lblNewLabel_2_1.setBounds(272, 24, 212, 27);
 		contentPane.add(lblNewLabel_2_1);
 
 		RSLabelImage labelImage_1 = new RSLabelImage();
@@ -89,6 +89,7 @@ public class FrameModificarEvento extends JFrame {
 		contentPane.add(lblTitulo);
 
 		RSTextFull textTitulo = new RSTextFull();
+		textTitulo.setBordeColorFocus(new Color(52, 152, 219));
 		textTitulo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textTitulo.setBounds(94, 96, 250, 42);
 		textTitulo.setText(eventoSeleccionado.getTitulo());
@@ -126,6 +127,7 @@ public class FrameModificarEvento extends JFrame {
 		contentPane.add(lblHoraFin);
 
 		RSDateChooser fechaFin = new RSDateChooser();
+		fechaFin.setColorBackground(new Color(52, 152, 219));
 		fechaFin.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaFin().getYear(),
 				eventoSeleccionado.getFechaFin().getMonth(), eventoSeleccionado.getFechaFin().getDay()));
 		fechaFin.setBounds(94, 196, 250, 42);
@@ -133,11 +135,14 @@ public class FrameModificarEvento extends JFrame {
 
 		modeloTipoEvento = new DefaultComboBoxModel();
 		RSComboBox comboBoxTipoEvento = new RSComboBox();
+		comboBoxTipoEvento.setColorBoton(Color.WHITE);
+		comboBoxTipoEvento.setColorFondo(new Color(52, 152, 219));
 		comboBoxTipoEvento.setModel(modeloTipoEvento);
 		comboBoxTipoEvento.setBounds(440, 96, 250, 42);
 		contentPane.add(comboBoxTipoEvento);
 
 		RSDateChooser fechaInicio = new RSDateChooser();
+		fechaInicio.setColorBackground(new Color(52, 152, 219));
 		fechaInicio.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaInicio().getYear(),
 				eventoSeleccionado.getFechaInicio().getMonth(), eventoSeleccionado.getFechaInicio().getDay()));
 		fechaInicio.setBounds(94, 143, 250, 42);
@@ -151,6 +156,8 @@ public class FrameModificarEvento extends JFrame {
 
 		modeloModalidad = new DefaultComboBoxModel();
 		RSComboBox comboBoxModalidad = new RSComboBox();
+		comboBoxModalidad.setColorBoton(Color.WHITE);
+		comboBoxModalidad.setColorFondo(new Color(52, 152, 219));
 		comboBoxModalidad.setModel(modeloModalidad);
 		comboBoxModalidad.setBounds(94, 249, 250, 42);
 		contentPane.add(comboBoxModalidad);
@@ -163,6 +170,8 @@ public class FrameModificarEvento extends JFrame {
 
 		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorBoton(Color.WHITE);
+		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(440, 248, 250, 42);
 		contentPane.add(comboBoxITR);
@@ -174,6 +183,7 @@ public class FrameModificarEvento extends JFrame {
 		contentPane.add(lblLocalizacion);
 
 		RSTextFull textLocalicacion = new RSTextFull();
+		textLocalicacion.setBordeColorFocus(new Color(52, 152, 219));
 		textLocalicacion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textLocalicacion.setBounds(94, 302, 250, 42);
 		textLocalicacion.setText(eventoSeleccionado.getLocalizacion());
@@ -182,17 +192,23 @@ public class FrameModificarEvento extends JFrame {
 
 		DefaultComboBoxModel modeloInicio = new DefaultComboBoxModel();
 		RSComboBox comboBoxHoraInicio = new RSComboBox();
+		comboBoxHoraInicio.setColorBoton(Color.WHITE);
+		comboBoxHoraInicio.setColorFondo(new Color(52, 152, 219));
 		comboBoxHoraInicio.setModel(modeloInicio);
 		comboBoxHoraInicio.setBounds(440, 144, 250, 42);
 		contentPane.add(comboBoxHoraInicio);
 		DefaultComboBoxModel modeloFin = new DefaultComboBoxModel();
 
 		RSComboBox comboBoxHoraFin = new RSComboBox();
+		comboBoxHoraFin.setColorBoton(Color.WHITE);
+		comboBoxHoraFin.setColorFondo(new Color(52, 152, 219));
 		comboBoxHoraFin.setModel(modeloFin);
 		comboBoxHoraFin.setBounds(440, 196, 250, 42);
 		contentPane.add(comboBoxHoraFin);
 
 		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setColorBoton(Color.WHITE);
+		comboBoxEstado.setColorFondo(new Color(52, 152, 219));
 		modeloEstado = new DefaultComboBoxModel();
 		comboBoxEstado.setModel(modeloEstado);
 		comboBoxEstado.setBounds(440, 302, 250, 42);
@@ -287,14 +303,14 @@ public class FrameModificarEvento extends JFrame {
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
-		btnhvrGuardar.setBounds(386, 440, 227, 33);
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
+		btnhvrGuardar.setBounds(391, 440, 227, 33);
 		contentPane.add(btnhvrGuardar);
 
 		JLabel lblSeleccionarTutor = new JLabel("Seleccionar Tutor");
 		lblSeleccionarTutor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSeleccionarTutor.setFont(new Font("Lato", Font.PLAIN, 17));
-		lblSeleccionarTutor.setBounds(18, 374, 232, 14);
+		lblSeleccionarTutor.setBounds(94, 374, 232, 14);
 		contentPane.add(lblSeleccionarTutor);
 
 		RSButtonHover btnhvrAsignarTutor = new RSButtonHover();
@@ -309,8 +325,8 @@ public class FrameModificarEvento extends JFrame {
 		});
 		btnhvrAsignarTutor.setText("Asignar tutores");
 		btnhvrAsignarTutor.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrAsignarTutor.setBackground(new Color(0, 112, 192));
-		btnhvrAsignarTutor.setBounds(179, 366, 227, 33);
+		btnhvrAsignarTutor.setBackground(new Color(52, 152, 219));
+		btnhvrAsignarTutor.setBounds(237, 366, 227, 33);
 		contentPane.add(btnhvrAsignarTutor);
 
 		JLabel lblEstado = new JLabel("Estado");
@@ -373,8 +389,8 @@ public class FrameModificarEvento extends JFrame {
 		});
 		btnhvrCancel.setText("Cancelar");
 		btnhvrCancel.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrCancel.setBackground(new Color(0, 112, 192));
-		btnhvrCancel.setBounds(94, 440, 227, 33);
+		btnhvrCancel.setBackground(new Color(52, 152, 219));
+		btnhvrCancel.setBounds(82, 440, 227, 33);
 		contentPane.add(btnhvrCancel);
 
 	}

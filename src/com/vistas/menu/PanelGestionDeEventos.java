@@ -69,8 +69,8 @@ public class PanelGestionDeEventos extends JPanel {
 		
 		JLabel lblNewLabel_2_1 = new JLabel("GESTION DE EVENTOS");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(236, 23, 227, 27);
+		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 18));
+		lblNewLabel_2_1.setBounds(255, 23, 291, 27);
 		add(lblNewLabel_2_1);
 
 		RSLabelImage labelImage_1 = new RSLabelImage();
@@ -82,7 +82,7 @@ public class PanelGestionDeEventos extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(17, 233, 561, 357);
+		scrollPane.setBounds(17, 233, 552, 357);
 		add(scrollPane);
 		modeloTabla = new DefaultTableModel(new Object[][] {},
 				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" });
@@ -99,21 +99,24 @@ public class PanelGestionDeEventos extends JPanel {
 		scrollPane.setViewportView(table);
 
 		dateChooserFechaInicio = new RSDateChooser();
+		dateChooserFechaInicio.setColorBackground(new Color(52, 152, 219));
 		dateChooserFechaInicio.setPlaceholder("Fecha desde");
 		dateChooserFechaInicio.setBounds(15, 116, 159, 32);
 		add(dateChooserFechaInicio);
 
 		dateChooserFechaHasta = new RSDateChooser();
+		dateChooserFechaHasta.setColorBackground(new Color(52, 152, 219));
 		dateChooserFechaHasta.setPlaceholder("Fecha hasta");
 		dateChooserFechaHasta.setBounds(184, 116, 150, 32);
 		add(dateChooserFechaHasta);
 
 		JLabel lblNewLabel = new JLabel("Tipo Evento");
-		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblNewLabel.setBounds(17, 174, 61, 13);
+		lblNewLabel.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblNewLabel.setBounds(17, 174, 91, 13);
 		add(lblNewLabel);
 		modeloTipo = new DefaultComboBoxModel();
 		RSComboBox comboBoxTipo = new RSComboBox();
+		comboBoxTipo.setColorFondo(new Color(52, 152, 219));
 		comboBoxTipo.setDisabledIdex("");
 
 		comboBoxTipo.setModel(modeloTipo);
@@ -122,12 +125,13 @@ public class PanelGestionDeEventos extends JPanel {
 		add(comboBoxTipo);
 
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblEstado.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblEstado.setBounds(155, 174, 45, 13);
 		add(lblEstado);
 
 		modeloEstado = new DefaultComboBoxModel();
 		RSComboBox comboBoxEstado = new RSComboBox();
+		comboBoxEstado.setColorFondo(new Color(52, 152, 219));
 		comboBoxEstado.setDisabledIdex("");
 
 		comboBoxEstado.setModel(modeloEstado);
@@ -137,6 +141,7 @@ public class PanelGestionDeEventos extends JPanel {
 
 		modeloITR = new DefaultComboBoxModel();
 		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setDisabledIdex("");
 
@@ -146,6 +151,7 @@ public class PanelGestionDeEventos extends JPanel {
 
 		modeloModalidad = new DefaultComboBoxModel();
 		RSComboBox comboBoxModalidad = new RSComboBox();
+		comboBoxModalidad.setColorFondo(new Color(52, 152, 219));
 		comboBoxModalidad.setDisabledIdex("");
 
 		comboBoxModalidad.setModel(modeloModalidad);
@@ -154,6 +160,7 @@ public class PanelGestionDeEventos extends JPanel {
 		add(comboBoxModalidad);
 
 		RSCheckBox chckbxFechaExacta = new RSCheckBox();
+		chckbxFechaExacta.setColorUnCheck(new Color(52, 152, 219));
 		chckbxFechaExacta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -174,10 +181,14 @@ public class PanelGestionDeEventos extends JPanel {
 		add(chckbxFechaExacta);
 
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
+		btnhvrFiltrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnhvrFiltrar.setText("Filtrar");
-		btnhvrFiltrar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrar.setBackground(new Color(0, 112, 192));
-		btnhvrFiltrar.setBounds(581, 191, 108, 33);
+		btnhvrFiltrar.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
+		btnhvrFiltrar.setBounds(574, 191, 117, 33);
 		add(btnhvrFiltrar);
 		btnhvrFiltrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -255,13 +266,13 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		JLabel lblNewLabel_1 = new JLabel("ITR");
-		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblNewLabel_1.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(293, 175, 45, 13);
 		add(lblNewLabel_1);
 
 		JLabel lblEstado_1 = new JLabel("Modalidad");
-		lblEstado_1.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblEstado_1.setBounds(431, 175, 52, 13);
+		lblEstado_1.setFont(new Font("Lato", Font.PLAIN, 14));
+		lblEstado_1.setBounds(431, 175, 69, 13);
 		add(lblEstado_1);
 		panelMantenimientoAnalista.setLayout(null);
 
@@ -282,9 +293,9 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrModificar.setText("Modificar");
-		btnhvrModificar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrModificar.setBackground(new Color(0, 112, 192));
-		btnhvrModificar.setBounds(10, 66, 108, 33);
+		btnhvrModificar.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		btnhvrModificar.setBackground(new Color(52, 152, 219));
+		btnhvrModificar.setBounds(4, 66, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrModificar);
 
 		RSButtonHover btnhvrEliminar = new RSButtonHover();
@@ -315,21 +326,21 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrEliminar.setText("Eliminar");
-		btnhvrEliminar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrEliminar.setBackground(new Color(0, 112, 192));
-		btnhvrEliminar.setBounds(10, 117, 108, 33);
+		btnhvrEliminar.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		btnhvrEliminar.setBackground(new Color(52, 152, 219));
+		btnhvrEliminar.setBounds(4, 117, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrEliminar);
 
 		JLabel lblFechaDeInicio = new JLabel("Fecha de Inicio");
-		lblFechaDeInicio.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblFechaDeInicio.setBounds(17, 92, 77, 13);
+		lblFechaDeInicio.setFont(new Font("Lato", Font.PLAIN, 13));
+		lblFechaDeInicio.setBounds(17, 92, 108, 13);
 		add(lblFechaDeInicio);
 
 		RSButtonHover btnhvrAlta = new RSButtonHover();
 		btnhvrAlta.setText("Alta");
-		btnhvrAlta.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrAlta.setBackground(new Color(0, 112, 192));
-		btnhvrAlta.setBounds(10, 11, 108, 33);
+		btnhvrAlta.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		btnhvrAlta.setBackground(new Color(52, 152, 219));
+		btnhvrAlta.setBounds(4, 11, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrAlta);
 		
 		btnhvrAlta.addMouseListener(new MouseAdapter() {
@@ -363,8 +374,8 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrConvocatoriaDeEvento.setText("Convocatoria de Evento");
-		btnhvrConvocatoriaDeEvento.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrConvocatoriaDeEvento.setBackground(new Color(0, 112, 192));
+		btnhvrConvocatoriaDeEvento.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrConvocatoriaDeEvento.setBackground(new Color(52, 152, 219));
 		btnhvrConvocatoriaDeEvento.setBounds(89, 636, 227, 33);
 		add(btnhvrConvocatoriaDeEvento);
 
@@ -386,14 +397,14 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrAsistenciaAEventos.setText("Asistencia a Evento");
-		btnhvrAsistenciaAEventos.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrAsistenciaAEventos.setBackground(new Color(0, 112, 192));
+		btnhvrAsistenciaAEventos.setFont(new Font("Lato Black", Font.BOLD, 14));
+		btnhvrAsistenciaAEventos.setBackground(new Color(52, 152, 219));
 		btnhvrAsistenciaAEventos.setBounds(384, 636, 227, 33);
 		add(btnhvrAsistenciaAEventos);
 
 		JLabel lblMantenimiento = new JLabel("Mantenimiento");
 		lblMantenimiento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMantenimiento.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblMantenimiento.setFont(new Font("Lato", Font.BOLD, 14));
 		lblMantenimiento.setBounds(10,204, 108, 13);
 		panelMantenimientoAnalista.add(lblMantenimiento);
 
@@ -407,9 +418,9 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrModalidades.setText("Modalidades");
-		btnhvrModalidades.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrModalidades.setBackground(new Color(0, 112, 192));
-		btnhvrModalidades.setBounds(10, 228, 108, 33);
+		btnhvrModalidades.setFont(new Font("Lato Black", Font.BOLD, 13));
+		btnhvrModalidades.setBackground(new Color(52, 152, 219));
+		btnhvrModalidades.setBounds(4, 228, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrModalidades);
 
 		RSButtonHover btnhvrEstados = new RSButtonHover();
@@ -423,9 +434,9 @@ MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 			}
 		});
 		btnhvrEstados.setText("Estados");
-		btnhvrEstados.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrEstados.setBackground(new Color(0, 112, 192));
-		btnhvrEstados.setBounds(10, 279, 108, 33);
+		btnhvrEstados.setFont(new Font("Lato Black", Font.PLAIN, 13));
+		btnhvrEstados.setBackground(new Color(52, 152, 219));
+		btnhvrEstados.setBounds(4, 279, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrEstados);
 		
 		

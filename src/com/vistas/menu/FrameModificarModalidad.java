@@ -68,6 +68,7 @@ public class FrameModificarModalidad extends JFrame {
 		contentPane.add(labelImage);
 		
 		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre.setBorderColor(new Color(52, 152, 219));
 		textNombre.setIcons(ICONS.BUSINESS);
 		textNombre.setPlaceholder("Ingresar Nombre");
 		textNombre.setBounds(10, 76, 291, 36);
@@ -82,7 +83,7 @@ public class FrameModificarModalidad extends JFrame {
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrCancelar.setBackground(new Color(0, 112, 192));
+		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 152, 98, 30);
 		contentPane.add(btnhvrCancelar);
 		
@@ -123,7 +124,7 @@ public class FrameModificarModalidad extends JFrame {
 		});
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(0, 112, 192));
+		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(201, 152, 98, 30);
 		contentPane.add(btnhvrGuardar);
 	}
