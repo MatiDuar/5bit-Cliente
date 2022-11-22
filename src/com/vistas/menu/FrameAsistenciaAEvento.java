@@ -3,6 +3,8 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +34,6 @@ import RSMaterialComponent.RSTextFieldIconUno;
 import rojeru_san.complementos.RSButtonHover;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class FrameAsistenciaAEvento extends JFrame {
 
@@ -51,6 +49,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 	private RSTextFieldIconUno textBuscar;
 	
 	private List<ConvocatoriaAsistencia> convocatorias;
+	
+	private List<Estudiante>estudiantes;
 	
 
 	/**
@@ -261,9 +261,10 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
 		
-		try {
-			cargarCombo();
+		try {			
 			cargarConvocados();
+
+			cargarCombo();
 			cargarTabla(DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado));
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
@@ -280,7 +281,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 			v.addElement(e.getNombre1() + " " + e.getApellido1());
 			v.addElement(e.getDocumento());
 			v.addElement(e.getItr().getNombre());
-			ConvocatoriaAsistencia ca = DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(e, eventoSeleccionado);
+			ConvocatoriaAsistencia ca = convocatoriaPorEstudiante(e);
 			if (ca.getEstadoAsistencia() == null) {
 				v.addElement("Sin Registrar");
 			} else {
@@ -321,7 +322,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 	
 	public void actulizarConvocados() throws ServicesException {
 		for(int i=0;i<table.getRowCount();i++) {
-			ConvocatoriaAsistencia ca=buscarConvocatoria((long) modeloTabla.getValueAt(i, 4), convocatorias);
+			ConvocatoriaAsistencia ca=buscarConvocatoria( Long.parseLong(modeloTabla.getValueAt(i, 4).toString()), convocatorias);
 			ca.setEstadoAsistencia(DAOGeneral.estadoAsistenciaBean.obtenerPorNombre(modeloTabla.getValueAt((int) i, 3).toString()));
 			if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
 				ca.setCalificacion(Float.parseFloat(modeloTabla.getValueAt((int) i, 5).toString()));
@@ -384,5 +385,14 @@ public class FrameAsistenciaAEvento extends JFrame {
 		}
 		
 		cargarTabla(estudiantesFilt3);
+	}
+	
+	public ConvocatoriaAsistencia convocatoriaPorEstudiante(Estudiante es) {
+		for(ConvocatoriaAsistencia ca:convocatorias) {
+			if(ca.getEstudiante().getId()==es.getId()) {
+				return ca;
+			}
+		}	
+		return null;
 	}
  }

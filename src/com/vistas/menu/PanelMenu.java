@@ -127,7 +127,7 @@ public class PanelMenu extends JPanel {
 	
 	
 	public void initUIAnalista() {
-		datosComunes();
+		 datosComunes();
 	
 		RSButtonMaterialIconUno buttonGestionUsuarios = new RSButtonMaterialIconUno();
 		buttonGestionUsuarios.addMouseListener(new MouseAdapter() {
