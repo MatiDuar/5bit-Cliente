@@ -36,7 +36,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 	private DefaultComboBoxModel modeloDep;
 	private DefaultComboBoxModel modeloAreaTutor;
 	private DefaultComboBoxModel modeloTipoTutor;
-	
+
 	private RSComboBox comboBoxAreaTutor;
 	private RSComboBox comboBoxRolTutor;
 	private RSYearDate yearDate;
@@ -74,7 +74,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		yearDate.setColorBackground(new Color(52, 152, 219));
 		yearDate.setBounds(100, 395, 215, 42);
 		add(yearDate);
-		
+
 		yearDate.setYear(((Estudiante) usuarioLogeado).getAnoIngreso());
 	}
 
@@ -106,13 +106,13 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		comboBoxAreaTutor.setColorFondo(new Color(52, 152, 219));
 		comboBoxAreaTutor.setBounds(420, 396, 214, 42);
 		add(comboBoxAreaTutor);
-		
+
 		try {
 			cargarComboTutor();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		comboBoxAreaTutor.setSelectedItem(((Tutor) usuarioLogeado).getAreaTutor().getNombre());
 		comboBoxRolTutor.setSelectedItem(((Tutor) usuarioLogeado).getTipoTutor().getNombre());
 
@@ -289,182 +289,190 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		btnhvrGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int input = JOptionPane.showConfirmDialog(getParent(), "Desa guardar los datos modificaos del usuario sleccionado",
+						"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (input == 0) {
+					Usuario usuarioMod = usuarioLogeado;
+					try {
 
-				Usuario usuarioMod = usuarioLogeado;
-				try {
-					
-					String apellido1=textApellido1.getText();
-				
-					if(apellido1.length()>50) {
-						throw new Exception("El campo primer apellido debe contener menos de 50 caracteres.");
-					}
-						
-					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
-						
-					if(!apellido1.matches("^[a-zA-Z]+$")) {
-						throw new Exception("El campo primer apellido no puede ser vacÃ­o y debe contener solo letras.");
-					}
-					
-					usuarioMod.setApellido1(apellido1);
-					
-					String apellido2=textApellido2.getText();
-					
-					if(apellido2.length()>50) {
-						throw new Exception("El campo segundo apellido debe contener menos de 50 caracteres.");
-					}
-						
-					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
-						
-					if(!apellido2.isEmpty()){
-						if(!apellido2.matches("^[a-zA-Z]+$")) {
-							throw new Exception("El campo segundo apellido no puede ser vacÃ­o y debe contener solo letras.");
+						String apellido1 = textApellido1.getText();
+
+						if (apellido1.length() > 50) {
+							throw new Exception("El campo primer apellido debe contener menos de 50 caracteres.");
 						}
-					}
-					
-					usuarioMod.setApellido2(apellido2);
-					
-					String nombre1=textNombre1.getText();
-					
-					if(nombre1.length()>50) {
-						throw new Exception("El campo primer nombre debe contener menos de 50 caracteres.");
-					}
-						
-					//^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^ and $ mark the begin and end of a string respectively)
-						
-					if(!nombre1.matches("^[a-zA-Z]+$")) {
-						throw new Exception("El campo primer nombre no puede ser vacÃ­o y debe contener solo letras.");
-					}
-				
-					
-					usuarioMod.setNombre1(nombre1);
-					
-					String nombre2=textNombre2.getText();
-					
-					if(nombre2.length()>50) {
-						throw new Exception("El campo segundo nombre debe contener menos de 50 caracteres.");
-					}
-						
-					
-					if(!textNombre2.getText().isEmpty()) {
-						if(nombre2.isBlank()) {
-							throw new Exception("El campo segundo nombre no puede ser solo espacios");
+
+						// ^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^
+						// and $ mark the begin and end of a string respectively)
+
+						if (!apellido1.matches("^[a-zA-Z]+$")) {
+							throw new Exception(
+									"El campo primer apellido no puede ser vacÃ­o y debe contener solo letras.");
 						}
-						if((nombre2.matches("^[0-9]*$"))){
-							throw new Exception("El campo segundo nombre no puede contener numeros");
+
+						usuarioMod.setApellido1(apellido1);
+
+						String apellido2 = textApellido2.getText();
+
+						if (apellido2.length() > 50) {
+							throw new Exception("El campo segundo apellido debe contener menos de 50 caracteres.");
 						}
-						if(nombre2.contains(" ")) {
-							throw new Exception("No puede contener espacios vacios");
+
+						// ^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^
+						// and $ mark the begin and end of a string respectively)
+
+						if (!apellido2.isEmpty()) {
+							if (!apellido2.matches("^[a-zA-Z]+$")) {
+								throw new Exception(
+										"El campo segundo apellido no puede ser vacÃ­o y debe contener solo letras.");
+							}
 						}
-					}
-						
-					usuarioMod.setNombre2(nombre2);
-					
-					// corresponde en editar usuario siendo un analista
-			 		// usuarioMod.setContrasena(password.getText());
-			 		
-			 		String valorCBDepString = comboBoxDepartamento.getSelectedItem().toString();
-						
-					if(valorCBDepString==""){
-						throw new Exception("Debe seleccionar un Departamento");
-					}
-			 		
-					usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
 
-					java.util.Date fecha = FechaNacimiento.getDatoFecha();
+						usuarioMod.setApellido2(apellido2);
 
-					LocalDate fechaActualLD = LocalDate.now();
-					java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+						String nombre1 = textNombre1.getText();
 
-					java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+						if (nombre1.length() > 50) {
+							throw new Exception("El campo primer nombre debe contener menos de 50 caracteres.");
+						}
 
-					if (fecha.before(fechaActualDATE)) {
-						java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
-						usuarioMod.setFechaNacimiento(sqlDate);
-					} else {
-						throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
-					}
-					// falta campo Genero
+						// ^[a-zA-Z]+$ matches only strings that consist of one or more letters only (^
+						// and $ mark the begin and end of a string respectively)
+
+						if (!nombre1.matches("^[a-zA-Z]+$")) {
+							throw new Exception(
+									"El campo primer nombre no puede ser vacÃ­o y debe contener solo letras.");
+						}
+
+						usuarioMod.setNombre1(nombre1);
+
+						String nombre2 = textNombre2.getText();
+
+						if (nombre2.length() > 50) {
+							throw new Exception("El campo segundo nombre debe contener menos de 50 caracteres.");
+						}
+
+						if (!textNombre2.getText().isEmpty()) {
+							if (nombre2.isBlank()) {
+								throw new Exception("El campo segundo nombre no puede ser solo espacios");
+							}
+							if ((nombre2.matches("^[0-9]*$"))) {
+								throw new Exception("El campo segundo nombre no puede contener numeros");
+							}
+							if (nombre2.contains(" ")) {
+								throw new Exception("No puede contener espacios vacios");
+							}
+						}
+
+						usuarioMod.setNombre2(nombre2);
+
+						// corresponde en editar usuario siendo un analista
+						// usuarioMod.setContrasena(password.getText());
+
+						String valorCBDepString = comboBoxDepartamento.getSelectedItem().toString();
+
+						if (valorCBDepString == "") {
+							throw new Exception("Debe seleccionar un Departamento");
+						}
+
+						usuarioMod.setDepartamento(DAOGeneral.DepRemote.obtenerDepPorNombre(valorCBDepString));
+
+						java.util.Date fecha = FechaNacimiento.getDatoFecha();
+
+						LocalDate fechaActualLD = LocalDate.now();
+						java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+
+						java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+
+						if (fecha.before(fechaActualDATE)) {
+							java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+							usuarioMod.setFechaNacimiento(sqlDate);
+						} else {
+							throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+						}
+						// falta campo Genero
 //					usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long) 1));
-					
-					String valorCBITRString = comboBoxITR.getSelectedItem().toString();
-						
-					if(valorCBITRString==""){
-						throw new Exception("Debe seleccionar un ITR");
-					}
-					
-					usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
-					
-					String localidad =textLocalidad.getText();
-				
-					if(textLocalidad.getText().equalsIgnoreCase("")) {
-						throw new Exception("El campo localidad no puede ser vacio");
-					}
-							
-					if( (!localidad.matches("\\w.*") ) ){
-						throw new Exception("El campo localidad debe contener letras");		
-					}
-							
-					if(localidad.length()>50){
-						throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
-					} 
-					
-					usuarioMod.setLocalidad(localidad.replaceAll("\\s", ""));
-					
-					String mailPersonal= textEmailPersonal.getText();
-				
-					if(!mailPersonal.contains("@")){
-						throw new Exception("Formato de email personal incorrecto");
-					}
-					
-					usuarioMod.setMail(mailPersonal);
-					
-					String mailInstitucional= textEmailUtec.getText();
-				
-					if(!mailInstitucional.contains("@")){
-						throw new Exception("Formato de email institucional incorrecto");
-					}
-					
-					usuarioMod.setMailInstitucional(mailInstitucional);
-					
-					String tel = textTelefonoContacto.getText();
-					
-					if(!esNumerico(tel)) {
-						throw new Exception("Ingrese un telÃ©fono vÃ¡lido");
-					}
-					
-					usuarioMod.setTelefono(tel);
-					
-				
-					
-					String doc = textCedula.getText();
-					
-					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
-						throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
-					}else{
-						usuarioMod.setDocumento(doc);
-					}
-					
-					if (usuarioMod instanceof Tutor) {
 
-						((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(comboBoxAreaTutor.getSelectedItem().toString()));
-						((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(
-								comboBoxRolTutor.getSelectedItem().toString()));
+						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
 
-					} else if (usuarioMod instanceof Estudiante) {
-						((Estudiante) usuarioMod).setAnoIngreso(yearDate.getYear());
+						if (valorCBITRString == "") {
+							throw new Exception("Debe seleccionar un ITR");
+						}
+
+						usuarioMod.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
+
+						String localidad = textLocalidad.getText();
+
+						if (textLocalidad.getText().equalsIgnoreCase("")) {
+							throw new Exception("El campo localidad no puede ser vacio");
+						}
+
+						if ((!localidad.matches("\\w.*"))) {
+							throw new Exception("El campo localidad debe contener letras");
+						}
+
+						if (localidad.length() > 50) {
+							throw new Exception("El campo localidad no puede contener mas de 50 caracteres");
+						}
+
+						usuarioMod.setLocalidad(localidad.replaceAll("\\s", ""));
+
+						String mailPersonal = textEmailPersonal.getText();
+
+						if (!mailPersonal.contains("@")) {
+							throw new Exception("Formato de email personal incorrecto");
+						}
+
+						usuarioMod.setMail(mailPersonal);
+
+						String mailInstitucional = textEmailUtec.getText();
+
+						if (!mailInstitucional.contains("@")) {
+							throw new Exception("Formato de email institucional incorrecto");
+						}
+
+						usuarioMod.setMailInstitucional(mailInstitucional);
+
+						String tel = textTelefonoContacto.getText();
+
+						if (!esNumerico(tel)) {
+							throw new Exception("Ingrese un telÃ©fono vÃ¡lido");
+						}
+
+						usuarioMod.setTelefono(tel);
+
+						String doc = textCedula.getText();
+
+						if (doc.length() != 8 || doc == "        " || !esNumerico(doc)) {
+							throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
+						} else {
+							usuarioMod.setDocumento(doc);
+						}
+
+						if (usuarioMod instanceof Tutor) {
+
+							((Tutor) usuarioMod).setAreaTutor(DAOGeneral.areaTutorRemote
+									.buscarPorNombre(comboBoxAreaTutor.getSelectedItem().toString()));
+							((Tutor) usuarioMod).setTipoTutor(DAOGeneral.tipoTutorRemote
+									.obtenerTipoTutorPorNombre(comboBoxRolTutor.getSelectedItem().toString()));
+
+						} else if (usuarioMod instanceof Estudiante) {
+							((Estudiante) usuarioMod).setAnoIngreso(yearDate.getYear());
+						}
+
+						DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
+
+						PanelGestionUsuarios.getInstancia()
+								.cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
+						JOptionPane.showMessageDialog(null, "Se modifico correctamente el usuario", "Aviso",
+								JOptionPane.INFORMATION_MESSAGE);
+
+						FrameModificarDatosUsuarios.getInstancia().setVisible(false);
+
+					} catch (Exception m) {
+						JOptionPane.showMessageDialog(null, m.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 
-					DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
-					
-					PanelGestionUsuarios.getInstancia().cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
-					JOptionPane.showMessageDialog(null, "Se modifico correctamente el usuario", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-					
-					FrameModificarDatosUsuarios.getInstancia().setVisible(false);
-					
-				} catch (Exception m) {
-					JOptionPane.showMessageDialog(null, m.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
 		btnhvrGuardar.setText("Guardar");
@@ -511,12 +519,12 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		}
 
 	}
-	
-	//	si usa un numero que no sea entre 0 y 9
-	//  se te va a romper porque la parte "d+" solo trabaja 
+
+	// si usa un numero que no sea entre 0 y 9
+	// se te va a romper porque la parte "d+" solo trabaja
 	// con numeros arabicos.
 
 	public static boolean esNumerico(String str) {
- 	 return str.matches("-?\\d+(\\.\\d+)?");
+		return str.matches("-?\\d+(\\.\\d+)?");
 	}
 }
