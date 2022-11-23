@@ -13,7 +13,7 @@ import rojeru_san.rsdate.RSYearDate;
 
 public class PanelRegistroEstudiante extends JPanel {
 
-	public static RSYearDate yearDate = new RSYearDate();
+	public static RSYearDate yearDate;
 	private static PanelRegistroEstudiante instancia = new PanelRegistroEstudiante();
 	/**
 	 * Create the panel.

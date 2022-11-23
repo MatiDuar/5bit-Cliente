@@ -10,7 +10,6 @@ import com.services.EstadoAsistenciaBeanRemote;
 import com.services.EstadosEventosBeanRemote;
 import com.services.EstudianteBeanRemote;
 import com.services.EventoBeanRemote;
-import com.services.GeneracionBeanRemote;
 import com.services.GeneroBeanRemote;
 import com.services.ITRBeanRemote;
 import com.services.ModalidadesEventosBeanRemote;
@@ -31,7 +30,6 @@ public class DAOGeneral {
 	public static EventoBeanRemote eventoRemote;
 	public static AnalistaBeanRemote analistaRemote;
 	public static TutorBeanRemote tutorRemote;
-	public static GeneracionBeanRemote generacionRemote;
 	public static EstadosEventosBeanRemote estadosEventoRemote;
 	public static ModalidadesEventosBeanRemote modalidadEventoRemote;
 	public static ConvocatoriaAsistenciaBeanRemote conAsistenciaBean;
@@ -50,7 +48,6 @@ public class DAOGeneral {
 			eventoRemote=(EventoBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/EventoBean!com.services.EventoBeanRemote");
 			analistaRemote=(AnalistaBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/AnalistaBean!com.services.AnalistaBeanRemote");
 			tutorRemote=(TutorBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/TutorBean!com.services.TutorBeanRemote");
-			generacionRemote=(GeneracionBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/GeneracionBean!com.services.GeneracionBeanRemote");
 			estadosEventoRemote=(EstadosEventosBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/EstadosEventosBean!com.services.EstadosEventosBeanRemote");
 			modalidadEventoRemote=(ModalidadesEventosBeanRemote) InitialContext.doLookup("ejb:/Proyecto-5bit/ModalidadesEventosBean!com.services.ModalidadesEventosBeanRemote");
 			conAsistenciaBean = (ConvocatoriaAsistenciaBeanRemote) InitialContext.doLookup(

@@ -234,8 +234,8 @@ public class FrameNuevoEvento extends JFrame {
 						// falta campos pero no lo pide el requerimiento
 						eventoNuevo.setCreditos(0);
 						eventoNuevo.setSemestre(1);
-
 						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
+						
 						if(comboBoxITR.getSelectedIndex()==0) {
 							throw new Exception("Debe seleccionar un ITR");
 						}

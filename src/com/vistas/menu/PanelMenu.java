@@ -41,7 +41,6 @@ public class PanelMenu extends JPanel {
 //		
 //	}
 	public void initUITutor() {
-		removeAll();
 		datosComunes();
 
 		RSButtonMaterialIconUno buttonGestionConstancias = new RSButtonMaterialIconUno();
@@ -202,7 +201,7 @@ public class PanelMenu extends JPanel {
 	
 	
 	public void datosComunes() {
-		
+		removeAll();
 		setLayout(null);
 		setBounds(0,0,955, 725);
 
