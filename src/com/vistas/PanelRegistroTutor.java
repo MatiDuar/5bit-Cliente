@@ -18,8 +18,8 @@ import rojeru_san.rsfield.RSTextFull;
 public class PanelRegistroTutor extends JPanel {
 
 	private static PanelRegistroTutor instancia = new PanelRegistroTutor();
-	public static RSComboBox comboBoxArea= new RSComboBox();
-	public static RSComboBox comboBoxRol = new RSComboBox();
+	public static RSComboBox comboBoxArea;
+	public static RSComboBox comboBoxRol;
 
 	public DefaultComboBoxModel modeloRol=new DefaultComboBoxModel();
 	

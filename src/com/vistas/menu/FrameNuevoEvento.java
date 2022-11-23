@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -239,23 +240,48 @@ public class FrameNuevoEvento extends JFrame {
 
 					if (input == 0) {
 						Evento eventoNuevo = new Evento();
+						if(textTitulo.getText().equalsIgnoreCase("")) {
+							throw new Exception("Debe espesificar un titulo");
+						}
 						eventoNuevo.setTitulo(textTitulo.getText());
 
 						// falta campos pero no lo pide el requerimiento
 						eventoNuevo.setCreditos(0);
 						eventoNuevo.setSemestre(1);
-
 						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
+						
+						if(comboBoxITR.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar un ITR");
+						}
 						eventoNuevo.setItr(
 								DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+						if(comboBoxModalidad.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar una Modalidad");
+						}
 						eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
 								.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
+						if(comboBoxTipoEvento.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar un Tipo de evento");
+						}
 						eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
 								.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
+						if(tutoresAsignados==null || tutoresAsignados.size()<1) {
+							throw new Exception("Debe haber por lo menos un tutor asignado al evento");
+						}
 						eventoNuevo.setTutores(tutoresAsignados);
-						SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-
+						
+						
 //					// fecha de evento inicio
+						java.util.Date fecha = fechaInicio.getDatoFecha();
+
+						LocalDate fechaActualLD = LocalDate.now();
+						java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+
+						java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+
+						if (fecha.before(fechaActualDATE)) {
+							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
+						}
 						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
 						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
 						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
@@ -263,13 +289,21 @@ public class FrameNuevoEvento extends JFrame {
 						eventoNuevo.setFechaInicio(dateInicio);
 
 						// fecha de evento fin
+						java.util.Date fechaFin1 = fechaFin.getDatoFecha();
 
+						if (fechaFin1.before(fechaActualDATE)) {
+							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
+						}
+						if(fechaFin1.before(fecha)) {
+							throw new Exception("La fecha final no puede ser menor a la fecha de inicio");
+						}
 						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
 						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
 						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
 						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
 
 						eventoNuevo.setFechaFin(dateFin);
+						
 						eventoNuevo.setLocalizacion(textLocalicacion.getText());
 						eventoNuevo.setSemestre(1);
 
@@ -278,8 +312,7 @@ public class FrameNuevoEvento extends JFrame {
 						setVisible(false);
 					}
 				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);				}
 			}
 		});
 		btnhvrGuardar.setText("Guardar");

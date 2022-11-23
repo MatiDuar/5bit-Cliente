@@ -386,7 +386,7 @@ public class PanelGestionDeEventos extends JPanel {
 					if (table.getSelectedRow() == -1) {
 						throw new Exception("Debe seleccionar un evento para realizar esta accion");
 					}
-					FrameAsistenciaAEvento.eventeSeleccionado = DAOGeneral.eventoRemote
+					FrameAsistenciaAEvento.eventoSeleccionado = DAOGeneral.eventoRemote
 							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
 					FrameAsistenciaAEvento frame = new FrameAsistenciaAEvento();
 					frame.setVisible(true);
@@ -427,7 +427,7 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrEstados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
+				MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 				
 				mod.setVisible(true);
 				
@@ -462,7 +462,7 @@ MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 		modeloTabla.setRowCount(0);
 		
 		for (Evento e : eventos) {
-			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), (Set<Tutor>) e.getTutores()))) {
+			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), (List<Tutor>) e.getTutores()))) {
 				Vector v = new Vector();
 				v.addElement(e.getTitulo());
 				v.addElement(e.getTipoActividad().getNombre());
@@ -550,7 +550,7 @@ MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 		}
 	}
 	
-	public boolean contieneTutor(Tutor buscar,Set<Tutor>tutores) {
+	public boolean contieneTutor(Tutor buscar,List<Tutor>tutores) {
 		for(Tutor t:tutores) {
 			if(t.getId()==buscar.getId()) {
 				return true;
@@ -561,5 +561,9 @@ MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
 	
 	public static PanelGestionDeEventos getInstancia() {
 		return instancia;
+	}
+	
+	public static void reset() {
+		instancia=new PanelGestionDeEventos();
 	}
 }

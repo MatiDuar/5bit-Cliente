@@ -270,7 +270,9 @@ public class PanelRegistroPag2 extends JPanel {
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						
-						
+						analistaRegistro.setValidado(false);
+						analistaRegistro.setActivo(true);
+
 						
 						Registro.resetDatos();
 						Registro.getInstancia().setVisible(false);
@@ -285,6 +287,7 @@ public class PanelRegistroPag2 extends JPanel {
 					try {
 						Tutor tutorRegistro=new Tutor();
 						copiarUsuario(PanelRegistroPag.usuarioRegistro, tutorRegistro);
+						
 						tutorRegistro.setMailInstitucional(textMailUtec.getText());
 						tutorRegistro.setMail(textMailPersonal.getText());
 						
@@ -324,15 +327,13 @@ public class PanelRegistroPag2 extends JPanel {
 							
 						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
 												
-						
+						System.out.println(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString());
 						//no se si va hacer un comboBox o un textField
-						String valorCBAreaTutorString = PanelRegistroTutor.comboBoxArea.getSelectedItem().toString();
-						
-						if(valorCBAreaTutorString==""){
+						if(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString()==""){
 							throw new Exception("Debe seleccionar un area para el tutor");
 						}
 							
-						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(valorCBAreaTutorString));
+						tutorRegistro.setAreaTutor(DAOGeneral.areaTutorRemote.buscarPorNombre(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString()));
 						
 						
 
@@ -343,9 +344,9 @@ public class PanelRegistroPag2 extends JPanel {
 						}
 
 						tutorRegistro.setTipoTutor(DAOGeneral.tipoTutorRemote.obtenerTipoTutorPorNombre(valorCBRolTutorString));
-	
-						
-						
+						tutorRegistro.setValidado(false);
+						tutorRegistro.setActivo(true);
+
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
 						
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
@@ -414,19 +415,18 @@ public class PanelRegistroPag2 extends JPanel {
 						//	
 						//}
 						
-						java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+						System.out.println(fechaObtenida);
+						System.out.println(fechaActualLD.getYear());
 						
-						java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
-
-						if (fechaObtenida <= fechaActualDATE.getYear()) {
-							estudianteRegistro.setAnoIngreso(fechaObtenida);
-						} else {
-								throw new Exception("Fecha inv�lida, introduzca una fecha menor a la actual.");
+						if (fechaObtenida > fechaActualLD.getYear()) {
+							throw new Exception("Fecha invalida, introduzca una fecha menor a la actual.");
+							
 						}
+						estudianteRegistro.setAnoIngreso(fechaObtenida);
 						
-						
-						
-						System.out.println(estudianteRegistro);
+						estudianteRegistro.setValidado(false);
+						estudianteRegistro.setActivo(false);
+
 						
 						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
