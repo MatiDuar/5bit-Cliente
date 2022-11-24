@@ -12,6 +12,9 @@ import com.services.EstudianteBeanRemote;
 import com.services.EventoBeanRemote;
 import com.services.GeneroBeanRemote;
 import com.services.ITRBeanRemote;
+import com.services.InscripcionBeanRemote;
+import com.services.MateriaBeanRemote;
+import com.services.MatriculaBeanRemote;
 import com.services.ModalidadesEventosBeanRemote;
 import com.services.TipoActividadBeanRemote;
 import com.services.TipoTutorBeanRemote;
@@ -35,6 +38,9 @@ public class DAOGeneral {
 	public static ConvocatoriaAsistenciaBeanRemote conAsistenciaBean;
 	public static EstudianteBeanRemote estudianteBean;
 	public static EstadoAsistenciaBeanRemote estadoAsistenciaBean;
+	public static MateriaBeanRemote materiaBean;
+	public static InscripcionBeanRemote  inscripcionBean;
+	public static MatriculaBeanRemote  matriculaBean;
 	
 	public DAOGeneral ( ) {
 		try {
@@ -56,6 +62,13 @@ public class DAOGeneral {
 					"ejb:/Proyecto-5bit/EstudianteBean!com.services.EstudianteBeanRemote");
 			estadoAsistenciaBean = (EstadoAsistenciaBeanRemote) InitialContext.doLookup(
 					"ejb:/Proyecto-5bit/EstadoAsistenciaBean!com.services.EstadoAsistenciaBeanRemote");
+			materiaBean=(MateriaBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/MateriaBean!com.services.MateriaBeanRemote");
+			inscripcionBean=(InscripcionBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/InscripcionBean!com.services.InscripcionBeanRemote");
+			
+			matriculaBean=(MatriculaBeanRemote) InitialContext.doLookup(
+					"ejb:/Proyecto-5bit/MatriculaBean!com.services.MatriculaBeanRemote");
 			
 		}catch(Exception e) {
 			e.printStackTrace();

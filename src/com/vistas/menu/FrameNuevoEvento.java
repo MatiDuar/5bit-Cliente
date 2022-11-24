@@ -243,12 +243,18 @@ public class FrameNuevoEvento extends JFrame {
 						if(textTitulo.getText().equalsIgnoreCase("")) {
 							throw new Exception("Debe espesificar un titulo");
 						}
+						
+						if(textTitulo.getText().length()>50) {
+							throw new Exception("El titulo no puede contener mas de 50 caracteres");
+						}
 						eventoNuevo.setTitulo(textTitulo.getText());
 
 						// falta campos pero no lo pide el requerimiento
-						eventoNuevo.setCreditos(0);
-						eventoNuevo.setSemestre(1);
-						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Terminado"));
+//						eventoNuevo.setCreditos(0);
+//						eventoNuevo.setSemestre(1);
+						
+						
+						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Futuro"));
 						
 						if(comboBoxITR.getSelectedIndex()==0) {
 							throw new Exception("Debe seleccionar un ITR");

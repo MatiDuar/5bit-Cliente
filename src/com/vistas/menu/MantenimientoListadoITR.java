@@ -258,6 +258,10 @@ public class MantenimientoListadoITR extends JFrame {
 					if(tableMetro.getSelectedRow()==-1) {
 						throw new Exception("Debe seleccionar un ITR para poder activarlo.");
 					}
+					
+					if(DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString()).getActivo()) {
+						throw new Exception("El ITR selccionado ya se encuentra activo");
+					}
 					int input = JOptionPane.showConfirmDialog(getParent(), "Desea activar el ITR seleccionado", "Guardado...",
 							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					

@@ -228,6 +228,9 @@ public class PanelRegistroPag2 extends JPanel {
 						analistaRegistro.setMailInstitucional(textMailUtec.getText());
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
+							throw new Exception("El email institucional ya se encuentra registado en el sistema");
+						}
 						analistaRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
 						String valorCBDepString = comboBoxDep.getSelectedItem().toString();
@@ -292,6 +295,9 @@ public class PanelRegistroPag2 extends JPanel {
 						tutorRegistro.setMail(textMailPersonal.getText());
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
+							throw new Exception("El email institucional ya se encuentra registado en el sistema");
+						}
 						tutorRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
 						String valorCBDepString = comboBoxDep.getSelectedItem().toString();
@@ -370,6 +376,9 @@ public class PanelRegistroPag2 extends JPanel {
 						estudianteRegistro.setMail(textMailPersonal.getText());
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
+						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
+							throw new Exception("El email institucional ya se encuentra registado en el sistema");
+						}
 						estudianteRegistro.setNombreUsuario(splitNombreUsuario[0]);
 						
 						String valorCBDepString = comboBoxDep.getSelectedItem().toString();

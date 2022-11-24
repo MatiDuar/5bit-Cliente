@@ -125,7 +125,7 @@ public class FrameAgregarEstadoEvento extends JFrame {
 				
 				try {
 					
-					
+					guardarEstado();
 				
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",

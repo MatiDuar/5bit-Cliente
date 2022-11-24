@@ -3,20 +3,30 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.controlador.DAOGeneral;
+import com.entities.Escolaridad;
 import com.entities.Estudiante;
+import com.entities.Inscripcion;
+import com.entities.Matricula;
+import com.exception.ServicesException;
 
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.complementos.TableMetro;
 import rojeru_san.rslabel.RSLabelImage;
+import rojerusan.RSComboBox;
 
 public class PanelReportesEstudiante extends JPanel {
-
+	private DefaultTableModel modeloTabla;
+	private DefaultComboBoxModel modeloCarrera;
+	private RSComboBox comboBoxCarrera;
 	/**
 	 * Create the panel.
 	 */
@@ -133,31 +143,16 @@ public class PanelReportesEstudiante extends JPanel {
 		tableMetro.setFuenteFilasSelect(new Font("Tahoma", Font.BOLD, 11));
 		tableMetro.setFuenteFilas(new Font("Tahoma", Font.BOLD, 11));
 		tableMetro.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		tableMetro.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Asiganturas", "Cr\u00E9ditos", "Tipo", "Convocatoria", "Calificaci\u00F3n"
-			}
-		));
+		
+		modeloTabla=new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null},
+				},
+				new String[] {
+					"Asiganturas", "Cr\u00E9ditos", "Tipo", "Convocatoria", "Calificaci\u00F3n"
+				}
+			);
+		tableMetro.setModel(modeloTabla);
 		tableMetro.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tableMetro.getColumnModel().getColumn(0).setMinWidth(100);
 		tableMetro.getColumnModel().getColumn(1).setMinWidth(75);
@@ -215,6 +210,59 @@ public class PanelReportesEstudiante extends JPanel {
 		tableMetro_1.setColorBordeHead(Color.DARK_GRAY);
 		tableMetro_1.setColorBordeFilas(Color.DARK_GRAY);
 		scrollPane_1.setViewportView(tableMetro_1);
+		
+		comboBoxCarrera = new RSComboBox();
+		modeloCarrera=new DefaultComboBoxModel();
+		comboBoxCarrera.setModel(modeloCarrera);
+		comboBoxCarrera.setBounds(466, 193, 224, 22);
+		add(comboBoxCarrera);
+		
+//		cargarComboCarrera();
+		try {
+			cargarComboCarrera();
+			cargarAsignaturas();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+	}
+	
+	public void  cargarAsignaturas() throws ServicesException{
+//		"Asiganturas", "Cr\u00E9ditos", "Tipo", "Convocatoria", "Calificaci\u00F3n"
+		
+		modeloTabla.setRowCount(0);
+		Escolaridad escolaridadEstudiante=buscarInscripcion((Estudiante) Menu.getUsuario(),comboBoxCarrera.getSelectedItem().toString()).getEscolaridad();
+		for(Matricula m:escolaridadEstudiante.getMatriculas()) {
+			Vector v=new Vector();
+			v.addElement(m.getMateria().getNombre());
+			v.addElement(m.getCreditos());
+			//falta tipo de asignatura
+			v.addElement(m.getTipoAsignatura().getNombre());
+			//falta convocatoria
+			v.addElement(m.getConvocatoriaTipo().getNombre());
+			
+			v.addElement(m.getNota());
+			modeloTabla.addRow(v);
+		}
+
+	}
+	
+	
+	public Inscripcion buscarInscripcion(Estudiante es,String nombreCarrera) throws ServicesException {
+		for(Inscripcion ins:DAOGeneral.inscripcionBean.obtenerInscripcionesPorEstudiante(es)) {
+			if(ins.getCarrera().getNombre().equalsIgnoreCase(nombreCarrera)){
+				return ins;
+			}
+		}
+		
+		return null;
+	}
+	
+	private void cargarComboCarrera() {
+		modeloCarrera.removeAllElements();
+		for(Inscripcion ins:((Estudiante) Menu.getUsuario()).getInscripciones()) {
+			modeloCarrera.addElement(ins.getCarrera().getNombre());
+		}
 	}
 }

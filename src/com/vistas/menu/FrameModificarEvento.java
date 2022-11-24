@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,8 +129,7 @@ public class FrameModificarEvento extends JFrame {
 
 		RSDateChooser fechaFin = new RSDateChooser();
 		fechaFin.setColorBackground(new Color(52, 152, 219));
-		fechaFin.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaFin().getYear(),
-				eventoSeleccionado.getFechaFin().getMonth(), eventoSeleccionado.getFechaFin().getDay()));
+		
 		fechaFin.setBounds(94, 196, 250, 42);
 		contentPane.add(fechaFin);
 
@@ -143,8 +143,7 @@ public class FrameModificarEvento extends JFrame {
 
 		RSDateChooser fechaInicio = new RSDateChooser();
 		fechaInicio.setColorBackground(new Color(52, 152, 219));
-		fechaInicio.setDatoFecha(new java.util.Date(eventoSeleccionado.getFechaInicio().getYear(),
-				eventoSeleccionado.getFechaInicio().getMonth(), eventoSeleccionado.getFechaInicio().getDay()));
+	
 		fechaInicio.setBounds(94, 143, 250, 42);
 		contentPane.add(fechaInicio);
 
@@ -253,24 +252,55 @@ public class FrameModificarEvento extends JFrame {
 					if (input == 0) {
 
 						Evento eventoNuevo = eventoSeleccionado;
+						if(textTitulo.getText().equalsIgnoreCase("")) {
+							throw new Exception("Debe espesificar un titulo");
+						}
+						
+						if(textTitulo.getText().length()>50) {
+							throw new Exception("El titulo no puede contener mas de 50 caracteres");
+						}
 						eventoNuevo.setTitulo(textTitulo.getText());
 
 						// falta campos pero no lo pide el requerimiento
 						eventoNuevo.setCreditos(0);
 						eventoNuevo.setSemestre(1);
-
+						if(comboBoxEstado.getSelectedIndex()==0) {
+							throw new Exception("Debe selecionar un estado de evento");
+						}
 						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote
 								.buscarNombreEstadoEvento(comboBoxEstado.getSelectedItem().toString()));
+						
+						if(comboBoxITR.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar un ITR");
+						}
 						eventoNuevo.setItr(
 								DAOGeneral.itrRemote.obtenerItrPorNombre(comboBoxITR.getSelectedItem().toString()));
+						if(comboBoxModalidad.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar una Modalidad");
+						}
 						eventoNuevo.setModalidad(DAOGeneral.modalidadEventoRemote
 								.buscarNombreModalidadEvento(comboBoxModalidad.getSelectedItem().toString()));
+						if(comboBoxTipoEvento.getSelectedIndex()==0) {
+							throw new Exception("Debe seleccionar un Tipo de evento");
+						}
 						eventoNuevo.setTipoActividad(DAOGeneral.tipoActividadRemote
 								.obtenerTipoActividadPorNombre(comboBoxTipoEvento.getSelectedItem().toString()));
+						if(tutoresAsignados==null || tutoresAsignados.size()<1) {
+							throw new Exception("Debe haber por lo menos un tutor asignado al evento");
+						}
 						eventoNuevo.setTutores(tutoresAsignados);
 
 //					// fecha de evento inicio
+						java.util.Date fecha = fechaInicio.getDatoFecha();
 
+						LocalDate fechaActualLD = LocalDate.now();
+						java.sql.Date fechaActualSQL = java.sql.Date.valueOf(fechaActualLD);
+
+						java.util.Date fechaActualDATE = new java.util.Date(fechaActualSQL.getTime());
+
+						if (fecha.before(fechaActualDATE)) {
+							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
+						}
 						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
 						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
 						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
@@ -278,14 +308,22 @@ public class FrameModificarEvento extends JFrame {
 						eventoNuevo.setFechaInicio(dateInicio);
 
 						// fecha de evento fin
+						java.util.Date fechaFin1 = fechaFin.getDatoFecha();
 
+						if(fechaFin1.before(fecha)) {
+							throw new Exception("La fecha fin no puede ser anterior a la fecha de Inicio");
+						}
+
+						if (fecha.before(fechaActualDATE)) {
+							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
+						}
 						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
 						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
 						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
 						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
 
 						eventoNuevo.setFechaFin(dateFin);
-
+						
 						eventoNuevo.setSemestre(1);
 
 						DAOGeneral.eventoRemote.modificarEvento(eventoNuevo);
@@ -347,33 +385,14 @@ public class FrameModificarEvento extends JFrame {
 		comboBoxModalidad.setSelectedItem(eventoSeleccionado.getModalidad().getNombre());
 		comboBoxTipoEvento.setSelectedItem(eventoSeleccionado.getTipoActividad().getNombre());
 		comboBoxEstado.setSelectedItem(eventoSeleccionado.getEstado().getNombre());
-		String horasInicio;
-		String minutosInicio;
-		if (eventoSeleccionado.getFechaInicio().getHours() < 10) {
-			horasInicio = "0" + eventoSeleccionado.getFechaInicio().getHours();
-		} else {
-			horasInicio = "0" + eventoSeleccionado.getFechaInicio().getHours();
-		}
-		if (eventoSeleccionado.getFechaInicio().getMinutes() == 0) {
-			minutosInicio = "00";
-		} else {
-			minutosInicio = "30";
-		}
-		comboBoxHoraInicio.setSelectedItem(horasInicio + ":" + minutosInicio);
+		
+		fechaInicio.setDatoFecha(eventoSeleccionado.getFechaInicio());
+		fechaFin.setDatoFecha(eventoSeleccionado.getFechaFin());
 
-		String horasFin;
-		String minutosFin;
-		if (eventoSeleccionado.getFechaFin().getHours() < 10) {
-			horasFin = "0" + eventoSeleccionado.getFechaFin().getHours();
-		} else {
-			horasFin = "0" + eventoSeleccionado.getFechaFin().getHours();
-		}
-		if (eventoSeleccionado.getFechaFin().getMinutes() == 0) {
-			minutosFin = "00";
-		} else {
-			minutosFin = "30";
-		}
-		comboBoxHoraFin.setSelectedItem(horasFin + ":" + minutosFin);
+		
+		comboBoxHoraInicio.setSelectedItem(eventoSeleccionado.getFechaInicio().getHours() + ":" + eventoSeleccionado.getFechaInicio().getMinutes());
+
+		comboBoxHoraFin.setSelectedItem(eventoSeleccionado.getFechaFin().getHours() + ":" + eventoSeleccionado.getFechaFin().getMinutes());
 		
 		RSButtonHover btnhvrCancel = new RSButtonHover();
 		btnhvrCancel.addMouseListener(new MouseAdapter() {
