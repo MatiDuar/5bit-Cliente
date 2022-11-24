@@ -425,7 +425,7 @@ public class PanelRegistroPag2 extends JPanel {
 						estudianteRegistro.setAnoIngreso(fechaObtenida);
 						
 						estudianteRegistro.setValidado(false);
-						estudianteRegistro.setActivo(false);
+						estudianteRegistro.setActivo(true);
 
 						
 						DAOGeneral.usuarioRemote.crearUsuario(estudianteRegistro);

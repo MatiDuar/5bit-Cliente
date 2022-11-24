@@ -90,6 +90,7 @@ public class PanelGestionUsuarios extends JPanel {
 		tableMetro.setGridColor(Color.DARK_GRAY);
 		tableMetro.setColorBorderRows(Color.DARK_GRAY);
 		tableMetro.setColorBorderHead(Color.DARK_GRAY);
+		tableMetro.setBackgoundHead(new Color(52, 152, 219));
 		tableMetro.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		modeloTablaMetro = new DefaultTableModel(
