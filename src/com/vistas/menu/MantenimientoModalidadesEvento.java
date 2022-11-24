@@ -74,10 +74,10 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel_2 = new JLabel("LISTADO DE EVENTOS");
+		JLabel lblNewLabel_2 = new JLabel("LISTADO DE MODALIDADES");
 		lblNewLabel_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(98, 22, 219, 27);
+		lblNewLabel_2.setBounds(53, 22, 279, 27);
 		contentPane.add(lblNewLabel_2);
 
 		RSLabelImage labelImage = new RSLabelImage();
@@ -121,15 +121,8 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		btnhvrCerrar.setText("Cerrar");
 		btnhvrCerrar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCerrar.setBackground(new Color(52, 152, 219));
-		btnhvrCerrar.setBounds(26, 370, 108, 33);
+		btnhvrCerrar.setBounds(131, 370, 123, 33);
 		contentPane.add(btnhvrCerrar);
-
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(254, 370, 108, 33);
-		contentPane.add(btnhvrGuardar);
 
 		
 
@@ -138,12 +131,15 @@ public class MantenimientoModalidadesEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe selccionar una modalidad de evento para poder editarlo");
+					}
 					FrameModificarModalidad.modalidadSeleccionada=DAOGeneral.modalidadEventoRemote.buscarModalidadEventoPorId((Long) modeloEstado.getValueAt(tableMetro.getSelectedRow(), 1));
 					FrameModificarModalidad mod=new FrameModificarModalidad();
 					mod.setVisible(true);
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
@@ -198,7 +194,8 @@ public class MantenimientoModalidadesEvento extends JFrame {
 					}
 					cargarTabla(modalidadFilt);
 				} catch (ServicesException e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

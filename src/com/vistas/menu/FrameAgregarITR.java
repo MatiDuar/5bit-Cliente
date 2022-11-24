@@ -25,13 +25,16 @@ import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrameAgregarITR extends JFrame {
 
 	private JPanel contentPane;
 	
 	private DefaultComboBoxModel modeloDep;
-
+	private RSTextFieldIconUno textNombre;
+	private RSComboBox comboBoxDep;
 	/**
 	 * Launch the application.
 	 */
@@ -73,7 +76,21 @@ public class FrameAgregarITR extends JFrame {
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		
-		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre = new RSTextFieldIconUno();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//El codigo 10 es el Enter
+				if(e.getKeyCode()==10) {				
+					try {
+						guardarITR();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 		textNombre.setBorderColor(new Color(52, 152, 219));
 		textNombre.setIcons(ICONS.BUSINESS);
 		textNombre.setPlaceholder("Ingresar Nombre");
@@ -90,7 +107,7 @@ public class FrameAgregarITR extends JFrame {
 		lblDepartamento.setBounds(10, 122, 85, 13);
 		contentPane.add(lblDepartamento);
 		
-		RSComboBox comboBoxDep = new RSComboBox();
+		comboBoxDep = new RSComboBox();
 		comboBoxDep.setColorBoton(Color.WHITE);
 		comboBoxDep.setColorFondo(new Color(52, 152, 219));
 		modeloDep=new DefaultComboBoxModel();
@@ -111,27 +128,7 @@ public class FrameAgregarITR extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					if(textNombre.getText()=="") {
-						throw new Exception("Debe indicar un nombre de ITR");
-					}
-					if(comboBoxDep.getSelectedIndex()==-1) {
-						throw new Exception("Debe seleccionar un departamento");
-					}
-					if(DAOGeneral.itrRemote.obtenerItrPorNombre(textNombre.getText())!=null) {
-						throw new Exception("El ITR espesificado ya esta registrado en el sistema");
-					}
-					int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el ITR", "Guardado...",
-							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					
-					if(input==0) {
-						DAOGeneral.itrRemote.crearITR(textNombre.getText(),DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()), true);
-						PanelGestionUsuarios.getInstancia().cargarComboBox();
-						MantenimientoListadoITR.getInstancia().cargarTabla(MantenimientoListadoITR.getInstancia().filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
-						MantenimientoListadoITR.getInstancia().comboBoxEstadoITR.setSelectedIndex(0);
-						JOptionPane.showMessageDialog(null, "Se creo correctamente el ITR.", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-					
+					guardarITR();
 				
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
@@ -158,6 +155,31 @@ public class FrameAgregarITR extends JFrame {
 		modeloDep.addElement("");
 		for(Departamento d:DAOGeneral.DepRemote.obtenerDepartamento()) {
 			modeloDep.addElement(d.getNombre());
+		}
+	}
+	
+	private void guardarITR() throws Exception {
+		if(textNombre.getText().length()<1) {
+			throw new Exception("Debe indicar un nombre de ITR");
+		}
+		if(comboBoxDep.getSelectedIndex()==0) {
+			throw new Exception("Debe seleccionar un departamento");
+		}
+
+		if(DAOGeneral.itrRemote.obtenerItrPorNombre(textNombre.getText())!=null) {
+			throw new Exception("El ITR espesificado ya esta registrado en el sistema");
+		}
+		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el ITR", "Guardado...",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+		if(input==0) {
+			DAOGeneral.itrRemote.crearITR(textNombre.getText(),DAOGeneral.DepRemote.obtenerDepPorNombre(comboBoxDep.getSelectedItem().toString()), true);
+			PanelGestionUsuarios.getInstancia().cargarComboBox();
+			MantenimientoListadoITR.getInstancia().cargarTabla(MantenimientoListadoITR.getInstancia().filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
+			MantenimientoListadoITR.getInstancia().comboBoxEstadoITR.setSelectedIndex(0);
+			JOptionPane.showMessageDialog(null, "Se creo correctamente el ITR.", "Aviso",
+					JOptionPane.INFORMATION_MESSAGE);
+			setVisible(false);
 		}
 	}
 }

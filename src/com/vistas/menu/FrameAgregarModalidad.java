@@ -21,11 +21,13 @@ import RSMaterialComponent.RSTextFieldIconUno;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojeru_san.rslabel.RSLabelImage;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrameAgregarModalidad extends JFrame {
 
 	private JPanel contentPane;
-	
+	private RSTextFieldIconUno textNombre;
 
 	/**
 	 * Launch the application.
@@ -48,7 +50,7 @@ public class FrameAgregarModalidad extends JFrame {
 	 */
 	public FrameAgregarModalidad() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarModalidad.class.getResource("/com/vistas/img/UTEC.png")));
-		setTitle("Agregar ITR");
+		setTitle("Agregar Modalidad");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 233);
 		contentPane = new JPanel();
@@ -68,7 +70,21 @@ public class FrameAgregarModalidad extends JFrame {
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		
-		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre = new RSTextFieldIconUno();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//el 10 es codigo para el Enter
+				if(e.getKeyCode()==10) {
+					try {
+						guardarModalidad();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 		textNombre.setBorderColor(new Color(52, 152, 219));
 		textNombre.setIcons(ICONS.BUSINESS);
 		textNombre.setPlaceholder("Ingresar Nombre");
@@ -85,6 +101,20 @@ public class FrameAgregarModalidad extends JFrame {
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 152, 98, 30);
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int input = JOptionPane.showConfirmDialog(getParent(),
+						"Desea cancelar la creacion modalidad \\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					textNombre.setText("");
+					setVisible(false);
+				}
+
+			}
+		});
 		contentPane.add(btnhvrCancelar);
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
@@ -93,29 +123,7 @@ public class FrameAgregarModalidad extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					if(textNombre.getText()=="") {
-						throw new Exception("Debe indicar un nombre de Modalidad");
-					}
-					
-					if(DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText())!=null) {
-						throw new Exception("La Modalidad espesificada ya esta registrada en el sistema");
-					}
-					int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear la Modalidad", "Guardado...",
-							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					
-					if(input==0) {
-						ModalidadesEventos ev=new ModalidadesEventos();
-						ev.setActivo(true);
-						ev.setNombre(textNombre.getText());
-						DAOGeneral.modalidadEventoRemote.crearModalidadEvento(ev);
-						JOptionPane.showMessageDialog(null, "Se creo correctamente la Modalidad.", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-						MantenimientoModalidadesEvento mod=MantenimientoModalidadesEvento.getInstancia();
-						mod.cargarTabla(mod.filtrarITRActivo(DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()));
-						mod.comboBoxModalidades.setSelectedIndex(0);
-						PanelGestionDeEventos.getInstancia().cargarCombo();
-						setVisible(false);
-					}
+					guardarModalidad();
 					
 				
 				} catch (Exception e1) {
@@ -131,5 +139,32 @@ public class FrameAgregarModalidad extends JFrame {
 		contentPane.add(btnhvrGuardar);
 	}
 	
-
+	public void guardarModalidad() throws Exception {
+		if(textNombre.getText().length()<1) {
+			throw new Exception("Debe indicar un nombre de Modalidad");
+		}
+		if(textNombre.getText().contains(" ")) {
+			throw new Exception("La modalidad no puede contener espacios");
+		}
+		
+		if(DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText())!=null) {
+			throw new Exception("La Modalidad espesificada ya esta registrada en el sistema");
+		}
+		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear la Modalidad", "Guardado...",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+		if(input==0) {
+			ModalidadesEventos ev=new ModalidadesEventos();
+			ev.setActivo(true);
+			ev.setNombre(textNombre.getText());
+			DAOGeneral.modalidadEventoRemote.crearModalidadEvento(ev);
+			JOptionPane.showMessageDialog(null, "Se creo correctamente la Modalidad.", "Aviso",
+					JOptionPane.INFORMATION_MESSAGE);
+			MantenimientoModalidadesEvento mod=MantenimientoModalidadesEvento.getInstancia();
+			mod.cargarTabla(mod.filtrarITRActivo(DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()));
+			mod.comboBoxModalidades.setSelectedIndex(0);
+			PanelGestionDeEventos.getInstancia().cargarCombo();
+			setVisible(false);
+		}
+	}
 }

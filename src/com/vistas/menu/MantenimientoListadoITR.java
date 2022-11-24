@@ -121,15 +121,8 @@ public class MantenimientoListadoITR extends JFrame {
 		btnhvrCerrar.setText("Cerrar");
 		btnhvrCerrar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCerrar.setBackground(new Color(52, 152, 219));
-		btnhvrCerrar.setBounds(26, 370, 108, 33);
+		btnhvrCerrar.setBounds(130, 370, 126, 33);
 		contentPane.add(btnhvrCerrar);
-
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(254, 370, 108, 33);
-		contentPane.add(btnhvrGuardar);
 
 		
 
@@ -139,13 +132,16 @@ public class MantenimientoListadoITR extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un ITR para poder modificarlo");
+					}
 					ITR itr=DAOGeneral.itrRemote.obtenerItrPorNombre(modeloItr.getValueAt(tableMetro.getSelectedRow(), 0).toString());
 					FrameModificarITR.itr=itr;
 					FrameModificarITR modificarITR = new FrameModificarITR();
 					modificarITR.setVisible(true);
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -199,8 +195,8 @@ public class MantenimientoListadoITR extends JFrame {
 					}
 					cargarTabla(itrsFil);
 				} catch (ServicesException e) {
-					e.printStackTrace();
-				}
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);				}
 			}
 		});
 		comboBoxEstadoITR.setFont(new Font("Lato", Font.BOLD, 14));

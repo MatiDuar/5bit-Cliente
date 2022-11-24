@@ -64,7 +64,7 @@ public class MantenimientoEstadosEvento extends JFrame {
 	private MantenimientoEstadosEvento() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoEstadosEvento.class.getResource("/com/vistas/img/UTEC.png")));
-		setTitle("Mantenimiento Lista de ITR");
+		setTitle("Mantenimiento Lista de Estados");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 400, 449);
 		contentPane = new JPanel();
@@ -73,7 +73,7 @@ public class MantenimientoEstadosEvento extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel_2 = new JLabel("LISTADO DE MODALIDADES");
+		JLabel lblNewLabel_2 = new JLabel("LISTADO DE ESTADOS");
 		lblNewLabel_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 18));
 		lblNewLabel_2.setBounds(70, 22, 267, 27);
@@ -120,15 +120,8 @@ public class MantenimientoEstadosEvento extends JFrame {
 		btnhvrCerrar.setText("Cerrar");
 		btnhvrCerrar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrCerrar.setBackground(new Color(52, 152, 219));
-		btnhvrCerrar.setBounds(26, 370, 108, 33);
+		btnhvrCerrar.setBounds(128, 369, 129, 33);
 		contentPane.add(btnhvrCerrar);
-
-		RSButtonHover btnhvrGuardar = new RSButtonHover();
-		btnhvrGuardar.setText("Guardar");
-		btnhvrGuardar.setFont(new Font("Lato Black", Font.BOLD, 14));
-		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(254, 370, 108, 33);
-		contentPane.add(btnhvrGuardar);
 
 		
 
@@ -137,12 +130,15 @@ public class MantenimientoEstadosEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe selccionar un estado de evento para poder editarlo");
+					}
 					FrameModificarEstadoEvento.estadoSeleccionado=(EstadosEventos) DAOGeneral.estadosEventoRemote.buscarEstadoEventoPorId((long)modeloModalidad.getValueAt(tableMetro.getSelectedRow(), 1));
 					FrameModificarEstadoEvento mod=new FrameModificarEstadoEvento();
 					mod.setVisible(true);
-				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				
 				

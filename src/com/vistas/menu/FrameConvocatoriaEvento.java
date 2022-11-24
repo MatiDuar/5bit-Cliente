@@ -86,7 +86,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		scrollPane.setBounds(10, 142, 569, 207);
 		contentPane.add(scrollPane);
 		modeloNoAsignados = new DefaultTableModel(new Object[][] {},
-				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }){
+				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }) {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -99,7 +99,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		scrollPane.setViewportView(tableNoAsignado);
 
 		modeloITRN = new DefaultComboBoxModel();
-		RSComboBox comboBoxITRN= new RSComboBox();
+		RSComboBox comboBoxITRN = new RSComboBox();
 		comboBoxITRN.setColorBoton(Color.WHITE);
 		comboBoxITRN.setColorFondo(new Color(52, 152, 219));
 		comboBoxITRN.setModel(modeloITRN);
@@ -113,8 +113,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		comboBoxGenN.setModel(modeloGenN);
 		comboBoxGenN.setBounds(151, 73, 121, 32);
 		contentPane.add(comboBoxGenN);
-		
-		
+
 		modeloITRA = new DefaultComboBoxModel();
 		RSComboBox comboBoxITRA = new RSComboBox();
 		comboBoxITRA.setColorBoton(Color.WHITE);
@@ -201,7 +200,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 		tableAsignado = new RSTableMetro();
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
-				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }){
+				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }) {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -216,7 +215,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {					
+				try {
 					agregarEstudiante();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -236,7 +235,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					
+
 					quitarEstudiante();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -248,8 +247,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrQuitar.setBackground(new Color(52, 152, 219));
 		btnhvrQuitar.setBounds(589, 533, 108, 33);
 		contentPane.add(btnhvrQuitar);
-
-		
 
 		RSButtonHover btnhvrFiltrarA = new RSButtonHover();
 		btnhvrFiltrarA.addMouseListener(new MouseAdapter() {
@@ -300,7 +297,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblNewLabel_1.setBounds(17, 362, 45, 13);
 		contentPane.add(lblNewLabel_1);
-		
+
 		tableAsignado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -313,7 +310,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 				}
 			}
 		});
-		
+
 		tableNoAsignado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -326,18 +323,17 @@ public class FrameConvocatoriaEvento extends JFrame {
 				}
 			}
 		});
-		
-	
 
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
 		btnhvrGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					
-					int input = JOptionPane.showConfirmDialog(getParent(), "Desea Guardar la convocatoria al evento seleccionado", "Guardado...",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					if(input==0) {
+
+					int input = JOptionPane.showConfirmDialog(getParent(),
+							"Desea Guardar la convocatoria al evento seleccionado", "Guardado...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (input == 0) {
 						ArrayList<Estudiante> asginadosNueva = asignados;
 						for (Estudiante es : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
 							boolean flag = false;
@@ -368,13 +364,13 @@ public class FrameConvocatoriaEvento extends JFrame {
 								DAOGeneral.conAsistenciaBean.crear(con);
 							}
 						}
-						 
-						 JOptionPane.showMessageDialog(null, "Se guardo la convocatoria al evento seleccionado", "Guardado...",
-									JOptionPane.INFORMATION_MESSAGE);
-						 
-						 setVisible(false);
-					 }
-					
+
+						JOptionPane.showMessageDialog(null, "Se guardo la convocatoria al evento seleccionado",
+								"Guardado...", JOptionPane.INFORMATION_MESSAGE);
+
+						setVisible(false);
+					}
+
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -386,15 +382,16 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(413, 669, 108, 33);
 		contentPane.add(btnhvrGuardar);
-		
+
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
 		btnhvrCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				int input = JOptionPane.showConfirmDialog(getParent(), "Desea cancelar la convocatoria al evento seleccionado\nLos datos no seran guardados", "Guardado...",
-						JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				if(input==0) {
+
+				int input = JOptionPane.showConfirmDialog(getParent(),
+						"Desea cancelar la convocatoria al evento seleccionado\nLos datos no seran guardados",
+						"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (input == 0) {
 					setVisible(false);
 				}
 			}
@@ -460,16 +457,20 @@ public class FrameConvocatoriaEvento extends JFrame {
 	public List<Estudiante> estudianteNoAsignados() throws ServicesException {
 		List<Estudiante> estudiantes = new ArrayList<>();
 		for (Estudiante e : DAOGeneral.estudianteBean.obtenerEstudiantes()) {
-			boolean flag = false;
-			for (Estudiante j : estudianteAsignados()) {
-				if (e.getId() == j.getId()) {
-					flag = true;
-					break;
+			if(e.getValidado() && e.getActivo()) {
+				boolean flag = false;
+				for (Estudiante j : estudianteAsignados()) {
+					if (e.getId() == j.getId()) {
+						flag = true;
+						break;
+					}
+				}
+				if (!flag) {
+					estudiantes.add(e);
 				}
 			}
-			if (!flag) {
-				estudiantes.add(e);
-			}
+			
+
 		}
 
 		return estudiantes;
@@ -496,14 +497,13 @@ public class FrameConvocatoriaEvento extends JFrame {
 			modeloITRN.addElement(itr.getNombre());
 		}
 	}
-	
-	
+
 	public void agregarEstudiante() throws Exception {
-		if(tableNoAsignado.getSelectedRow()==-1) {
+		if (tableNoAsignado.getSelectedRow() == -1) {
 			throw new Exception("Debe seleccionar un estudiante de la lista No Asignados, para poder Agregarlo.");
 		}
-		Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote.buscarUsuarioPorId(
-				(Long) modeloNoAsignados.getValueAt(tableNoAsignado.getSelectedRow(), 4));
+		Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
+				.buscarUsuarioPorId((Long) modeloNoAsignados.getValueAt(tableNoAsignado.getSelectedRow(), 4));
 		Estudiante estudianteLista = buscarEstudiante(noAsignados, estudianteTabla);
 		noAsignados.remove(estudianteLista);
 		asignados.add(estudianteLista);
@@ -511,11 +511,11 @@ public class FrameConvocatoriaEvento extends JFrame {
 		cargarTablaAsignado(asignados);
 		cargarTablaNoAsignado(noAsignados);
 	}
-	
-	
+
 	public void quitarEstudiante() throws Exception {
-		if(tableAsignado.getSelectedRow()==-1) {
-			throw new Exception("Debe seleccionar un estudiante de la lista Asignados, para poder quitarlo de la misma.");
+		if (tableAsignado.getSelectedRow() == -1) {
+			throw new Exception(
+					"Debe seleccionar un estudiante de la lista Asignados, para poder quitarlo de la misma.");
 		}
 		Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
 				.buscarUsuarioPorId((Long) modeloAsignados.getValueAt(tableAsignado.getSelectedRow(), 4));

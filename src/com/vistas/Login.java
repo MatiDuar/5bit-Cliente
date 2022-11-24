@@ -104,6 +104,7 @@ public class Login extends JFrame {
 				//10 es codigo para el enter
 				if(e.getKeyCode()==10) {
 					DAOUsuario us = new DAOUsuario();
+
 					String nombreUsuario = textUsuario.getText();
 					String pswd = password.getText();
 					try {

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -28,7 +30,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 
 	private JPanel contentPane;
 	public static EstadosEventos estadoSeleccionado;
-
+	private RSTextFieldIconUno textNombre;
 	/**
 	 * Launch the application.
 	 */
@@ -70,11 +72,25 @@ public class FrameModificarEstadoEvento extends JFrame {
 		labelImage.setBounds(264, 10, 37, 38);
 		contentPane.add(labelImage);
 		
-		RSTextFieldIconUno textNombre = new RSTextFieldIconUno();
+		textNombre = new RSTextFieldIconUno();
 		textNombre.setBorderColor(new Color(52, 152, 219));
 		textNombre.setIcons(ICONS.BUSINESS);
 		textNombre.setPlaceholder("Ingresar Nombre");
 		textNombre.setBounds(10, 76, 291, 36);
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//el 10 es codigo para el Enter
+				if(e.getKeyCode()==10) {
+					try {
+						guardarEstado();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 		textNombre.setText(estadoSeleccionado.getNombre());
 		contentPane.add(textNombre);
 		
@@ -87,6 +103,20 @@ public class FrameModificarEstadoEvento extends JFrame {
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int input = JOptionPane.showConfirmDialog(getParent(),
+						"Desea cancelar la modificacion del estado seleccionado\\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					textNombre.setText("");
+					setVisible(false);
+				}
+			}
+		});
 		btnhvrCancelar.setBounds(10, 152, 98, 30);
 		contentPane.add(btnhvrCancelar);
 		
@@ -96,27 +126,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
-					if(textNombre.getText()=="") {
-						throw new Exception("Debe indicar un nombre de Estado");
-					}
 					
-					if(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText())!=null) {
-						throw new Exception("El Estado espesificado ya esta registrado en el sistema");
-					}
-					int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de modificar el Estado seleccionado", "Guardado...",
-							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					
-					if(input==0) {
-						estadoSeleccionado.setNombre(textNombre.getText());
-						DAOGeneral.estadosEventoRemote.crearEstadoEvento(estadoSeleccionado);;
-						JOptionPane.showMessageDialog(null, "Se modifico correctamente el Estado seleccionado.", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-						MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
-						mod.cargarTabla(mod.filtrarEstadoActivo(DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()));
-						mod.comboBoxModalidades.setSelectedIndex(0);
-						PanelGestionDeEventos.getInstancia().cargarCombo();
-						setVisible(false);
-					}
 					
 				
 				} catch (Exception e1) {
@@ -131,6 +141,31 @@ public class FrameModificarEstadoEvento extends JFrame {
 		btnhvrGuardar.setBounds(201, 152, 98, 30);
 		contentPane.add(btnhvrGuardar);
 	}
-	
+	public void guardarEstado() throws Exception {
+		if(textNombre.getText().length()<1) {
+			throw new Exception("Debe indicar un nombre de Estado");
+		}
+		if(textNombre.getText().contains(" ")) {
+			throw new Exception("El estado no puede contener espacios");
+		}
+		
+		if(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText())!=null && DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText()).getId()!=estadoSeleccionado.getId()) {
+			throw new Exception("El Estado espesificado ya esta registrado en el sistema");
+		}
+		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de modificar el Estado seleccionado", "Guardado...",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+		if(input==0) {
+			estadoSeleccionado.setNombre(textNombre.getText());
+			DAOGeneral.estadosEventoRemote.crearEstadoEvento(estadoSeleccionado);;
+			JOptionPane.showMessageDialog(null, "Se modifico correctamente el Estado seleccionado.", "Aviso",
+					JOptionPane.INFORMATION_MESSAGE);
+			MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
+			mod.cargarTabla(mod.filtrarEstadoActivo(DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()));
+			mod.comboBoxModalidades.setSelectedIndex(0);
+			PanelGestionDeEventos.getInstancia().cargarCombo();
+			setVisible(false);
+		}
+	}
 
 }
