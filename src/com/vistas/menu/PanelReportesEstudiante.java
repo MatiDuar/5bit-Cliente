@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
 import com.entities.Carrera;
-import com.entities.Escolaridad;
 import com.entities.Estudiante;
 import com.entities.Inscripcion;
 import com.entities.Matricula;
@@ -263,8 +262,8 @@ public class PanelReportesEstudiante extends JPanel {
 //		"Asiganturas", "Cr\u00E9ditos", "Tipo", "Convocatoria", "Calificaci\u00F3n"
 		
 		modeloTabla.setRowCount(0);
-		Escolaridad escolaridadEstudiante=buscarInscripcion(estudianteSeleccionado,comboBoxCarrera.getSelectedItem().toString()).getEscolaridad();
-		for(Matricula m:escolaridadEstudiante.getMatriculas()) {
+		Inscripcion inscripcion=buscarInscripcion(estudianteSeleccionado,comboBoxCarrera.getSelectedItem().toString());
+		for(Matricula m:inscripcion.getMatriculas()) {
 			if(m.getNota()>=3.0) {
 				Vector v=new Vector();
 				v.addElement(m.getMateria().getNombre());
@@ -318,7 +317,7 @@ public class PanelReportesEstudiante extends JPanel {
 //		Proyecto
 //		Practicas Profesionales
 //		Total
-		Escolaridad escolaridadEstudiante=buscarInscripcion(estudianteSeleccionado,comboBoxCarrera.getSelectedItem().toString()).getEscolaridad();
+		Inscripcion inscripcionEstudiante=buscarInscripcion(estudianteSeleccionado,comboBoxCarrera.getSelectedItem().toString());
 
 		modeloTablaCreditos.setRowCount(0);
 		int aprobadosObligatorio=0;
@@ -348,7 +347,7 @@ public class PanelReportesEstudiante extends JPanel {
 		int matriculadosLibreConfiguracion=0;
 		int matriculadosProyecto=0;
 		int matriculadosPracticasProfesionales=0;
-		for(Matricula m:escolaridadEstudiante.getMatriculas()) {
+		for(Matricula m:inscripcionEstudiante.getMatriculas()) {
 			String tipoAsignatura=m.getTipoAsignatura().getNombre();
 			int cantCreditos=m.getCreditos();
 			if(tipoAsignatura.equalsIgnoreCase("Obligatoria")) {

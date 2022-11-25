@@ -266,15 +266,15 @@ public class PanelRegistroPag2 extends JPanel {
 							
 						analistaRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
 						
-												
+						analistaRegistro.setValidado(false);
+						analistaRegistro.setActivo(true);		
 						
 						DAOGeneral.usuarioRemote.crearUsuario(analistaRegistro);
 						
 						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						
-						analistaRegistro.setValidado(false);
-						analistaRegistro.setActivo(true);
+						
 
 						
 						Registro.resetDatos();

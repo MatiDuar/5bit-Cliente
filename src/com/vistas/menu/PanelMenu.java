@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,6 +20,7 @@ import com.entities.Estudiante;
 import com.vistas.Login;
 
 import RSMaterialComponent.RSButtonMaterialIconUno;
+import RSMaterialComponent.RSLabelTextIcon;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojeru_san.rslabel.RSLabelImage;
 
@@ -231,45 +231,71 @@ public class PanelMenu extends JPanel {
 		menuUsuario.add(iconoUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("NOMBRE USUARIO");
-		lblNombreUsuario.setText(Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1());
+		lblNombreUsuario.setText((Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1()).toUpperCase());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
 		lblNombreUsuario.setBounds(10, 194, 227, 30);
 		menuUsuario.add(lblNombreUsuario);
 		
-		JLabel lblEditarPerfil = new JLabel("Editar perfil");
+		RSLabelTextIcon lbltxtcnEditarPerfil = new RSLabelTextIcon();
+        lbltxtcnEditarPerfil.setText("Editar Perfil");
+        lbltxtcnEditarPerfil.setIcons(ICONS.ACCOUNT_BOX);
+        lbltxtcnEditarPerfil.setBounds(46, 235, 155, 40);
+        lbltxtcnEditarPerfil.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                PanelEditarPerfil panelEditarPerfil=new PanelEditarPerfil();
+                panelDinamico.removeAll();
+                panelEditarPerfil.setSize(945, 725);
+                panelEditarPerfil.setLocation(0, 0);
+                panelDinamico.add(panelEditarPerfil);
+                panelDinamico.revalidate();
+                panelDinamico.repaint();
+            }
 
-		lblEditarPerfil.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				PanelEditarPerfil panelEditarPerfil=new PanelEditarPerfil();
-				panelDinamico.removeAll();
-				panelEditarPerfil.setSize(945, 725);
-				panelEditarPerfil.setLocation(0, 0);
-				panelDinamico.add(panelEditarPerfil);
-				panelDinamico.revalidate();
-				panelDinamico.repaint();
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblEditarPerfil.setForeground(Color.BLUE);
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				lblEditarPerfil.setForeground(new Color(27, 91, 124));
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lbltxtcnEditarPerfil.setForeground(Color.BLUE);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                lbltxtcnEditarPerfil.setForeground(new Color(27, 91, 124));
 
-			}
-			
-		});
-		lblEditarPerfil.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblEditarPerfil.setBounds(93, 226, 60, 13);
-		menuUsuario.add(lblEditarPerfil);
+            }
+
+        });
+        menuUsuario.add(lbltxtcnEditarPerfil);
 		
-		JLabel lblCerrarSesion = new JLabel("Cerrar sesiÃ³n");
+        RSLabelTextIcon lbltxtcnCerrarSesin = new RSLabelTextIcon();
+        lbltxtcnCerrarSesin.setText("Cerrar Sesión");
+        lbltxtcnCerrarSesin.setIcons(ICONS.EXIT_TO_APP);
+        lbltxtcnCerrarSesin.setBounds(46, 630, 180, 40);
+        lbltxtcnCerrarSesin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Menu.setUsuario(null);
+                Menu.getInstancia().setVisible(false);
+
+                Login log=new Login();
+                log.setVisible(true);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lbltxtcnCerrarSesin.setForeground(Color.BLUE);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                lbltxtcnCerrarSesin.setForeground(new Color(27, 91, 124));
+
+            }
+        });
+        menuUsuario.add(lbltxtcnCerrarSesin);
 		
 		panelDinamico.setBounds(245, 0, 700, 725);
 		add(panelDinamico);
@@ -286,31 +312,6 @@ public class PanelMenu extends JPanel {
 		labelImage_1.setBounds(646, 11, 51, 53);
 		panelDinamico.add(labelImage_1);
 		
-		lblCerrarSesion.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Menu.setUsuario(null);
-				Menu.getInstancia().setVisible(false);
-				
-				Login log=new Login();
-				log.setVisible(true);
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCerrarSesion.setForeground(Color.BLUE);
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				lblCerrarSesion.setForeground(new Color(27, 91, 124));
-
-			}
-		});
-		lblCerrarSesion.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblCerrarSesion.setBounds(93, 600, 73, 13);
-		menuUsuario.add(lblCerrarSesion);
 		
 	}
 }
