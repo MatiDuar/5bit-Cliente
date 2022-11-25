@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -41,17 +44,20 @@ import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSCheckBox;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelGestionDeEventos extends JPanel {
 	private RSTableMetro table;
 
-	private static PanelGestionDeEventos instancia=new PanelGestionDeEventos();
-	
+	private static PanelGestionDeEventos instancia = new PanelGestionDeEventos();
+
 	private DefaultTableModel modeloTabla;
 	private DefaultComboBoxModel modeloITR;
 	private DefaultComboBoxModel modeloTipo;
 	private DefaultComboBoxModel modeloModalidad;
 	private DefaultComboBoxModel modeloEstado;
+	
 
 	private RSDateChooser dateChooserFechaHasta;
 	private RSDateChooser dateChooserFechaInicio;
@@ -66,7 +72,7 @@ public class PanelGestionDeEventos extends JPanel {
 		JPanel panelMantenimientoAnalista = new JPanel();
 		panelMantenimientoAnalista.setBounds(570, 257, 127, 348);
 		add(panelMantenimientoAnalista);
-		
+
 		JLabel lblNewLabel_2_1 = new JLabel("GESTION DE EVENTOS");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 18));
@@ -78,17 +84,45 @@ public class PanelGestionDeEventos extends JPanel {
 //		labelImage_1.setIcon(new ImageIcon(Dise�o.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
-
+		modeloEstado=new DefaultComboBoxModel();
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(17, 233, 552, 357);
 		add(scrollPane);
+		
 		modeloTabla = new DefaultTableModel(new Object[][] {},
-				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" });
+				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" }){
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
+
 
 		table = new RSTableMetro();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.getClickCount()==2 && table.getSelectedRow()!=-1) {
+					try {
+						Evento eventoSeleccionado = DAOGeneral.eventoRemote.buscarEventoPorId(
+								(long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+						FrameModificarEvento.eventoSeleccionado = eventoSeleccionado;
+						FrameModificarEvento frame = new FrameModificarEvento();
+						frame.setVisible(true);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		table.setModel(modeloTabla);
+
 //		table.getColumnModel().getColumn(0).setMinWidth(60);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
@@ -99,6 +133,7 @@ public class PanelGestionDeEventos extends JPanel {
 		scrollPane.setViewportView(table);
 
 		dateChooserFechaInicio = new RSDateChooser();
+
 		dateChooserFechaInicio.setColorBackground(new Color(52, 152, 219));
 		dateChooserFechaInicio.setPlaceholder("Fecha desde");
 		dateChooserFechaInicio.setBounds(15, 116, 159, 32);
@@ -129,7 +164,6 @@ public class PanelGestionDeEventos extends JPanel {
 		lblEstado.setBounds(155, 174, 45, 13);
 		add(lblEstado);
 
-		modeloEstado = new DefaultComboBoxModel();
 		RSComboBox comboBoxEstado = new RSComboBox();
 		comboBoxEstado.setColorFondo(new Color(52, 152, 219));
 		comboBoxEstado.setDisabledIdex("");
@@ -181,14 +215,11 @@ public class PanelGestionDeEventos extends JPanel {
 		add(chckbxFechaExacta);
 
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
-		btnhvrFiltrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+
 		btnhvrFiltrar.setText("Filtrar");
 		btnhvrFiltrar.setFont(new Font("Lato Black", Font.PLAIN, 13));
 		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
-		btnhvrFiltrar.setBounds(574, 191, 117, 33);
+		btnhvrFiltrar.setBounds(570, 202, 117, 33);
 		add(btnhvrFiltrar);
 		btnhvrFiltrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -281,15 +312,16 @@ public class PanelGestionDeEventos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Evento eventoSeleccionado=DAOGeneral.eventoRemote.buscarEventoPorId((long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
-					FrameModificarEvento.eventoSeleccionado=eventoSeleccionado;
-					FrameModificarEvento frame=new FrameModificarEvento();
+					Evento eventoSeleccionado = DAOGeneral.eventoRemote.buscarEventoPorId(
+							(long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+					FrameModificarEvento.eventoSeleccionado = eventoSeleccionado;
+					FrameModificarEvento frame = new FrameModificarEvento();
 					frame.setVisible(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnhvrModificar.setText("Modificar");
@@ -342,13 +374,13 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrAlta.setBackground(new Color(52, 152, 219));
 		btnhvrAlta.setBounds(4, 11, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrAlta);
-		
+
 		btnhvrAlta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					FrameNuevoEvento.tutoresAsignados=null;
-					FrameNuevoEvento ventana=new FrameNuevoEvento();
+					FrameNuevoEvento.tutoresAsignados = null;
+					FrameNuevoEvento ventana = new FrameNuevoEvento();
 					ventana.setVisible(true);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -405,16 +437,16 @@ public class PanelGestionDeEventos extends JPanel {
 		JLabel lblMantenimiento = new JLabel("Mantenimiento");
 		lblMantenimiento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMantenimiento.setFont(new Font("Lato", Font.BOLD, 14));
-		lblMantenimiento.setBounds(10,204, 108, 13);
+		lblMantenimiento.setBounds(10, 204, 108, 13);
 		panelMantenimientoAnalista.add(lblMantenimiento);
 
 		RSButtonHover btnhvrModalidades = new RSButtonHover();
 		btnhvrModalidades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MantenimientoModalidadesEvento es=MantenimientoModalidadesEvento.getInstancia();
+				MantenimientoModalidadesEvento es = MantenimientoModalidadesEvento.getInstancia();
 				es.setVisible(true);
-				
+
 			}
 		});
 		btnhvrModalidades.setText("Modalidades");
@@ -427,10 +459,10 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrEstados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MantenimientoEstadosEvento mod=MantenimientoEstadosEvento.getInstancia();
-				
+				MantenimientoEstadosEvento mod = MantenimientoEstadosEvento.getInstancia();
+
 				mod.setVisible(true);
-				
+
 			}
 		});
 		btnhvrEstados.setText("Estados");
@@ -438,10 +470,36 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrEstados.setBackground(new Color(52, 152, 219));
 		btnhvrEstados.setBounds(4, 279, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrEstados);
-		
-		
+
+		RSButtonHover btnhvrReiniciarFiltro = new RSButtonHover();
+		btnhvrReiniciarFiltro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					dateChooserFechaInicio.setDatoFecha(null);
+					dateChooserFechaHasta.setDatoFecha(null);
+					comboBoxITR.setSelectedIndex(0);
+					comboBoxModalidad.setSelectedIndex(0);
+					comboBoxEstado.setSelectedIndex(0);
+					comboBoxTipo.setSelectedIndex(0);
+
+					cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
+
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+		btnhvrReiniciarFiltro.setText("Reiniciar Filtro");
+		btnhvrReiniciarFiltro.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnhvrReiniciarFiltro.setBackground(new Color(52, 152, 219));
+		btnhvrReiniciarFiltro.setBounds(570, 154, 117, 33);
+		add(btnhvrReiniciarFiltro);
+
 		try {
-			if(Menu.getUsuario() instanceof Tutor) {
+			if (Menu.getUsuario() instanceof Tutor) {
 				btnhvrConvocatoriaDeEvento.setVisible(false);
 				btnhvrAsistenciaAEventos.setLocation(236, 636);
 				panelMantenimientoAnalista.setVisible(false);
@@ -460,19 +518,21 @@ public class PanelGestionDeEventos extends JPanel {
 	public void cargarTabla(List<Evento> eventos) throws Exception {
 //		"Titulo", "Tipo","Fec Inc", "ITR", "Modalidad", "Estado"
 		modeloTabla.setRowCount(0);
-		
+
 		for (Evento e : eventos) {
-			if( (Menu.getUsuario() instanceof Analista) ||(Menu.getUsuario() instanceof Tutor && contieneTutor((Tutor) Menu.getUsuario(), (List<Tutor>) e.getTutores()))) {
+			if ((Menu.getUsuario() instanceof Analista) || (Menu.getUsuario() instanceof Tutor
+					&& contieneTutor((Tutor) Menu.getUsuario(), (List<Tutor>) e.getTutores()))) {
 				Vector v = new Vector();
 				v.addElement(e.getTitulo());
 				v.addElement(e.getTipoActividad().getNombre());
-				String Fecha=e.getFechaInicio().getDay()+"-"+e.getFechaInicio().getMonth()+"-"+e.getFechaInicio().getYear();
+				String Fecha = e.getFechaInicio().getDay() + "-" + e.getFechaInicio().getMonth() + "-"
+						+ e.getFechaInicio().getYear();
 				v.addElement(e.getFechaInicio());
 				v.addElement(e.getItr().getNombre());
 				v.addElement(e.getModalidad().getNombre());
 				v.addElement(e.getEstado().getNombre());
 				v.addElement(e.getId());
-	
+
 				modeloTabla.addRow(v);
 			}
 		}
@@ -549,21 +609,21 @@ public class PanelGestionDeEventos extends JPanel {
 			modeloTipo.addElement(t.getNombre());
 		}
 	}
-	
-	public boolean contieneTutor(Tutor buscar,List<Tutor>tutores) {
-		for(Tutor t:tutores) {
-			if(t.getId()==buscar.getId()) {
+
+	public boolean contieneTutor(Tutor buscar, List<Tutor> tutores) {
+		for (Tutor t : tutores) {
+			if (t.getId() == buscar.getId()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public static PanelGestionDeEventos getInstancia() {
 		return instancia;
 	}
-	
+
 	public static void reset() {
-		instancia=new PanelGestionDeEventos();
+		instancia = new PanelGestionDeEventos();
 	}
 }

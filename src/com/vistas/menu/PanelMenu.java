@@ -12,10 +12,12 @@ import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import com.entities.Estudiante;
 import com.vistas.Login;
 
 import RSMaterialComponent.RSButtonMaterialIconUno;
@@ -107,12 +109,22 @@ public class PanelMenu extends JPanel {
 		buttonReportes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PanelReportesEstudiante ventana=new PanelReportesEstudiante();
-				panelDinamico.removeAll();
-				panelDinamico.add(ventana);
-				panelDinamico.setPreferredSize(new Dimension(700,500));
-				panelDinamico.revalidate();
-				panelDinamico.repaint();
+				try {
+					if(((Estudiante) Menu.getUsuario()).getInscripciones().size()<1){
+						throw new Exception("Usted no cuenta con una escolaridad");
+					}
+					PanelReportesEstudiante.estudianteSeleccionado=(Estudiante) Menu.getUsuario();
+					
+					PanelReportesEstudiante ventana=new PanelReportesEstudiante();
+					panelDinamico.removeAll();
+					panelDinamico.add(ventana);
+					panelDinamico.setPreferredSize(new Dimension(700,500));
+					panelDinamico.revalidate();
+					panelDinamico.repaint();
+				}catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+				}
+				
 
 			}
 		});

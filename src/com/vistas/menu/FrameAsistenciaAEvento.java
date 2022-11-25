@@ -98,7 +98,10 @@ public class FrameAsistenciaAEvento extends JFrame {
 		modeloEstadoAsistencia=new DefaultComboBoxModel();
 		RSComboBox comboBoxEstadoTabla = new RSComboBox();
 		comboBoxEstadoTabla.setSelectedIndex(1);
+		comboBoxEstadoTabla.setDisabledIdex("");
 		comboBoxEstadoTabla.setModel(modeloEstadoAsistencia);
+		
+		
 
 		modeloTabla = new DefaultTableModel(
 				new Object[][] { { null, null, null, null }, { null, null, null, null }, { null, null, null, null }, },
