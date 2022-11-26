@@ -23,7 +23,7 @@ public class PanelRegistroEstudiante extends JPanel {
 		setLayout(null);
 		
 		
-		JLabel lblAoDeIngreso = new JLabel("Año de Ingreso");
+		JLabel lblAoDeIngreso = new JLabel("A\u00f1o de Ingreso");
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblAoDeIngreso.setBounds(0, 11, 100, 14);
 		add(lblAoDeIngreso);

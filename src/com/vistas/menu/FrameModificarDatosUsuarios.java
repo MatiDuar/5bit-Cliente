@@ -11,9 +11,7 @@ public class FrameModificarDatosUsuarios extends JFrame {
 	private static FrameModificarDatosUsuarios instancia=new FrameModificarDatosUsuarios();
 	
 	public PanelModificarDatosUsuarios panelDatosUsuario = new PanelModificarDatosUsuarios();
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,9 +25,7 @@ public class FrameModificarDatosUsuarios extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	private FrameModificarDatosUsuarios() {
 		JPanel panelCargarDatosUsuario = new JPanel();
 		panelCargarDatosUsuario.setLayout(null);
@@ -37,11 +33,11 @@ public class FrameModificarDatosUsuarios extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarDatosUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar datos de usuario");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 680, 546);
+		setBounds(100, 100, 680, 600);
 
 		
 		panelCargarDatosUsuario.setBounds(0, 0, 666, 509);
-		panelDatosUsuario.setBounds(0,0,666,509);
+		panelDatosUsuario.setBounds(0,0,666,600);
 		panelDatosUsuario.datosAnalista();
 		add(panelCargarDatosUsuario);
 	

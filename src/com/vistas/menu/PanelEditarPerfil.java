@@ -31,10 +31,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 public class PanelEditarPerfil extends JPanel {
-	/**
-	 *
-	 */
+	
 	private static final long serialVersionUID = 1L;
+	
+	
 	private Menu menu = Menu.getInstancia();
 	public PanelEditarPerfilExtra panelDinamicoEditarPerfilPorTipoUsuarios;
 	private PanelMenu panelEstudiante = new PanelMenu();
@@ -44,9 +44,7 @@ public class PanelEditarPerfil extends JPanel {
 	RSComboBox comboBoxDepartamento;
 	DefaultComboBoxModel modeloITR = new DefaultComboBoxModel();;
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public PanelEditarPerfil() {
 		setBounds(245, 0, 700, 725);
 
@@ -100,7 +98,7 @@ public class PanelEditarPerfil extends JPanel {
 		textApellido2.setText(Menu.getUsuario().getApellido2());
 		add(textApellido2);
 
-		JLabel lblCedula = new JLabel("Cédula*");
+		JLabel lblCedula = new JLabel("C\u00e9dula*");
 		lblCedula.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCedula.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCedula.setBounds(12, 209, 84, 14);
@@ -137,7 +135,7 @@ public class PanelEditarPerfil extends JPanel {
 		textEmailPersonal.setText(Menu.getUsuario().getMail());
 		add(textEmailPersonal);
 
-		JLabel lblTelefonoDeContacto = new JLabel("Teléfono de");
+		JLabel lblTelefonoDeContacto = new JLabel("Tel\u00e9fono de");
 		lblTelefonoDeContacto.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblTelefonoDeContacto.setBounds(356, 253, 86, 14);
@@ -194,7 +192,7 @@ public class PanelEditarPerfil extends JPanel {
 		textEmailUtec.setText(Menu.getUsuario().getMailInstitucional());
 		add(textEmailUtec);
 
-		JLabel lblContrasenia = new JLabel("Contraseña*");
+		JLabel lblContrasenia = new JLabel("Contrase\u00f1a*");
 		lblContrasenia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblContrasenia.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblContrasenia.setBounds(358, 365, 84, 14);
@@ -226,7 +224,7 @@ public class PanelEditarPerfil extends JPanel {
 		comboBoxITR.setSelectedItem(Menu.getUsuario().getItr().getNombre());
 		comboBoxDepartamento.setSelectedItem(Menu.getUsuario().getDepartamento().getNombre());
 
-		//
+		
 
 		if (Menu.getUsuario() instanceof Estudiante) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();

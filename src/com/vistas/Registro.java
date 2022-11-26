@@ -5,8 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.vistas.menu.Menu;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import rojeru_san.rsfield.RSTextFull;
 import rojeru_san.complementos.RSButtonHover;
 import java.awt.Color;
@@ -24,9 +29,7 @@ public class Registro extends JFrame {
 	PanelRegistroPag panelRegistroPag = PanelRegistroPag.getInstancia();
 	static PanelRegistroPag2 panelRegistroPag2 = PanelRegistroPag2.getInstancia();
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,11 +43,12 @@ public class Registro extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public Registro() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setTitle("Registro de Usuario");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
+
 		setBounds(100, 100, 726, 523);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -57,7 +61,6 @@ public class Registro extends JFrame {
 		getPanelDinamico().setBounds(0, 0, 710, 495);
 		contentPane.add(getPanelDinamico());
 		getPanelDinamico().setLayout(null);
-		//Mostrar primer pagina registro
 		mostrarPag1(panelRegistroPag);
 	}
 	

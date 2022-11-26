@@ -46,9 +46,7 @@ public class MantenimientoListadoITR extends JFrame {
 	
 	public static ArrayList<ITR>itrsActivos;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,9 +60,7 @@ public class MantenimientoListadoITR extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	private MantenimientoListadoITR() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoListadoITR.class.getResource("/com/vistas/img/UTEC.png")));
@@ -104,6 +100,8 @@ public class MantenimientoListadoITR extends JFrame {
 		tableMetro.setFuenteFilasSelect(new Font("Tahoma", Font.PLAIN, 14));
 		tableMetro.setFuenteHead(new Font("Tahoma", Font.BOLD, 14));
 		tableMetro.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
+		tableMetro.setColorBackgoundHead(new Color(52, 152, 219));
+
 		tableMetro.setAltoHead(30);
 		modeloItr = new DefaultTableModel(new Object[][] { { null }, }, new String[] { "Nombre" });
 		tableMetro.setModel(modeloItr);
@@ -292,7 +290,6 @@ public class MantenimientoListadoITR extends JFrame {
 		contentPane.add(btnhvrReactivarITR);
 		
 		try {
-//			itrsActivos=(ArrayList<ITR>) DAOGeneral.itrRemote.obtenerItrs();
 			cargarTabla(filtrarITRActivo(DAOGeneral.itrRemote.obtenerItrs()));
 			
 		} catch (ServicesException e1) {

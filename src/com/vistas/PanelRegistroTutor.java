@@ -45,7 +45,7 @@ public class PanelRegistroTutor extends JPanel {
 		comboBoxRol.setBounds(321, 36, 250, 42);
 		add(comboBoxRol);
 		
-		JLabel lblArea = new JLabel("Area");
+		JLabel lblArea = new JLabel("\u00c1rea");
 		lblArea.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblArea.setBounds(0, 11, 61, 14);
 		add(lblArea);

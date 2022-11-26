@@ -35,9 +35,7 @@ public class FrameAgregarITR extends JFrame {
 	private DefaultComboBoxModel modeloDep;
 	private RSTextFieldIconUno textNombre;
 	private RSComboBox comboBoxDep;
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,9 +49,7 @@ public class FrameAgregarITR extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameAgregarITR() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Agregar ITR");

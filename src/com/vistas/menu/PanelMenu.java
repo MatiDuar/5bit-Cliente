@@ -25,23 +25,18 @@ import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojeru_san.rslabel.RSLabelImage;
 
 public class PanelMenu extends JPanel {
-//	private PanelEditarPerfil panelEditarPerfil = new PanelEditarPerfil();
-	
-//	static private PanelMenuEstudiante instancia = new PanelMenuEstudiante()
 
+
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel menuUsuario;
 	private JPanel panelDinamico;
 	private JScrollPane scrollPane;
-	/**
-	 * Create the panel.
-	 */
+
 	public PanelMenu() {
 	}
 
-//	public static PanelMenuEstudiante getInstancia() {
-//		return instancia;
-//		
-//	}
+
 	public void initUITutor() {
 		datosComunes();
 
@@ -234,13 +229,14 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setText((Menu.getUsuario().getNombre1()+" "+Menu.getUsuario().getApellido1()).toUpperCase());
 		lblNombreUsuario.setForeground(new Color(59, 168, 231));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreUsuario.setFont(new Font("Lato Black", Font.PLAIN, 17));
+		lblNombreUsuario.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblNombreUsuario.setForeground(new Color(0,112,192));
 		lblNombreUsuario.setBounds(10, 194, 227, 30);
 		menuUsuario.add(lblNombreUsuario);
 		
 		RSLabelTextIcon lbltxtcnEditarPerfil = new RSLabelTextIcon();
         lbltxtcnEditarPerfil.setText("Editar Perfil");
-        lbltxtcnEditarPerfil.setIcons(ICONS.ACCOUNT_BOX);
+        lbltxtcnEditarPerfil.setIcons(null);
         lbltxtcnEditarPerfil.setBounds(46, 235, 155, 40);
         lbltxtcnEditarPerfil.addMouseListener(new MouseAdapter() {
             @Override
@@ -301,10 +297,10 @@ public class PanelMenu extends JPanel {
 		add(panelDinamico);
 		panelDinamico.setLayout(null);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("SISTEMA DE GESTIÓN");
+		JLabel lblNewLabel_2_1 = new JLabel("SISTEMA DE GESTI\u00d3N");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(247, 24, 206, 27);
+		lblNewLabel_2_1.setBounds(200, 24, 299, 27);
 		panelDinamico.add(lblNewLabel_2_1);
 		
 		RSLabelImage labelImage_1 = new RSLabelImage();

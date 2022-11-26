@@ -3,6 +3,7 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +34,7 @@ import RSMaterialComponent.RSButtonIconUno;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojeru_san.rsfield.RSTextFull;
+import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
 import java.awt.event.ActionListener;
@@ -67,19 +70,26 @@ public class FrameAsignarTutores extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameAsignarTutores() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setTitle("Asignar Tutor");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setBounds(100, 100, 525, 564);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		RSLabelImage labelImage = new RSLabelImage();
+		labelImage.setIcon(new ImageIcon(PanelGestionUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage.setBounds(439, 11, 51, 53);
+		contentPane.add(labelImage);
 
 		JScrollPane scrollPaneTutoresAsignados = new JScrollPane();
 		scrollPaneTutoresAsignados.setBounds(10, 160, 201, 284);
+		scrollPaneTutoresAsignados.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 		contentPane.add(scrollPaneTutoresAsignados);
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Documento", "ITR", "Area", "Id" }) {
@@ -92,6 +102,7 @@ public class FrameAsignarTutores extends JFrame {
 		
 
 		tableAsignados = new RSTableMetro();
+		tableAsignados.setBackgoundHead(new Color(52, 152, 219));
 
 		tableAsignados.addMouseListener(new MouseAdapter() {
 			@Override
@@ -133,6 +144,8 @@ public class FrameAsignarTutores extends JFrame {
 		};
 		
 		tableNoAsignados = new RSTableMetro();
+		tableNoAsignados.setBackgoundHead(new Color(52, 152, 219));
+
 		tableNoAsignados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

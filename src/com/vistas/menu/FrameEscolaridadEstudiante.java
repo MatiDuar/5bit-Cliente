@@ -11,9 +11,6 @@ public class FrameEscolaridadEstudiante extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -27,9 +24,7 @@ public class FrameEscolaridadEstudiante extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameEscolaridadEstudiante() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Escolaridad por estudiante");

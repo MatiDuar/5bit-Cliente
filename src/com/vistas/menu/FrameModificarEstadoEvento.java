@@ -31,9 +31,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 	private JPanel contentPane;
 	public static EstadosEventos estadoSeleccionado;
 	private RSTextFieldIconUno textNombre;
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,9 +45,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameModificarEstadoEvento() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarEstadoEvento.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar Estado de Evento");

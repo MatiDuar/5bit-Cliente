@@ -103,6 +103,8 @@ public class MantenimientoEstadosEvento extends JFrame {
 		tableMetro.setAltoHead(30);
 		modeloModalidad = new DefaultTableModel(new Object[][] { { null }, }, new String[] { "Nombre","Id" });
 		tableMetro.setModel(modeloModalidad);
+		tableMetro.setColorBackgoundHead(new Color(52, 152, 219));
+
 		scrollPane.setViewportView(tableMetro);
 		
 		tableMetro.removeColumn(tableMetro.getColumnModel().getColumn(1));
@@ -231,7 +233,6 @@ public class MantenimientoEstadosEvento extends JFrame {
 						cargarTabla(filtrarEstadoActivo(DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()));
 						JOptionPane.showMessageDialog(null, "Se realizo la baja logica del Estado seleccionado", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-//						PanelGestionUsuarios.getInstancia().cargarComboBox();
 						PanelGestionDeEventos.getInstancia().cargarCombo();
 						comboBoxModalidades.setSelectedIndex(0);
 					}

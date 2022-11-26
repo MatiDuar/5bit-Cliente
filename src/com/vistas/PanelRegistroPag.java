@@ -3,7 +3,6 @@ package com.vistas;
 import javax.swing.JPanel;
 
 import com.controlador.DAOGeneral;
-import com.controlador.DAOGenero;
 import com.entities.Analista;
 import com.entities.Estudiante;
 import com.entities.Usuario;
@@ -30,15 +29,13 @@ public class PanelRegistroPag extends JPanel {
 
 	private static PanelRegistroPag instancia = new PanelRegistroPag();
 
-//	PanelRegistroPag2 panelRegistroPag2;
+
 	Registro regsitro = Registro.getInstancia();
 
 	public static Usuario usuarioRegistro;
 	private RSPassword password;
 
-	/**
-	 * Create the panel.
-	 */
+
 	public PanelRegistroPag() {
 		setLayout(null);
 		setBounds(100, 100, 710, 495);
@@ -231,20 +228,6 @@ public class PanelRegistroPag extends JPanel {
 						throw new Exception("Fecha inv�lida, introduzca una fecha menor a la actual.");
 					}
 
-//				    if(mailPersonal.contains("@")){
-//						usuarioRegistro.setMail(mailPersonal);
-//					}else{
-//						throw new Exception("Formato de email personal incorrecto");
-//					}
-//					
-//					String mailInstitucional =textTelefono.getText();
-//				
-//					
-//					if(mailInstitucional.contains("@")){
-//						usuarioRegistro.setMailInstitucional(mailInstitucional);
-//					}else{
-//						throw new Exception("Formato de email institucional incorrecto");
-//					}
 						
 					
 					String nombre1=textNombre1.getText();
@@ -300,23 +283,12 @@ public class PanelRegistroPag extends JPanel {
 					
 					usuarioRegistro.setContrasena(password.getText());
 
-//					String[] splitNombreUsuario=textTelefono.getText().split("@");
-//					usuarioRegistro.setNombreUsuario(splitNombreUsuario[0]);
-
 					Registro.mostrarPag2(PanelRegistroPag2.getInstancia());
 
 				} catch (Exception m) {
 					JOptionPane.showMessageDialog(null, m.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
-				Usuario estudiante = new Estudiante();
-
-//				Registro.getPanelDinamico().removeAll();
-//				panelRegistroPag2.setSize(710, 495);
-//				panelRegistroPag2.setLocation(0, 0);
-//				Registro.getPanelDinamico().add(panelRegistroPag2);
-//				Registro.getPanelDinamico().revalidate();
-//				Registro.getPanelDinamico().repaint();
 			}
 		});
 		btnhvrSiguiente.setText("Siguiente");

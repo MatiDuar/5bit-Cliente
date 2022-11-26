@@ -8,6 +8,7 @@ import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -53,6 +54,7 @@ public class PanelReportesEstudiante extends JPanel {
 		add(lblTituloVentana);
 		
 		RSLabelImage labelImage = new RSLabelImage();
+		labelImage.setIcon(new ImageIcon(PanelGestionUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(642, 10, 51, 53);
 		add(labelImage);
 		
@@ -66,7 +68,7 @@ public class PanelReportesEstudiante extends JPanel {
 		lblNombres.setBounds(10, 91, 120, 13);
 		add(lblNombres);
 		
-		JLabel lblNewLabel_1 = new JLabel("Cédula: ");
+		JLabel lblNewLabel_1 = new JLabel("C\u00e9dula: ");
 		lblNewLabel_1.setFont(new Font("Lato", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(10, 107, 51, 13);
 		add(lblNewLabel_1);
@@ -94,15 +96,15 @@ public class PanelReportesEstudiante extends JPanel {
 		lblValorCedula.setBounds(54, 107, 250, 13);
 		add(lblValorCedula);
 		
-		JLabel lblAnioIngreso = new JLabel("Año de ingreso:");
+		JLabel lblAnioIngreso = new JLabel("A\u00f1o de ingreso:");
 		lblAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 12));
-		lblAnioIngreso.setBounds(10, 124, 84, 13);
+		lblAnioIngreso.setBounds(10, 124, 93, 13);
 		add(lblAnioIngreso);
 		
 		JLabel lblValorAnioIngreso = new JLabel("");
 		lblValorAnioIngreso.setText(estudianteSeleccionado.getAnoIngreso()+"");
 		lblValorAnioIngreso.setFont(new Font("Lato", Font.PLAIN, 12));
-		lblValorAnioIngreso.setBounds(97, 124, 250, 13);
+		lblValorAnioIngreso.setBounds(111, 124, 214, 13);
 		add(lblValorAnioIngreso);
 		
 		JLabel lblCarrera = new JLabel("Carrera: ");
@@ -153,6 +155,8 @@ public class PanelReportesEstudiante extends JPanel {
 		tableMetro.setFuenteFilasSelect(new Font("Tahoma", Font.BOLD, 11));
 		tableMetro.setFuenteFilas(new Font("Tahoma", Font.BOLD, 11));
 		tableMetro.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		tableMetro.setColorBackgoundHead(new Color(52, 152, 219));
+
 		
 		modeloTabla=new DefaultTableModel(
 				new Object[][] {
@@ -219,6 +223,8 @@ public class PanelReportesEstudiante extends JPanel {
 		tableMetroCreditos.setForeground(Color.DARK_GRAY);
 		tableMetroCreditos.setColorBordeHead(Color.DARK_GRAY);
 		tableMetroCreditos.setColorBordeFilas(Color.DARK_GRAY);
+		tableMetroCreditos.setColorBackgoundHead(new Color(52, 152, 219));
+
 		scrollPane_1.setViewportView(tableMetroCreditos);
 		
 		comboBoxCarrera = new RSComboBox();
@@ -415,9 +421,9 @@ public class PanelReportesEstudiante extends JPanel {
 		Vector v4=new Vector();
 		
 		v4.addElement("Pr\u00E1cticas Profesionales");
-		v4.addElement(carrera.getCreditosPracticasProfecionales());
+		v4.addElement(carrera.getCreditosPracticasProfesionales());
 		v4.addElement(aprobadosPracticasProfesionales);
-		v4.addElement(carrera.getCreditosPracticasProfecionales()-aprobadosPracticasProfesionales);
+		v4.addElement(carrera.getCreditosPracticasProfesionales()-aprobadosPracticasProfesionales);
 		v4.addElement(matriculadosPracticasProfesionales);
 		
 		modeloTablaCreditos.addRow(v4);
@@ -427,7 +433,7 @@ public class PanelReportesEstudiante extends JPanel {
 		Vector v5=new Vector();
 		
 		v5.addElement("Total");
-		int cantidadCreditosTotal=carrera.getCreditosLibreConfiguracion()+carrera.getCreditosObligatorios()+carrera.getCreditosOptativos()+carrera.getCreditosPracticasProfecionales()+carrera.getCreditosProyecto();
+		int cantidadCreditosTotal=carrera.getCreditosLibreConfiguracion()+carrera.getCreditosObligatorios()+carrera.getCreditosOptativos()+carrera.getCreditosPracticasProfesionales()+carrera.getCreditosProyecto();
 		v5.addElement(cantidadCreditosTotal);
 		int cantidadAprobadosTotal=aprobadosLibreConfiguracion+aprobadosObligatorio+aprobadosOptativo+aprobadosPracticasProfesionales+aprobadosProyecto;
 		v5.addElement(cantidadAprobadosTotal);

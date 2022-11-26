@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -37,10 +38,8 @@ public class PanelEditarPerfilExtra extends JPanel {
 		yearDate.setBordeColorFocus(new Color(52, 152, 219));
 		yearDate.setMostrarBoton(false);
 		yearDate.setHorizontalAlignment(SwingConstants.CENTER);
-//		yearDate.setBackground(new Color(52, 152, 219));
 		yearDate.setBounds(98, 10, 250, 42);
 		yearDate.setText(((((Estudiante) Menu.getUsuario()).getAnoIngreso())+""));
-//		yearDate.setYear(((Estudiante) Menu.usuarioIngresado).getAnoIngreso());
 		add(yearDate);
 		
 		
@@ -117,8 +116,8 @@ public class PanelEditarPerfilExtra extends JPanel {
 				modeloTipoTutor.addElement(tp.getNombre());
 			}
 		} catch (ServicesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 }

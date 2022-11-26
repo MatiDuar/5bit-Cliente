@@ -43,9 +43,7 @@ public class MantenimientoModalidadesEvento extends JFrame {
 	public RSComboBox comboBoxModalidades;
 	
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,9 +57,7 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	private MantenimientoModalidadesEvento() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoModalidadesEvento.class.getResource("/com/vistas/img/UTEC.png")));
@@ -102,6 +98,7 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		tableMetro.setFuenteHead(new Font("Tahoma", Font.BOLD, 14));
 		tableMetro.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
 		tableMetro.setAltoHead(30);
+		tableMetro.setColorBackgoundHead(new Color(52, 152, 219));
 		modeloEstado = new DefaultTableModel(new Object[][] { { null }, }, new String[] { "Nombre","Id" });
 		tableMetro.setModel(modeloEstado);
 		scrollPane.setViewportView(tableMetro);
@@ -230,7 +227,6 @@ public class MantenimientoModalidadesEvento extends JFrame {
 						cargarTabla(filtrarITRActivo(DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()));
 						JOptionPane.showMessageDialog(null, "Se realizo la baja logica de la Modalidad seleccionada", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
-//						PanelGestionUsuarios.getInstancia().cargarComboBox();
 						comboBoxModalidades.setSelectedIndex(0);
 					}
 					 				 
@@ -292,7 +288,6 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		contentPane.add(btnhvrReactivarITR);
 		
 		try {
-//			itrsActivos=(ArrayList<ITR>) DAOGeneral.itrRemote.obtenerItrs();
 			cargarTabla(filtrarITRActivo(DAOGeneral.modalidadEventoRemote.obtenerModalidadesEventos()));
 			
 		} catch (ServicesException e1) {

@@ -29,9 +29,7 @@ public class FrameAgregarModalidad extends JFrame {
 	private JPanel contentPane;
 	private RSTextFieldIconUno textNombre;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,9 +43,7 @@ public class FrameAgregarModalidad extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameAgregarModalidad() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarModalidad.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Agregar Modalidad");

@@ -18,9 +18,7 @@ import java.awt.event.MouseEvent;
 
 public class PanelListadoEventos extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public PanelListadoEventos() {
 		setLayout(null);
 		

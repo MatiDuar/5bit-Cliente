@@ -1,6 +1,7 @@
 package com.vistas.menu;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -58,19 +59,18 @@ public class PanelGestionUsuarios extends JPanel {
 	private PanelGestionUsuarios() {
 		setLayout(null);
 		setSize(1000, 1000);
-		JLabel lblNewLabel_2 = new JLabel("GESTIÓN DE USUARIOS");
+		JLabel lblNewLabel_2 = new JLabel("GESTI\u00d3N DE USUARIOS");
 		lblNewLabel_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2.setFont(new Font("Lato Black", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(251, 23, 222, 27);
+		lblNewLabel_2.setBounds(208, 23, 259, 27);
 		add(lblNewLabel_2);
-		JLabel lblGeneracionEstudiante = new JLabel("Generación");
+		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00f3n");
 
 		try {
 			usuarioAll = DAOGeneral.usuarioRemote.obtenerUsuarios();
 
 		} catch (ServicesException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			JOptionPane.showMessageDialog(null, e2.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 		}
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(PanelGestionUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
@@ -326,13 +326,17 @@ public class PanelGestionUsuarios extends JPanel {
 							cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 						}
 						
-						JOptionPane.showMessageDialog(null, "Se habilito correctamente el usuario", "Aviso...",
-								JOptionPane.INFORMATION_MESSAGE);
 						
+						setCursor(new Cursor(Cursor.WAIT_CURSOR));
 						EmailSender email=new EmailSender();
 						email.setupServerProperties();
 						email.draftEmail(usuarioHa);
 						email.sendEmail();
+						
+						JOptionPane.showMessageDialog(null, "Se habilito correctamente el usuario", "Aviso...",
+								JOptionPane.INFORMATION_MESSAGE);
+						setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+
 						
 					}
 				} catch (Exception m) {
@@ -456,7 +460,6 @@ public class PanelGestionUsuarios extends JPanel {
 //		"Tipo Usuario", "Generaci\u00F3n Estudiante", "\u00C1rea Tutor", "Rol Tutor", "Estado"
 		modeloTablaMetro.setRowCount(0);
 		for (Usuario u : usuarios) {
-//			if (u.getActivo()) {
 			Vector v = new Vector<>();
 			v.addElement(u.getNombre1());
 			v.addElement(u.getNombre2());
@@ -470,8 +473,7 @@ public class PanelGestionUsuarios extends JPanel {
 			v.addElement(u.getMail());
 			v.addElement(u.getMailInstitucional());
 			v.addElement(u.getItr().getNombre());
-//			String s[]=u.getClass().getName().split(".");
-//			v.addElement(s.toString());
+
 			if (u instanceof Estudiante) {
 				v.addElement("Estudiante");
 				v.addElement(((Estudiante) u).getAnoIngreso());

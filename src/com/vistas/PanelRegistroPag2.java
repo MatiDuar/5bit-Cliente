@@ -49,9 +49,7 @@ public class PanelRegistroPag2 extends JPanel {
 	
 	Usuario us=PanelRegistroPag.usuarioRegistro;
 
-	/**
-	 * Create the panel. 
-	 */
+
 	public PanelRegistroPag2() {
 		setLayout(null);
 		setBounds(100, 100, 710, 495);
@@ -334,7 +332,6 @@ public class PanelRegistroPag2 extends JPanel {
 						tutorRegistro.setItr(DAOGeneral.itrRemote.obtenerItrPorNombre(valorCBITRString));
 												
 						System.out.println(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString());
-						//no se si va hacer un comboBox o un textField
 						if(PanelRegistroTutor.comboBoxArea.getSelectedItem().toString()==""){
 							throw new Exception("Debe seleccionar un area para el tutor");
 						}
@@ -419,10 +416,7 @@ public class PanelRegistroPag2 extends JPanel {
 						int fechaObtenida = PanelRegistroEstudiante.yearDate.getYear();
 						
 						LocalDate fechaActualLD = LocalDate.now();
-						
-						//IF(FECHAACTUALLD.GETYEAR() < PANELREGISTROESTUDIANTE.YEARDATE.GETYEAR()) {
-						//	
-						//}
+
 						
 						System.out.println(fechaObtenida);
 						System.out.println(fechaActualLD.getYear());

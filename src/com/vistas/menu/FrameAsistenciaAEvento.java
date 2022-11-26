@@ -54,9 +54,6 @@ public class FrameAsistenciaAEvento extends JFrame {
 	private List<Estudiante>estudiantes;
 	
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -70,9 +67,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public FrameAsistenciaAEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 586, 657);
@@ -126,7 +121,6 @@ public class FrameAsistenciaAEvento extends JFrame {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
 		}
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
 		
 
@@ -284,13 +278,12 @@ public class FrameAsistenciaAEvento extends JFrame {
 			cargarCombo();
 			cargarTabla(DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado));
 		} catch (ServicesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
 	public void cargarTabla(List<Estudiante>estudiantes) throws ServicesException {
-//		"Nombre", "Cedula", "A\u00F1o Ingreso", "Asistencia"
 
 		modeloTabla.setRowCount(0);
 		for (Estudiante e : estudiantes) {

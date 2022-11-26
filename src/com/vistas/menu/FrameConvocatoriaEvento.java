@@ -3,6 +3,7 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,8 +29,10 @@ import com.entities.Estudiante;
 import com.entities.Evento;
 import com.entities.ITR;
 import com.exception.ServicesException;
+import com.vistas.Login;
 
 import rojeru_san.complementos.RSButtonHover;
+import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
 
@@ -67,7 +71,10 @@ public class FrameConvocatoriaEvento extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameConvocatoriaEvento() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
+
+		setTitle("Convocatoria a Evento");
 		setBounds(100, 100, 711, 762);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,6 +86,12 @@ public class FrameConvocatoriaEvento extends JFrame {
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTitulo.setBounds(207, 10, 360, 27);
 		contentPane.add(lblTitulo);
+		
+		RSLabelImage labelImage = new RSLabelImage();
+		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage.setBounds(627, 10, 50, 50);
+		contentPane.add(labelImage);
+
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -94,6 +107,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 			}
 		};
 		tableNoAsignado = new RSTableMetro();
+		tableNoAsignado.setBackgoundHead(new Color(52, 152, 219));
+
 		tableNoAsignado.setModel(modeloNoAsignados);
 		tableNoAsignado.removeColumn(tableNoAsignado.getColumnModel().getColumn(4));
 		scrollPane.setViewportView(tableNoAsignado);
@@ -162,7 +177,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 					}
 					cargarTablaNoAsignado(estudiantesFilt2);
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -199,6 +213,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 		contentPane.add(scrollPane_1);
 
 		tableAsignado = new RSTableMetro();
+		tableAsignado.setBackgoundHead(new Color(52, 152, 219));
+
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }) {
 
@@ -275,8 +291,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 					}
 					cargarTablaAsignado(estudiantesFilt2);
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -372,8 +387,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 					}
 
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 				}
 			}
 		});

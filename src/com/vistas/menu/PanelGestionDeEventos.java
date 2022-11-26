@@ -81,7 +81,6 @@ public class PanelGestionDeEventos extends JPanel {
 
 		RSLabelImage labelImage_1 = new RSLabelImage();
 		labelImage_1.setIcon(new ImageIcon(PanelGestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
-//		labelImage_1.setIcon(new ImageIcon(Dise�o.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
 		modeloEstado=new DefaultComboBoxModel();
@@ -115,21 +114,20 @@ public class PanelGestionDeEventos extends JPanel {
 						FrameModificarEvento frame = new FrameModificarEvento();
 						frame.setVisible(true);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
 		});
 		table.setModel(modeloTabla);
 
-//		table.getColumnModel().getColumn(0).setMinWidth(60);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
 		}
 		table.getColumnModel().getColumn(0).setMinWidth(120);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setBackgoundHead(new Color(52, 152, 219));
+
 		scrollPane.setViewportView(table);
 
 		dateChooserFechaInicio = new RSDateChooser();
@@ -219,7 +217,7 @@ public class PanelGestionDeEventos extends JPanel {
 		btnhvrFiltrar.setText("Filtrar");
 		btnhvrFiltrar.setFont(new Font("Lato Black", Font.PLAIN, 13));
 		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
-		btnhvrFiltrar.setBounds(570, 202, 117, 33);
+		btnhvrFiltrar.setBounds(570, 191, 117, 33);
 		add(btnhvrFiltrar);
 		btnhvrFiltrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -318,8 +316,8 @@ public class PanelGestionDeEventos extends JPanel {
 					FrameModificarEvento frame = new FrameModificarEvento();
 					frame.setVisible(true);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 				}
 
 			}
@@ -450,7 +448,7 @@ public class PanelGestionDeEventos extends JPanel {
 			}
 		});
 		btnhvrModalidades.setText("Modalidades");
-		btnhvrModalidades.setFont(new Font("Lato Black", Font.BOLD, 13));
+		btnhvrModalidades.setFont(new Font("Lato Black", Font.PLAIN, 13));
 		btnhvrModalidades.setBackground(new Color(52, 152, 219));
 		btnhvrModalidades.setBounds(4, 228, 117, 33);
 		panelMantenimientoAnalista.add(btnhvrModalidades);
@@ -492,8 +490,8 @@ public class PanelGestionDeEventos extends JPanel {
 
 			}
 		});
-		btnhvrReiniciarFiltro.setText("Reiniciar Filtro");
-		btnhvrReiniciarFiltro.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnhvrReiniciarFiltro.setText("Borrar Filtro");
+		btnhvrReiniciarFiltro.setFont(new Font("Lato Black", Font.PLAIN, 13));
 		btnhvrReiniciarFiltro.setBackground(new Color(52, 152, 219));
 		btnhvrReiniciarFiltro.setBounds(570, 154, 117, 33);
 		add(btnhvrReiniciarFiltro);
@@ -503,20 +501,18 @@ public class PanelGestionDeEventos extends JPanel {
 				btnhvrConvocatoriaDeEvento.setVisible(false);
 				btnhvrAsistenciaAEventos.setLocation(236, 636);
 				panelMantenimientoAnalista.setVisible(false);
-//				scrollPane.setBounds(10, 233, 561, 357);
 				scrollPane.setSize(672, 357);
 			}
 			cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
 			cargarCombo();
 			table.removeColumn(table.getColumnModel().getColumn(6));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
 	public void cargarTabla(List<Evento> eventos) throws Exception {
-//		"Titulo", "Tipo","Fec Inc", "ITR", "Modalidad", "Estado"
 		modeloTabla.setRowCount(0);
 
 		for (Evento e : eventos) {

@@ -174,6 +174,8 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		tableMetro.setFont(new Font("Tahoma", Font.BOLD, 11));
 		tableMetro.setColorBordeHead(Color.DARK_GRAY);
 		tableMetro.setColorBordeFilas(Color.DARK_GRAY);
+		tableMetro.setColorBackgoundHead(new Color(52, 152, 219));
+
 		tableMetro.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tableMetro.getColumnModel().getColumn(0).setMinWidth(100);
 		tableMetro.getColumnModel().getColumn(1).setMinWidth(75);
@@ -183,6 +185,7 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		tableMetro.getColumnModel().getColumn(4).setMinWidth(130);
 		tableMetro.getColumnModel().getColumn(5).setMinWidth(75);
 		tableMetro.removeColumn(tableMetro.getColumnModel().getColumn(6));
+
 
 		scrollPane.setViewportView(tableMetro);
 

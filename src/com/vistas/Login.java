@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.controlador.DAOGeneral;
-import com.controlador.DAOUsuario;
 import com.entities.Analista;
 import com.entities.Estudiante;
 import com.entities.Tutor;
@@ -40,10 +39,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblRegistrarse;
 	Registro frameRegistro = new Registro();
-
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,12 +54,11 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public Login() {
 		DAOGeneral dao = new DAOGeneral();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Log-in");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 
 		setBounds(100, 100, 374, 387);
@@ -105,8 +100,6 @@ public class Login extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				//10 es codigo para el enter
 				if(e.getKeyCode()==10) {
-					DAOUsuario us = new DAOUsuario();
-
 					String nombreUsuario = textUsuario.getText();
 					String pswd = password.getText();
 					try {
@@ -134,7 +127,6 @@ public class Login extends JFrame {
 
 				// 10 es codigo para el enter
 				if (e.getKeyCode() == 10) {
-					DAOUsuario us = new DAOUsuario();
 					String nombreUsuario = textUsuario.getText();
 					String pswd = password.getText();
 					try {
@@ -194,7 +186,6 @@ public class Login extends JFrame {
 		RSButtonHover btnIngresar = new RSButtonHover();
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DAOUsuario us = new DAOUsuario();
 				String nombreUsuario = textUsuario.getText();
 				String pswd = password.getText();
 				try {
@@ -216,7 +207,7 @@ public class Login extends JFrame {
 	}
 
 	public void ingresar(String nombreUsuario, String pswd) throws Exception {
-		Usuario usuarioIngresado = DAOUsuario.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
+		Usuario usuarioIngresado = DAOGeneral.usuarioRemote.verificarUsuario(nombreUsuario, pswd);
 		Menu menu = Menu.getInstancia();
 		if (usuarioIngresado == null) {
 			throw new Exception("Nombre de usuario o contraseña incorrecto.");

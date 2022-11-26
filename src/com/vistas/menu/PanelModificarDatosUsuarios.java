@@ -41,9 +41,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 	private RSComboBox comboBoxRolTutor;
 	private RSYearDate yearDate;
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public PanelModificarDatosUsuarios() {
 		datosComunes();
 	}
@@ -64,7 +62,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		lblTelefonoDeContacto_1_1.setBounds(12, 417, 86, 14);
 		add(lblTelefonoDeContacto_1_1);
 
-		JLabel lblAoDeIngreso = new JLabel("AÃ±o de ingreso");
+		JLabel lblAoDeIngreso = new JLabel("A\u00f1o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblAoDeIngreso.setBounds(12, 402, 86, 14);
@@ -94,7 +92,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		comboBoxRolTutor.setBounds(101, 395, 214, 42);
 		add(comboBoxRolTutor);
 
-		JLabel lblAreaTutor = new JLabel("Ã�rea*");
+		JLabel lblAreaTutor = new JLabel("\u00c1rea*");
 		lblAreaTutor.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblAreaTutor.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblAreaTutor.setBounds(337, 410, 78, 14);
@@ -142,7 +140,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		lblPrimerApellido.setBounds(12, 148, 94, 14);
 		add(lblPrimerApellido);
 
-		JLabel lblCedula = new JLabel("CÃ©dula*");
+		JLabel lblCedula = new JLabel("C\u00e9dula*");
 		lblCedula.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCedula.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblCedula.setBounds(12, 200, 84, 14);
@@ -259,7 +257,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		FechaNacimiento.setBounds(420, 187, 214, 42);
 		add(FechaNacimiento);
 
-		JLabel lblTelefonoDeContacto = new JLabel("TelÃ©fono de");
+		JLabel lblTelefonoDeContacto = new JLabel("Tel\u00e9fono de");
 		lblTelefonoDeContacto.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblTelefonoDeContacto.setBounds(329, 245, 86, 14);
@@ -378,7 +376,6 @@ public class PanelModificarDatosUsuarios extends JPanel {
 						usuarioMod.setNombre2(nombre2);
 
 						// corresponde en editar usuario siendo un analista
-						// usuarioMod.setContrasena(password.getText());
 
 						String valorCBDepString = comboBoxDepartamento.getSelectedItem().toString();
 
@@ -447,7 +444,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 						String tel = textTelefonoContacto.getText();
 
 						if (!esNumerico(tel)) {
-							throw new Exception("Ingrese un telÃ©fono vÃ¡lido");
+							throw new Exception("Ingrese un tel\u00e9fono v\u00e1lido");
 						}
 
 						usuarioMod.setTelefono(tel);

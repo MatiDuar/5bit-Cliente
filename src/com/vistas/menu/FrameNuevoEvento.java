@@ -3,6 +3,7 @@ package com.vistas.menu;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +27,7 @@ import com.entities.ModalidadesEventos;
 import com.entities.TipoActividad;
 import com.entities.Tutor;
 import com.exception.ServicesException;
+import com.vistas.Login;
 
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsdate.RSDateChooser;
@@ -41,9 +44,7 @@ public class FrameNuevoEvento extends JFrame {
 
 	public static List<Tutor> tutoresAsignados;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -57,11 +58,12 @@ public class FrameNuevoEvento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public FrameNuevoEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setTitle("Nuevo Evento");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
+
 		setBounds(100, 100, 717, 554);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,6 +77,8 @@ public class FrameNuevoEvento extends JFrame {
 		contentPane.add(lblNewLabel_2_1);
 
 		RSLabelImage labelImage_1 = new RSLabelImage();
+		labelImage_1.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
+
 		labelImage_1.setBounds(644, 11, 51, 53);
 		contentPane.add(labelImage_1);
 
@@ -170,8 +174,7 @@ public class FrameNuevoEvento extends JFrame {
 		try {
 			cargarComboBox();
 		} catch (ServicesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 		}
 
 		JLabel lblLocalizacion = new JLabel("Localizacion");
@@ -249,10 +252,6 @@ public class FrameNuevoEvento extends JFrame {
 						}
 						eventoNuevo.setTitulo(textTitulo.getText());
 
-						// falta campos pero no lo pide el requerimiento
-//						eventoNuevo.setCreditos(0);
-//						eventoNuevo.setSemestre(1);
-						
 						
 						eventoNuevo.setEstado(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento("Futuro"));
 						
@@ -277,7 +276,7 @@ public class FrameNuevoEvento extends JFrame {
 						eventoNuevo.setTutores(tutoresAsignados);
 						
 						
-//					// fecha de evento inicio
+					// fecha de evento inicio
 						java.util.Date fecha = fechaInicio.getDatoFecha();
 
 						LocalDate fechaActualLD = LocalDate.now();

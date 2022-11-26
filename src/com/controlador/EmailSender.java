@@ -34,8 +34,8 @@ public class EmailSender
 		}
 
 		public void sendEmail() throws MessagingException {
-			String fromUser = "polinogaymer@gmail.com";  //Enter sender email id
-			String fromUserPassword = "xdbfujpiaxmhqidj";  //Enter sender gmail password , this will be authenticated by gmail smtp server
+			String fromUser = "5bitutec@gmail.com";  //Email del emisor
+			String fromUserPassword = "qjmwqsgvkpflzjvx";  //Este es la clave de aplicacion para poder mandar mail con la cuenta
 			String emailHost = "smtp.gmail.com";
 			Transport transport = newSession.getTransport("smtp");
 			transport.connect(emailHost, fromUser, fromUserPassword);
@@ -45,10 +45,10 @@ public class EmailSender
 		}
 
 		public MimeMessage draftEmail(Usuario usuario) throws AddressException, MessagingException, IOException {
-			String[] emailReceipients = {usuario.getMail()};  //Enter list of email recepients
+			String[] emailReceipients = {usuario.getMail()};  //Se pasa por parametro el usuario para poder saber el mail personal
 			String emailSubject = "Validacion de cuenta";
-			String emailBody = "<H1>Hello "+usuario.getNombre1()+ " "+ usuario.getApellido1()+"</H1> <br> su cuenta ha sido validada por un analista"
-					+ "ASDASDASDASDAS";
+			String emailBody = "<H2>Detalles de tu cuenta UTEC</H2>se le informa que su cuenta de UTEC a sido validada.<br><br>"
+					+ "si tiene algún inconveniente al ingresar a su cuenta puede comunicarse con secretaría para que releven su caso.";
 			mimeMessage = new MimeMessage(newSession);
 			
 			for (int i =0 ;i<emailReceipients.length;i++)
@@ -57,11 +57,6 @@ public class EmailSender
 			}
 			mimeMessage.setSubject(emailSubject);
 			
-	      // CREATE MIMEMESSAGE 
-		    // CREATE MESSAGE BODY PARTS 
-		    // CREATE MESSAGE MULTIPART 
-		    // ADD MESSAGE BODY PARTS ----> MULTIPART 
-		    // FINALLY ADD MULTIPART TO MESSAGECONTENT i.e. mimeMessage object 
 		    
 		    
 			 MimeBodyPart bodyPart = new MimeBodyPart();
