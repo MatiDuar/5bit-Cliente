@@ -128,7 +128,7 @@ public class PanelReportesAnalistaTutor extends JPanel {
 		lblITR.setBounds(323, 87, 45, 13);
 		add(lblITR);
 
-		JLabel lblGeneracion = new JLabel("Generación");
+		JLabel lblGeneracion = new JLabel("Generaci\u00f3n");
 		lblGeneracion.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblGeneracion.setBounds(454, 87, 102, 13);
 		add(lblGeneracion);

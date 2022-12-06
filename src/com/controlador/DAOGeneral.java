@@ -70,8 +70,11 @@ public class DAOGeneral {
 			matriculaBean=(MatriculaBeanRemote) InitialContext.doLookup(
 					"ejb:/Proyecto-5bit/MatriculaBean!com.services.MatriculaBeanRemote");
 			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	
 }

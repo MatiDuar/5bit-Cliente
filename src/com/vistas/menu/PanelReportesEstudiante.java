@@ -178,7 +178,7 @@ public class PanelReportesEstudiante extends JPanel {
 		tableMetro.getColumnModel().getColumn(4).setMinWidth(100);
 		scrollPane.setViewportView(tableMetro);
 		
-		JLabel lblCrditosConseguidosPor = new JLabel("CRÉDITOS CONSEGUIDOS POR TIPO DE ASIGNATURA");
+		JLabel lblCrditosConseguidosPor = new JLabel("CR\u00c9DITOS CONSEGUIDOS POR TIPO DE ASIGNATURA");
 		lblCrditosConseguidosPor.setFont(new Font("Lato", Font.PLAIN, 14));
 		lblCrditosConseguidosPor.setBounds(10, 488, 362, 13);
 		add(lblCrditosConseguidosPor);

@@ -40,7 +40,7 @@ public class PanelRegistroPag extends JPanel {
 		setLayout(null);
 		setBounds(100, 100, 710, 495);
 
-		JLabel lblNombre1 = new JLabel("Nombre 1");
+		JLabel lblNombre1 = new JLabel("Primer Nombre");
 		lblNombre1.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNombre1.setBounds(70, 90, 61, 14);
 		add(lblNombre1);
@@ -52,7 +52,7 @@ public class PanelRegistroPag extends JPanel {
 		textNombre1.setBordeColorFocus(new Color(52, 152, 219));
 		add(textNombre1);
 
-		JLabel lblNombre2 = new JLabel("Nombre 2");
+		JLabel lblNombre2 = new JLabel("Segundo Nombre");
 		lblNombre2.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblNombre2.setBounds(390, 90, 61, 14);
 		add(lblNombre2);
@@ -71,7 +71,7 @@ public class PanelRegistroPag extends JPanel {
 		textApellido1.setBordeColorFocus(new Color(52, 152, 219));
 		add(textApellido1);
 
-		JLabel lbApellido1 = new JLabel("Apellido 1");
+		JLabel lbApellido1 = new JLabel("Primer Apellido");
 		lbApellido1.setFont(new Font("Lato", Font.PLAIN, 11));
 		lbApellido1.setBounds(70, 168, 61, 14);
 		add(lbApellido1);
@@ -93,7 +93,7 @@ public class PanelRegistroPag extends JPanel {
 		lblEmailPersonal.setBounds(70, 324, 77, 14);
 		add(lblEmailPersonal);
 
-		JLabel lblApellido2 = new JLabel("Apellido 2");
+		JLabel lblApellido2 = new JLabel("Segundo Apellido");
 		lblApellido2.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblApellido2.setBounds(390, 168, 61, 14);
 		add(lblApellido2);
@@ -105,7 +105,7 @@ public class PanelRegistroPag extends JPanel {
 		textApellido2.setBordeColorFocus(new Color(52, 152, 219));
 		add(textApellido2);
 
-		JLabel lblFecNac = new JLabel("Fecha Naciemiento");
+		JLabel lblFecNac = new JLabel("Fecha Nacimiento");
 		lblFecNac.setFont(new Font("Lato", Font.PLAIN, 11));
 		lblFecNac.setBounds(390, 246, 100, 14);
 		add(lblFecNac);

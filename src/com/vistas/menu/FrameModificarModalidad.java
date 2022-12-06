@@ -52,7 +52,7 @@ public class FrameModificarModalidad extends JFrame {
 	public FrameModificarModalidad() {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(FrameModificarModalidad.class.getResource("/com/vistas/img/UTEC.png")));
-		setTitle("Agregar ITR");
+		setTitle("Modificar Modalidad de Evento");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 233);
 		contentPane = new JPanel();
@@ -103,7 +103,8 @@ public class FrameModificarModalidad extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int input = JOptionPane.showConfirmDialog(getParent(),
-						"Desea cancelar la modificacion modalidad seleccionado\\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						"Desea cancelar la modificacion modalidad seleccionado"
+						+"\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE);
 
 				if (input == 0) {
@@ -149,7 +150,7 @@ public class FrameModificarModalidad extends JFrame {
 		if (DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText()) != null
 				&& DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText())
 						.getId() != modalidadSeleccionada.getId()) {
-			throw new Exception("La Modalidad espesificada ya esta registrada en el sistema");
+			throw new Exception("La Modalidad especificada ya esta registrada en el sistema");
 		}
 		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de Modificar la Modalidad seleccionada",
 				"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);

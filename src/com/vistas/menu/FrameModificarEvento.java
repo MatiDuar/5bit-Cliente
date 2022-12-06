@@ -326,6 +326,8 @@ public class FrameModificarEvento extends JFrame {
 						eventoNuevo.setFechaFin(dateFin);
 						
 						eventoNuevo.setSemestre(1);
+						
+						eventoNuevo.setLocalizacion(textLocalicacion.getText());
 
 						DAOGeneral.eventoRemote.modificarEvento(eventoNuevo);
 						PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());

@@ -244,7 +244,7 @@ public class FrameNuevoEvento extends JFrame {
 					if (input == 0) {
 						Evento eventoNuevo = new Evento();
 						if(textTitulo.getText().equalsIgnoreCase("")) {
-							throw new Exception("Debe espesificar un titulo");
+							throw new Exception("Debe especificar un titulo");
 						}
 						
 						if(textTitulo.getText().length()>50) {

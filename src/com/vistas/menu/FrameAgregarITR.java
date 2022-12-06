@@ -163,7 +163,7 @@ public class FrameAgregarITR extends JFrame {
 		}
 
 		if(DAOGeneral.itrRemote.obtenerItrPorNombre(textNombre.getText())!=null) {
-			throw new Exception("El ITR espesificado ya esta registrado en el sistema");
+			throw new Exception("El ITR especificado ya esta registrado en el sistema");
 		}
 		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el ITR", "Guardado...",
 				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);

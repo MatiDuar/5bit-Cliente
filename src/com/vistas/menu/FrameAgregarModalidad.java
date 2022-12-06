@@ -101,7 +101,8 @@ public class FrameAgregarModalidad extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int input = JOptionPane.showConfirmDialog(getParent(),
-						"Desea cancelar la creacion modalidad \\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						"Desea cancelar la creacion modalidad "
+						+ "\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE);
 
 				if (input == 0) {
@@ -144,7 +145,7 @@ public class FrameAgregarModalidad extends JFrame {
 		}
 		
 		if(DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText())!=null) {
-			throw new Exception("La Modalidad espesificada ya esta registrada en el sistema");
+			throw new Exception("La Modalidad especificada ya esta registrada en el sistema");
 		}
 		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear la Modalidad", "Guardado...",
 				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);

@@ -352,7 +352,7 @@ public class PanelRegistroPag2 extends JPanel {
 
 						DAOGeneral.usuarioRemote.crearUsuario(tutorRegistro);
 						
-						JOptionPane.showMessageDialog(null, "Se registro correctamente el usuario, en espera por revision para su activacion", "Aviso",
+						JOptionPane.showMessageDialog(null, "Se registr\u00f3 correctamente el usuario, en espera por revision para su activaci\u00f3n", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 						Registro.resetDatos();
 						Registro.getInstancia().setVisible(false);

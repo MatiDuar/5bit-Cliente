@@ -103,7 +103,8 @@ public class FrameAgregarEstadoEvento extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				int input = JOptionPane.showConfirmDialog(getParent(),
-						"Desea cancelar la creacion estado \\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						"Desea cancelar la creacion estado "
+						+ "\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE);
 
 				if (input == 0) {
@@ -145,7 +146,7 @@ public class FrameAgregarEstadoEvento extends JFrame {
 		}
 		
 		if(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText())!=null) {
-			throw new Exception("El Estado espesificado ya esta registrado en el sistema");
+			throw new Exception("El Estado especificado ya esta registrado en el sistema");
 		}
 		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de crear el Estado", "Guardado...",
 				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
