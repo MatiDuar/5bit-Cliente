@@ -48,8 +48,11 @@ public class FrameAgregarEstadoEvento extends JFrame {
 	public FrameAgregarEstadoEvento() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarEstadoEvento.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Agregar Estado de Evento");
+		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 233);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -143,6 +146,9 @@ public class FrameAgregarEstadoEvento extends JFrame {
 		}
 		if(textNombre.getText().contains(" ")) {
 			throw new Exception("El estado no puede contener espacios");
+		}
+		if(textNombre.getText().length()>50) {
+			throw new Exception("El estado no puede contener mas de 50 caracteres");
 		}
 		
 		if(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText())!=null) {

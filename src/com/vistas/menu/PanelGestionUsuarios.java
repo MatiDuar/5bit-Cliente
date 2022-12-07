@@ -322,7 +322,9 @@ public class PanelGestionUsuarios extends JPanel {
 							cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
 						}else if(comboEstado.getSelectedItem().toString()=="Inactivo") {
 							cargarDatosTabla(filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else {
+						}else if(comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")){
+							cargarDatosTabla(filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						}else{
 							cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 						}
 						
@@ -373,7 +375,9 @@ public class PanelGestionUsuarios extends JPanel {
 							cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
 						}else if(comboEstado.getSelectedItem().toString()=="Inactivo") {
 							cargarDatosTabla(filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else {
+						}else if(comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")){
+							cargarDatosTabla(filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						}else{
 							cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 						}
 						

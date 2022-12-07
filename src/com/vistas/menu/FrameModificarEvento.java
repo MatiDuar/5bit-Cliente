@@ -67,8 +67,10 @@ public class FrameModificarEvento extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Modificar Evento");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
+		setResizable(false);
 
 		setBounds(100, 100, 717, 554);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -304,12 +306,35 @@ public class FrameModificarEvento extends JFrame {
 						}
 						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
 						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
+						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
+						
+						java.util.Date fechaFin1 = fechaFin.getDatoFecha();
+
+
+						if(fechaFin1.getDate()==fecha.getDate() && fechaFin1.getMonth()==fecha.getMonth() && fechaFin1.getYear()==fecha.getYear()) {
+							if(Integer.parseInt(horaMinFin[0])<Integer.parseInt(horaMinIncio[0])) {
+								throw new Exception("La hora de inicio no puede ser mayor a la hora de finalizacion");
+							}
+							if(Integer.parseInt(horaMinFin[0])==Integer.parseInt(horaMinIncio[0])) {
+								
+								if(Integer.parseInt(horaMinFin[1])<=Integer.parseInt(horaMinIncio[1])) {
+									throw new Exception("La hora de inicio no puede ser mayor o igual a la hora de finalizacion");
+								}
+							}
+							
+						}
+						System.out.println(Integer.parseInt(horaMinIncio[0]));
+						System.out.println(Integer.parseInt(horaMinIncio[1]));
+						System.out.println(Integer.parseInt(horaMinFin[0]));
+						System.out.println(Integer.parseInt(horaMinFin[1]));
+						
+						System.out.println(fechaFin1);
+						System.out.println(fecha);
 						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
 						dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
 						eventoNuevo.setFechaInicio(dateInicio);
 
 						// fecha de evento fin
-						java.util.Date fechaFin1 = fechaFin.getDatoFecha();
 
 						if(fechaFin1.before(fecha)) {
 							throw new Exception("La fecha fin no puede ser anterior a la fecha de Inicio");
@@ -319,10 +344,9 @@ public class FrameModificarEvento extends JFrame {
 							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
 						}
 						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
-						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
 						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
 						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
-
+						
 						eventoNuevo.setFechaFin(dateFin);
 						
 						eventoNuevo.setSemestre(1);
@@ -392,10 +416,35 @@ public class FrameModificarEvento extends JFrame {
 		fechaInicio.setDatoFecha(eventoSeleccionado.getFechaInicio());
 		fechaFin.setDatoFecha(eventoSeleccionado.getFechaFin());
 
-		
-		comboBoxHoraInicio.setSelectedItem(eventoSeleccionado.getFechaInicio().getHours() + ":" + eventoSeleccionado.getFechaInicio().getMinutes());
+		String horaInicio;
+		String minInicio;
+		if(eventoSeleccionado.getFechaInicio().getHours()<10) {
+			horaInicio="0"+eventoSeleccionado.getFechaInicio().getHours();
+		}	else {
+			horaInicio=""+eventoSeleccionado.getFechaInicio().getHours();
+		}
+		if(eventoSeleccionado.getFechaInicio().getMinutes()==0) {
+			minInicio="00";
+		}else {
+			minInicio=""+eventoSeleccionado.getFechaInicio().getMinutes();
+		}
+		comboBoxHoraInicio.setSelectedItem(horaInicio + ":" +minInicio );
 
-		comboBoxHoraFin.setSelectedItem(eventoSeleccionado.getFechaFin().getHours() + ":" + eventoSeleccionado.getFechaFin().getMinutes());
+		
+		String horaFin;
+		String minFin;
+		if(eventoSeleccionado.getFechaFin().getHours()<10) {
+			horaFin="0"+eventoSeleccionado.getFechaFin().getHours();
+		}else {
+			horaFin=""+eventoSeleccionado.getFechaFin().getHours();
+		}
+		
+		if(eventoSeleccionado.getFechaFin().getMinutes()==0) {
+			minFin="00";
+		}else {
+			minFin=""+eventoSeleccionado.getFechaFin().getMinutes();
+		}
+		comboBoxHoraFin.setSelectedItem(horaFin + ":" + minFin);
 		
 		RSButtonHover btnhvrCancel = new RSButtonHover();
 		btnhvrCancel.addMouseListener(new MouseAdapter() {

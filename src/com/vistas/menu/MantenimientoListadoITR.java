@@ -65,6 +65,7 @@ public class MantenimientoListadoITR extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoListadoITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Mantenimiento Lista de ITR");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 400, 449);
 		contentPane = new JPanel();

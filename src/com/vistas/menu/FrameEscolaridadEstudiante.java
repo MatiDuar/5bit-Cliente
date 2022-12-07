@@ -28,6 +28,8 @@ public class FrameEscolaridadEstudiante extends JFrame {
 	public FrameEscolaridadEstudiante() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Escolaridad por estudiante");
+		setResizable(false);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setBounds(100, 100,720,725);
 		contentPane = new JPanel();

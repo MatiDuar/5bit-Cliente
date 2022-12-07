@@ -57,6 +57,8 @@ public class Login extends JFrame {
 
 	public Login() {
 		DAOGeneral dao = new DAOGeneral();
+		
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Log-in");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));

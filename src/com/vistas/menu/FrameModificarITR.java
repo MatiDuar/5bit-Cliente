@@ -60,8 +60,11 @@ public class FrameModificarITR extends JFrame {
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(FrameModificarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar ITR");
+		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 281);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -130,6 +133,21 @@ public class FrameModificarITR extends JFrame {
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 200, 98, 30);
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				int input = JOptionPane.showConfirmDialog(getParent(),
+						"Desea cancelar la modificacion del ITR "
+						+ "\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					textNombre.setText("");
+					setVisible(false);
+				}
+			}
+		});
 		contentPane.add(btnhvrCancelar);
 
 		RSButtonHover btnhvrModificar = new RSButtonHover();
@@ -165,6 +183,9 @@ public class FrameModificarITR extends JFrame {
 		}
 		if (comboBoxDep.getSelectedIndex() == 0) {
 			throw new Exception("Debe seleccionar un departamento");
+		}
+		if(textNombre.getText().length()>50) {
+			throw new Exception("El nombre del ITR no puede contener mas de 50 caracteres");
 		}
 		int input = JOptionPane.showConfirmDialog(getParent(), "Estas seguro de modificar el ITR seleccionado", "Guardado...",
 				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);

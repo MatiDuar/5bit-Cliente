@@ -57,7 +57,6 @@ public class PanelGestionDeEventos extends JPanel {
 	private DefaultComboBoxModel modeloTipo;
 	private DefaultComboBoxModel modeloModalidad;
 	private DefaultComboBoxModel modeloEstado;
-	
 
 	private RSDateChooser dateChooserFechaHasta;
 	private RSDateChooser dateChooserFechaInicio;
@@ -83,44 +82,44 @@ public class PanelGestionDeEventos extends JPanel {
 		labelImage_1.setIcon(new ImageIcon(PanelGestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
-		modeloEstado=new DefaultComboBoxModel();
-		
+		modeloEstado = new DefaultComboBoxModel();
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(17, 233, 552, 357);
 		add(scrollPane);
-		
+
 		modeloTabla = new DefaultTableModel(new Object[][] {},
-				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" }){
+				new String[] { "Titulo", "Tipo", "Fec Inc", "ITR", "Modalidad", "Estado", "Id" }) {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
-		
-
 
 		table = new RSTableMetro();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(e.getClickCount()==2 && table.getSelectedRow()!=-1) {
-					try {
-						Evento eventoSeleccionado = DAOGeneral.eventoRemote.buscarEventoPorId(
-								(long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
-						FrameModificarEvento.eventoSeleccionado = eventoSeleccionado;
-						FrameModificarEvento frame = new FrameModificarEvento();
-						frame.setVisible(true);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+		if (Menu.getUsuario() instanceof Analista) {
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+						try {
+							Evento eventoSeleccionado = DAOGeneral.eventoRemote.buscarEventoPorId((long) Integer
+									.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
+							FrameModificarEvento.eventoSeleccionado = eventoSeleccionado;
+							FrameModificarEvento frame = new FrameModificarEvento();
+							frame.setVisible(true);
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
-			}
-		});
-		table.setModel(modeloTabla);
+			});
+		}
 
+		table.setModel(modeloTabla);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
@@ -225,13 +224,10 @@ public class PanelGestionDeEventos extends JPanel {
 				try {
 					ArrayList<Evento> eventos = (ArrayList<Evento>) DAOGeneral.eventoRemote.obtenerEvento();
 					ArrayList<Evento> eventosFilt1 = new ArrayList<>();
-					if (dateChooserFechaInicio.getDatoFecha() != null) {
+					if (dateChooserFechaInicio.getDatoFecha() != null || dateChooserFechaHasta.getDatoFecha() != null) {
 						if (chckbxFechaExacta.isSelected()) {
 							eventosFilt1 = (ArrayList<Evento>) filtrarFechaExacta(eventos);
 						} else if (!chckbxFechaExacta.isSelected()) {
-							if (dateChooserFechaHasta.getDatoFecha() == null) {
-								throw new Exception("Debe seleccionar una fecha hasta");
-							}
 							eventosFilt1 = (ArrayList<Evento>) filtrarFechaEntre(eventos);
 						}
 					} else {
@@ -310,6 +306,9 @@ public class PanelGestionDeEventos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(table.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un evento para poder modificarlo.");
+					}
 					Evento eventoSeleccionado = DAOGeneral.eventoRemote.buscarEventoPorId(
 							(long) Integer.parseInt(modeloTabla.getValueAt(table.getSelectedRow(), 6).toString()));
 					FrameModificarEvento.eventoSeleccionado = eventoSeleccionado;
@@ -333,11 +332,12 @@ public class PanelGestionDeEventos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Evento eventoEliminar = DAOGeneral.eventoRemote
-							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
-					if (table.getSelectedRowCount() == -1) {
+					if (table.getSelectedRow() == -1) {
 						throw new Exception("Debe seleccionar un evento para poder eliminarlo");
 					}
+					Evento eventoEliminar = DAOGeneral.eventoRemote
+							.buscarEventoPorId((Long) modeloTabla.getValueAt(table.getSelectedRow(), 6));
+					
 					if (!DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoEliminar).isEmpty()) {
 						throw new Exception("Para poder eliminar el evento no puede tener estudiantes convocados");
 					}
@@ -558,26 +558,56 @@ public class PanelGestionDeEventos extends JPanel {
 		ArrayList<Evento> eventosFiltArrayList = new ArrayList<>();
 		for (Evento ev : eventos) {
 			SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-
 			// fecha de evento
 			String year = "" + ev.getFechaInicio().getYear();
 			String mes = "" + ev.getFechaInicio().getMonth();
 			String dia = "" + ev.getFechaInicio().getDate();
 			Date date = sdformat.parse(year + "-" + mes + "-" + dia);
-			// fecha de inicio del filtro
-			String year1 = "" + dateChooserFechaInicio.getDatoFecha().getYear();
-			String mes1 = "" + dateChooserFechaInicio.getDatoFecha().getMonth();
-			String dia1 = "" + dateChooserFechaInicio.getDatoFecha().getDate();
-			Date date1 = sdformat.parse(year1 + "-" + mes1 + "-" + dia1);
 
-			// fecha de hasta del filtro
-			String year2 = "" + dateChooserFechaHasta.getDatoFecha().getYear();
-			String mes2 = "" + dateChooserFechaHasta.getDatoFecha().getMonth();
-			String dia2 = "" + dateChooserFechaHasta.getDatoFecha().getDate();
-			Date date2 = sdformat.parse(year2 + "-" + mes2 + "-" + dia2);
+			String year1;
+			String mes1;
+			String dia1;
+			Date date1;
 
-			if (date.after(date1) && date.before(date2)) {
-				eventosFiltArrayList.add(ev);
+			String year2;
+			String mes2;
+			String dia2;
+			Date date2;
+
+			if (dateChooserFechaInicio.getDatoFecha() != null && dateChooserFechaHasta.getDatoFecha() == null) {
+				// fecha de inicio del filtro
+				year1 = "" + dateChooserFechaInicio.getDatoFecha().getYear();
+				mes1 = "" + dateChooserFechaInicio.getDatoFecha().getMonth();
+				dia1 = "" + dateChooserFechaInicio.getDatoFecha().getDate();
+				date1 = sdformat.parse(year1 + "-" + mes1 + "-" + dia1);
+				if (date.after(date1) || date.compareTo(date1)==0) {
+					eventosFiltArrayList.add(ev);
+				}
+			} else if (dateChooserFechaInicio.getDatoFecha() == null && dateChooserFechaHasta.getDatoFecha() != null) {
+
+				// fecha de hasta del filtro
+				year2 = "" + dateChooserFechaHasta.getDatoFecha().getYear();
+				mes2 = "" + dateChooserFechaHasta.getDatoFecha().getMonth();
+				dia2 = "" + dateChooserFechaHasta.getDatoFecha().getDate();
+				date2 = sdformat.parse(year2 + "-" + mes2 + "-" + dia2);
+				if (date.compareTo(date2) == 0) {
+					eventosFiltArrayList.add(ev);
+				}
+			} else {
+				// fecha de inicio del filtro
+				year1 = "" + dateChooserFechaInicio.getDatoFecha().getYear();
+				mes1 = "" + dateChooserFechaInicio.getDatoFecha().getMonth();
+				dia1 = "" + dateChooserFechaInicio.getDatoFecha().getDate();
+				date1 = sdformat.parse(year1 + "-" + mes1 + "-" + dia1);
+				
+				// fecha de hasta del filtro
+				year2 = "" + dateChooserFechaHasta.getDatoFecha().getYear();
+				mes2 = "" + dateChooserFechaHasta.getDatoFecha().getMonth();
+				dia2 = "" + dateChooserFechaHasta.getDatoFecha().getDate();
+				date2 = sdformat.parse(year2 + "-" + mes2 + "-" + dia2);
+				if (date.after(date1) && date.before(date2)) {
+					eventosFiltArrayList.add(ev);
+				}
 			}
 		}
 		return eventosFiltArrayList;

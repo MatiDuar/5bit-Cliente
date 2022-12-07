@@ -53,8 +53,10 @@ public class FrameModificarModalidad extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(FrameModificarModalidad.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar Modalidad de Evento");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 233);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -146,7 +148,9 @@ public class FrameModificarModalidad extends JFrame {
 		if (textNombre.getText().contains(" ")) {
 			throw new Exception("La modalidad no puede contener espacios");
 		}
-
+		if(textNombre.getText().length()>50) {
+			throw new Exception("El nombre de la modalidad no puede contener mas de 50 caracteres");
+		}
 		if (DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText()) != null
 				&& DAOGeneral.modalidadEventoRemote.buscarNombreModalidadEvento(textNombre.getText())
 						.getId() != modalidadSeleccionada.getId()) {

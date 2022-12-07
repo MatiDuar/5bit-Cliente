@@ -74,8 +74,11 @@ public class FrameAsignarTutores extends JFrame {
 	public FrameAsignarTutores() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Asignar Tutor");
+		setResizable(false);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setBounds(100, 100, 525, 564);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

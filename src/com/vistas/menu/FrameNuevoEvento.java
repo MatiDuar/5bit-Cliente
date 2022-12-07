@@ -63,7 +63,7 @@ public class FrameNuevoEvento extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setTitle("Nuevo Evento");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
-
+		setResizable(false);
 		setBounds(100, 100, 717, 554);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -302,11 +302,23 @@ public class FrameNuevoEvento extends JFrame {
 						if(fechaFin1.before(fecha)) {
 							throw new Exception("La fecha final no puede ser menor a la fecha de inicio");
 						}
+						
 						Timestamp dateFin = new Timestamp(fechaFin.getDatoFecha().getTime());
 						String[] horaMinFin = comboBoxHoraFin.getSelectedItem().toString().split(":");
 						dateFin.setHours(Integer.parseInt(horaMinFin[0]));
 						dateFin.setMinutes(Integer.parseInt(horaMinFin[1]));
-
+						
+						if(fechaFin1.compareTo(fecha)==0) {
+							if(Integer.parseInt(horaMinFin[0])<Integer.parseInt(horaMinIncio[0])) {
+								throw new Exception("La hora de inicio no puede ser mayor a la hora de finalizacion");
+							}
+							if(Integer.parseInt(horaMinFin[0])==Integer.parseInt(horaMinIncio[0])) {
+								if(Integer.parseInt(horaMinFin[1])<=Integer.parseInt(horaMinIncio[1])) {
+									throw new Exception("La hora de inicio no puede ser mayor o igual a la hora de finalizacion");
+								}
+							}
+							
+						}
 						eventoNuevo.setFechaFin(dateFin);
 						
 						eventoNuevo.setLocalizacion(textLocalicacion.getText());

@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.controlador.DAOGeneral;
@@ -33,9 +35,9 @@ import com.exception.ServicesException;
 
 import RSMaterialComponent.RSTextFieldIconUno;
 import rojeru_san.complementos.RSButtonHover;
+import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
-import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class FrameAsistenciaAEvento extends JFrame {
 
@@ -50,10 +52,11 @@ public class FrameAsistenciaAEvento extends JFrame {
 	DefaultComboBoxModel modeloEstado = new DefaultComboBoxModel<>();
 	private RSTextFieldIconUno textBuscar;
 	
+	private float dinamicNota;
+
 	private List<ConvocatoriaAsistencia> convocatorias;
-	
-	private List<Estudiante>estudiantes;
-	
+
+	private List<Estudiante> estudiantes;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -68,11 +71,13 @@ public class FrameAsistenciaAEvento extends JFrame {
 		});
 	}
 
-
 	public FrameAsistenciaAEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 586, 657);
+		setLocationRelativeTo(null);
 		setTitle("Registro de asistencia");
+		setResizable(false);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setLocationRelativeTo(getParent());
 		contentPane = new JPanel();
@@ -93,28 +98,35 @@ public class FrameAsistenciaAEvento extends JFrame {
 		contentPane.add(scrollPane);
 
 		table = new RSTableMetro();
-		modeloEstadoAsistencia=new DefaultComboBoxModel();
+		
+		modeloEstadoAsistencia = new DefaultComboBoxModel();
 		RSComboBox comboBoxEstadoTabla = new RSComboBox();
 		comboBoxEstadoTabla.setSelectedIndex(1);
 		comboBoxEstadoTabla.setDisabledIdex("");
 		comboBoxEstadoTabla.setModel(modeloEstadoAsistencia);
-		
-		
 
 		modeloTabla = new DefaultTableModel(
 				new Object[][] { { null, null, null, null }, { null, null, null, null }, { null, null, null, null }, },
-				new String[] { "Nombre", "Cedula", "ITR", "Asistencia","Id" }){
+				new String[] { "Nombre", "Cedula", "ITR", "Asistencia", "Id" }) {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				if(column==3 || column==5) {
+				if (column == 3 || column == 5) {
 					return true;
 				}
 				return false;
 			}
 		};
-		if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
+
+		if (eventoSeleccionado.getTipoActividad().getEsCalificado()) {
 			modeloTabla.addColumn("Nota");
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					dinamicNota=Float.parseFloat(modeloTabla.getValueAt(table.getSelectedRow(), 5).toString());
+				}
+			});
 		}
 		table.setModel(modeloTabla);
 		table.getColumnModel().getColumn(3).setResizable(false);
@@ -125,14 +137,10 @@ public class FrameAsistenciaAEvento extends JFrame {
 			table.getColumnModel().getColumn(i).setMinWidth(60);
 		}
 		scrollPane.setViewportView(table);
-		
 
-		
 		table.removeColumn(table.getColumnModel().getColumn(4));
 
-		
-
-		RSComboBox comboBoxITR = new RSComboBox();
+		comboBoxITR = new RSComboBox();
 		comboBoxITR.setColorBoton(Color.WHITE);
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 
@@ -146,8 +154,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		lblNewLabel.setBounds(161, 77, 45, 13);
 		contentPane.add(lblNewLabel);
 
-		modeloEstado=new DefaultComboBoxModel();
-		
+		modeloEstado = new DefaultComboBoxModel();
 
 		comboBoxEstado = new RSComboBox();
 		comboBoxEstado.setColorBoton(Color.WHITE);
@@ -164,11 +171,9 @@ public class FrameAsistenciaAEvento extends JFrame {
 		lblEstado.setBounds(292, 77, 45, 13);
 		contentPane.add(lblEstado);
 
-		
-		
-		DefaultComboBoxModel modeloGen=new DefaultComboBoxModel();
+		DefaultComboBoxModel modeloGen = new DefaultComboBoxModel();
 		modeloGen.addElement("");
-		for(int i=2012;i<2023;i++) {
+		for (int i = 2012; i < 2023; i++) {
 			modeloGen.addElement(i);
 		}
 
@@ -179,21 +184,22 @@ public class FrameAsistenciaAEvento extends JFrame {
 		contentPane.add(lblNewLabel_2_1_1);
 
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
-		
+
 		btnhvrCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					 int input = JOptionPane.showConfirmDialog(getParent(), "Desea cancelar el registro de asistencias al evento \nLos datos no seran guardados", "Guardado...",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					 if(input==0) {
-						 setVisible(false);
-					 }
-					 
-				}catch(Exception e1) {
+					int input = JOptionPane.showConfirmDialog(getParent(),
+							"Desea cancelar el registro de asistencias al evento \nLos datos no seran guardados",
+							"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (input == 0) {
+						setVisible(false);
+					}
+
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnhvrCancelar.setText("Cancelar");
@@ -207,23 +213,25 @@ public class FrameAsistenciaAEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					 int input = JOptionPane.showConfirmDialog(getParent(), "Desea confirmar la asistencia al evento", "Guardado...",
-								JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					 if(input==0) {
-						 actulizarConvocados();
-						 for(ConvocatoriaAsistencia c:convocatorias) {
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea confirmar la asistencia al evento",
+							"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (input == 0) {
+						actulizarConvocados();
+						for (ConvocatoriaAsistencia c : convocatorias) {
 							DAOGeneral.conAsistenciaBean.modificar(c);
-						 }
-						 
-						 JOptionPane.showMessageDialog(null, "Se guardo correctamente la asistencia al evento seleccionado", "Guardado...",
-									JOptionPane.INFORMATION_MESSAGE);
-						 
-						 setVisible(false);
-					 }
-				}catch(Exception e1) {
-					e1.printStackTrace();
+						}
+
+						JOptionPane.showMessageDialog(null,
+								"Se guardo correctamente la asistencia al evento seleccionado", "Guardado...",
+								JOptionPane.INFORMATION_MESSAGE);
+
+						setVisible(false);
+					}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
 				}
-				
+
 			}
 		});
 		btnhvrGuardar.setText("Guardar");
@@ -231,7 +239,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
 		btnhvrGuardar.setBounds(321, 571, 108, 33);
 		contentPane.add(btnhvrGuardar);
-		
+
 		textBuscar = new RSTextFieldIconUno();
 
 		textBuscar.setBorderColor(new Color(52, 152, 219));
@@ -242,7 +250,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		textBuscar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==10) {
+				if (e.getKeyCode() == 10) {
 					try {
 						filtrarTabla();
 					} catch (ServicesException e1) {
@@ -255,15 +263,14 @@ public class FrameAsistenciaAEvento extends JFrame {
 		contentPane.add(textBuscar);
 		textBuscar.setColumns(10);
 
-		
 		RSButtonHover btnhvrFiltrar = new RSButtonHover();
 		btnhvrFiltrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				try {
 					filtrarTabla();
-				}catch(Exception e1) {
+				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -274,19 +281,36 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
-		
-		try {			
+
+		try {
 			cargarConvocados();
 
 			cargarCombo();
 			cargarTabla(DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado));
+			
+			if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
+				modeloTabla.addTableModelListener(new TableModelListener() {
+					public void tableChanged(TableModelEvent evt) {
+						try {
+							if (Float.parseFloat(modeloTabla.getValueAt(table.getSelectedRow(), 5).toString()) > 5) {
+								throw new Exception("La nota solo puede ser de 0 a 5");
+							}
+						} catch (Exception e1) {
+							modeloTabla.setValueAt(dinamicNota, table.getSelectedRow(), 5);
+							JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+
+						}
+
+					}
+				});
+			}
 		} catch (ServicesException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 
 		}
 	}
 
-	public void cargarTabla(List<Estudiante>estudiantes) throws ServicesException {
+	public void cargarTabla(List<Estudiante> estudiantes) throws ServicesException {
 
 		modeloTabla.setRowCount(0);
 		for (Estudiante e : estudiantes) {
@@ -301,7 +325,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 				v.addElement(ca.getEstadoAsistencia().getNombre());
 			}
 			v.addElement(ca.getId());
-			if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
+			if (eventoSeleccionado.getTipoActividad().getEsCalificado()) {
 				v.addElement(ca.getCalificacion());
 			}
 			modeloTabla.addRow(v);
@@ -327,85 +351,90 @@ public class FrameAsistenciaAEvento extends JFrame {
 		}
 
 	}
-	
+
 	public void cargarConvocados() throws ServicesException {
-		convocatorias=DAOGeneral.conAsistenciaBean.buscarConvocatoriasPorEvento(eventoSeleccionado);
+		convocatorias = DAOGeneral.conAsistenciaBean.buscarConvocatoriasPorEvento(eventoSeleccionado);
 	}
-	
-	
+
 	public void actulizarConvocados() throws ServicesException {
-		for(int i=0;i<table.getRowCount();i++) {
-			ConvocatoriaAsistencia ca=buscarConvocatoria( Long.parseLong(modeloTabla.getValueAt(i, 4).toString()), convocatorias);
-			ca.setEstadoAsistencia(DAOGeneral.estadoAsistenciaBean.obtenerPorNombre(modeloTabla.getValueAt((int) i, 3).toString()));
-			if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
+		for (int i = 0; i < table.getRowCount(); i++) {
+			ConvocatoriaAsistencia ca = buscarConvocatoria(Long.parseLong(modeloTabla.getValueAt(i, 4).toString()),
+					convocatorias);
+			ca.setEstadoAsistencia(
+					DAOGeneral.estadoAsistenciaBean.obtenerPorNombre(modeloTabla.getValueAt((int) i, 3).toString()));
+			if (eventoSeleccionado.getTipoActividad().getEsCalificado()) {
 				ca.setCalificacion(Float.parseFloat(modeloTabla.getValueAt((int) i, 5).toString()));
 			}
-			
+
 		}
 	}
-	
-	public ConvocatoriaAsistencia buscarConvocatoria(long id,List<ConvocatoriaAsistencia> convocatorias) {
-		for(ConvocatoriaAsistencia c:convocatorias) {
-			if(c.getId()==id) {
+
+	public ConvocatoriaAsistencia buscarConvocatoria(long id, List<ConvocatoriaAsistencia> convocatorias) {
+		for (ConvocatoriaAsistencia c : convocatorias) {
+			if (c.getId() == id) {
 				return c;
 			}
 		}
 		return null;
 	}
-	
-	
+
 	public void filtrarTabla() throws ServicesException {
 		actulizarConvocados();
-		ArrayList<Estudiante>estudiantesFilt=new ArrayList<>();
-		if(comboBoxITR.getSelectedItem().toString()=="") {
-			estudiantesFilt= (ArrayList<Estudiante>) DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado);
-		}else {
-			for(Estudiante es: DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
-				if(es.getItr().getNombre().equalsIgnoreCase(comboBoxITR.getSelectedItem().toString())) {
+		ArrayList<Estudiante> estudiantesFilt = new ArrayList<>();
+		if (comboBoxITR.getSelectedItem().toString() == "") {
+			estudiantesFilt = (ArrayList<Estudiante>) DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado);
+		} else {
+			for (Estudiante es : DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado)) {
+				if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITR.getSelectedItem().toString())) {
 					estudiantesFilt.add(es);
 				}
 			}
 		}
-		ArrayList<Estudiante>estudiantesFilt2=new ArrayList<>();
-		
-		if(comboBoxEstado.getSelectedItem().toString()=="") {
-			estudiantesFilt2=estudiantesFilt;
-		}else {
-			for(Estudiante es: estudiantesFilt) {
-				if(DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado).getEstadoAsistencia()==null && comboBoxEstado.getSelectedItem().toString().equalsIgnoreCase("Sin Registrar")){
+		ArrayList<Estudiante> estudiantesFilt2 = new ArrayList<>();
+
+		if (comboBoxEstado.getSelectedItem().toString() == "") {
+			estudiantesFilt2 = estudiantesFilt;
+		} else {
+			for (Estudiante es : estudiantesFilt) {
+				if (DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado)
+						.getEstadoAsistencia() == null
+						&& comboBoxEstado.getSelectedItem().toString().equalsIgnoreCase("Sin Registrar")) {
 					estudiantesFilt2.add(es);
-				}else if(DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado).getEstadoAsistencia()!=null){
-					if(DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado).getEstadoAsistencia().getNombre().equalsIgnoreCase(comboBoxEstado.getSelectedItem().toString())) {
+				} else if (DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado)
+						.getEstadoAsistencia() != null) {
+					if (DAOGeneral.conAsistenciaBean.buscarPorEstudianteEvento(es, eventoSeleccionado)
+							.getEstadoAsistencia().getNombre()
+							.equalsIgnoreCase(comboBoxEstado.getSelectedItem().toString())) {
 						estudiantesFilt2.add(es);
 					}
 				}
-				
+
 			}
 		}
-		
-		ArrayList<Estudiante>estudiantesFilt3=new ArrayList<>();
-		if(textBuscar.getText()=="") {
-			estudiantesFilt3=estudiantesFilt2;
-		}else {
-			for(Estudiante es:estudiantesFilt2) {
-				String nombre=es.getNombre1()+ " "+ es.getApellido1();
-				nombre=nombre.toLowerCase();
-				String cedula=es.getDocumento()+"";
-				if(nombre.startsWith(textBuscar.getText().toLowerCase()) || cedula.startsWith(textBuscar.getText()) ) {
+
+		ArrayList<Estudiante> estudiantesFilt3 = new ArrayList<>();
+		if (textBuscar.getText() == "") {
+			estudiantesFilt3 = estudiantesFilt2;
+		} else {
+			for (Estudiante es : estudiantesFilt2) {
+				String nombre = es.getNombre1() + " " + es.getApellido1();
+				nombre = nombre.toLowerCase();
+				String cedula = es.getDocumento() + "";
+				if (nombre.startsWith(textBuscar.getText().toLowerCase()) || cedula.startsWith(textBuscar.getText())) {
 					estudiantesFilt3.add(es);
 				}
 			}
 		}
-		
+
 		cargarTabla(estudiantesFilt3);
 	}
-	
+
 	public ConvocatoriaAsistencia convocatoriaPorEstudiante(Estudiante es) {
-		for(ConvocatoriaAsistencia ca:convocatorias) {
-			if(ca.getEstudiante().getId()==es.getId()) {
+		for (ConvocatoriaAsistencia ca : convocatorias) {
+			if (ca.getEstudiante().getId() == es.getId()) {
 				return ca;
 			}
-		}	
+		}
 		return null;
 	}
- }
+}

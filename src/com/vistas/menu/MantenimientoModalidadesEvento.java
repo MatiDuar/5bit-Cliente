@@ -62,6 +62,7 @@ public class MantenimientoModalidadesEvento extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MantenimientoModalidadesEvento.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Mantenimiento Lista de Modalidades");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 400, 449);
 		contentPane = new JPanel();

@@ -35,6 +35,7 @@ public class Menu extends JFrame {
 	private Menu() {
 		
 		setTitle("Men\u00fa Principal");
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 966, 725);

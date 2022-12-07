@@ -53,8 +53,11 @@ public class FrameAgregarITR extends JFrame {
 	public FrameAgregarITR() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameAgregarITR.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Agregar ITR");
+		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 281);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -116,6 +119,21 @@ public class FrameAgregarITR extends JFrame {
 		btnhvrCancelar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
 		btnhvrCancelar.setBounds(10, 200, 98, 30);
+		btnhvrCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				int input = JOptionPane.showConfirmDialog(getParent(),
+						"Desea cancelar la creacion del ITR "
+						+ "\nLos datos no seran guardados", "Guardado...", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
+
+				if (input == 0) {
+					textNombre.setText("");
+					setVisible(false);
+				}
+			}
+		});
 		contentPane.add(btnhvrCancelar);
 		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
@@ -160,6 +178,9 @@ public class FrameAgregarITR extends JFrame {
 		}
 		if(comboBoxDep.getSelectedIndex()==0) {
 			throw new Exception("Debe seleccionar un departamento");
+		}
+		if(textNombre.getText().length()>50) {
+			throw new Exception("El nombre del ITR no puede contener mas de 50 caracteres");
 		}
 
 		if(DAOGeneral.itrRemote.obtenerItrPorNombre(textNombre.getText())!=null) {

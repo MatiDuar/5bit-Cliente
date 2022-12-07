@@ -30,6 +30,8 @@ public class FrameModificarDatosUsuarios extends JFrame {
 		JPanel panelCargarDatosUsuario = new JPanel();
 		panelCargarDatosUsuario.setLayout(null);
 		add(panelCargarDatosUsuario);
+		setResizable(false);
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarDatosUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar datos de usuario");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

@@ -73,6 +73,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 	public FrameConvocatoriaEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
+		setResizable(false);
 
 		setTitle("Convocatoria a Evento");
 		setBounds(100, 100, 711, 762);

@@ -49,8 +49,11 @@ public class FrameModificarEstadoEvento extends JFrame {
 	public FrameModificarEstadoEvento() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameModificarEstadoEvento.class.getResource("/com/vistas/img/UTEC.png")));
 		setTitle("Modificar Estado de Evento");
+		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 325, 233);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -123,7 +126,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 				
 				try {
 					
-					
+					guardarEstado();
 				
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",
@@ -144,7 +147,9 @@ public class FrameModificarEstadoEvento extends JFrame {
 		if(textNombre.getText().contains(" ")) {
 			throw new Exception("El estado no puede contener espacios");
 		}
-		
+		if(textNombre.getText().length()>50) {
+			throw new Exception("El estado no puede contener mas de 50 caracteres");
+		}
 		if(DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText())!=null && DAOGeneral.estadosEventoRemote.buscarNombreEstadoEvento(textNombre.getText()).getId()!=estadoSeleccionado.getId()) {
 			throw new Exception("El Estado especificado ya esta registrado en el sistema");
 		}
@@ -160,6 +165,7 @@ public class FrameModificarEstadoEvento extends JFrame {
 			mod.cargarTabla(mod.filtrarEstadoActivo(DAOGeneral.estadosEventoRemote.obtenerEstadosEventos()));
 			mod.comboBoxModalidades.setSelectedIndex(0);
 			PanelGestionDeEventos.getInstancia().cargarCombo();
+			PanelGestionDeEventos.getInstancia().cargarTabla(DAOGeneral.eventoRemote.obtenerEvento());
 			setVisible(false);
 		}
 	}
