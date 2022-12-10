@@ -6,7 +6,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -33,7 +34,7 @@ import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 
 public class PanelModificarDatosUsuarios extends JPanel {
-	public static Usuario usuarioLogeado;
+	public static Usuario usuarioSeleccionado;
 	private DefaultComboBoxModel modeloITR;
 	private DefaultComboBoxModel modeloDep;
 	private DefaultComboBoxModel modeloAreaTutor;
@@ -77,7 +78,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		yearDate.setBounds(419, 399, 215, 42);
 		add(yearDate);
 
-		yearDate.setYear(((Estudiante) usuarioLogeado).getAnoIngreso());
+		yearDate.setYear(((Estudiante) usuarioSeleccionado).getAnoIngreso());
 	}
 
 	public void datosTutor() {
@@ -115,8 +116,8 @@ public class PanelModificarDatosUsuarios extends JPanel {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
-		comboBoxAreaTutor.setSelectedItem(((Tutor) usuarioLogeado).getAreaTutor().getNombre());
-		comboBoxRolTutor.setSelectedItem(((Tutor) usuarioLogeado).getTipoTutor().getNombre());
+		comboBoxAreaTutor.setSelectedItem(((Tutor) usuarioSeleccionado).getAreaTutor().getNombre());
+		comboBoxRolTutor.setSelectedItem(((Tutor) usuarioSeleccionado).getTipoTutor().getNombre());
 
 	}
 
@@ -176,14 +177,14 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textNombre1 = new RSTextFull();
 		textNombre1.setBordeColorFocus(new Color(52, 152, 219));
-		textNombre1.setText(usuarioLogeado.getNombre1());
+		textNombre1.setText(usuarioSeleccionado.getNombre1());
 		textNombre1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre1.setBounds(101, 88, 214, 42);
 		add(textNombre1);
 
 		RSTextFull textApellido1 = new RSTextFull();
 		textApellido1.setBordeColorFocus(new Color(52, 152, 219));
-		textApellido1.setText(usuarioLogeado.getApellido1());
+		textApellido1.setText(usuarioSeleccionado.getApellido1());
 
 		textApellido1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido1.setBounds(101, 135, 214, 42);
@@ -191,14 +192,14 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textCedula = new RSTextFull();
 		textCedula.setBordeColorFocus(new Color(52, 152, 219));
-		textCedula.setText(usuarioLogeado.getDocumento());
+		textCedula.setText(usuarioSeleccionado.getDocumento());
 		textCedula.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textCedula.setBounds(101, 187, 214, 42);
 		add(textCedula);
 
 		RSTextFull textEmailPersonal = new RSTextFull();
 		textEmailPersonal.setBordeColorFocus(new Color(52, 152, 219));
-		textEmailPersonal.setText(usuarioLogeado.getMail());
+		textEmailPersonal.setText(usuarioSeleccionado.getMail());
 		textEmailPersonal.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailPersonal.setBounds(101, 239, 214, 42);
 		add(textEmailPersonal);
@@ -213,7 +214,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textEmailUtec = new RSTextFull();
 		textEmailUtec.setBordeColorFocus(new Color(52, 152, 219));
-		textEmailUtec.setText(usuarioLogeado.getMailInstitucional());
+		textEmailUtec.setText(usuarioSeleccionado.getMailInstitucional());
 		textEmailUtec.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textEmailUtec.setBounds(101, 343, 214, 42);
 		add(textEmailUtec);
@@ -233,7 +234,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textNombre2 = new RSTextFull();
 		textNombre2.setBordeColorFocus(new Color(52, 152, 219));
-		textNombre2.setText(usuarioLogeado.getNombre2());
+		textNombre2.setText(usuarioSeleccionado.getNombre2());
 		textNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textNombre2.setBounds(420, 88, 214, 42);
 		add(textNombre2);
@@ -245,7 +246,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textApellido2 = new RSTextFull();
 		textApellido2.setBordeColorFocus(new Color(52, 152, 219));
-		textApellido2.setText(usuarioLogeado.getApellido2());
+		textApellido2.setText(usuarioSeleccionado.getApellido2());
 		textApellido2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textApellido2.setBounds(420, 135, 214, 42);
 		add(textApellido2);
@@ -257,7 +258,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSDateChooser FechaNacimiento = new RSDateChooser();
 		FechaNacimiento.setColorBackground(new Color(52, 152, 219));
-		FechaNacimiento.setDatoFecha(usuarioLogeado.getFechaNacimiento());
+		FechaNacimiento.setDatoFecha(usuarioSeleccionado.getFechaNacimiento());
 		FechaNacimiento.setBounds(420, 187, 214, 42);
 		add(FechaNacimiento);
 
@@ -275,7 +276,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textTelefonoContacto = new RSTextFull();
 		textTelefonoContacto.setBordeColorFocus(new Color(52, 152, 219));
-		textTelefonoContacto.setText(usuarioLogeado.getTelefono());
+		textTelefonoContacto.setText(usuarioSeleccionado.getTelefono());
 		textTelefonoContacto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textTelefonoContacto.setBounds(420, 239, 214, 42);
 		add(textTelefonoContacto);
@@ -287,7 +288,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 		RSTextFull textLocalidad = new RSTextFull();
 		textLocalidad.setBordeColorFocus(new Color(52, 152, 219));
-		textLocalidad.setText(usuarioLogeado.getLocalidad());
+		textLocalidad.setText(usuarioSeleccionado.getLocalidad());
 		textLocalidad.setFont(new Font("Tahoma", Font.BOLD, 11));
 		textLocalidad.setBounds(420, 291, 214, 42);
 		add(textLocalidad);
@@ -319,7 +320,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 				int input = JOptionPane.showConfirmDialog(getParent(), "Desa guardar los datos modificaos del usuario sleccionado",
 						"Guardado...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (input == 0) {
-					Usuario usuarioMod = usuarioLogeado;
+					Usuario usuarioMod = usuarioSeleccionado;
 					try {
 
 						String apellido1 = textApellido1.getText();
@@ -441,16 +442,56 @@ public class PanelModificarDatosUsuarios extends JPanel {
 						}
 
 						usuarioMod.setLocalidad(localidad.replaceAll("\\s", ""));
-
-						String mailPersonal = textEmailPersonal.getText();
-
-						if (!mailPersonal.contains("@")) {
-							throw new Exception("Formato de email personal incorrecto");
-						}
+						
+						//Inicio Control Email Personal
+						
+				        // Patrón para validar el email
+				        Pattern pattern = Pattern
+				                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+				 
+				        // El email a validar
+				        String mailPersonal = textEmailPersonal.getText();
+				 				        
+				        Matcher mather = pattern.matcher(mailPersonal);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El Email Personal ingresado es inválido.");
+				        }
+						
+				        //Fin Control Email Personal
 
 						usuarioMod.setMail(mailPersonal);
 
-						String mailInstitucional = textEmailUtec.getText();
+												
+						//Inicio Control Email Institucional
+				        //verifica que este en el dominio @utec.edu.uy
+						Pattern patternInst;
+						if (usuarioSeleccionado instanceof Estudiante) {
+				         patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(estudiantes)\\.utec\\.edu\\.uy(\\W|$)");
+						}else {
+				         patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(utec)\\.edu\\.uy(\\W|$)");
+				        }
+				 
+				        // El email a validar
+				        String mailInstitucional = textEmailUtec.getText();
+				 
+
+				        mather = patternInst.matcher(mailInstitucional);
+				 
+				        if (!mather.find()) {	
+				        	if (usuarioSeleccionado instanceof Estudiante) {
+				        		throw new Exception("El email institucional no esta dentro del dominio."
+					        			+ "\nEjemplo: nombre.apellido@estudiantes.utec.edu.uy");
+				        	}else {
+				        		throw new Exception("El email institucional no esta dentro del dominio."
+					        			+ "\nEjemplo: nombre.apellido@utec.edu.uy");
+				        	}
+				        
+				        	
+				        }					
+				        //Fin Control Email Institucional	
+						
 
 						if (!mailInstitucional.contains("@")) {
 							throw new Exception("Formato de email institucional incorrecto");
@@ -525,11 +566,12 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		comboBoxITR.setSelectedItem(usuarioLogeado.getItr().getNombre());
-		comboBoxDepartamento.setSelectedItem(usuarioLogeado.getDepartamento().getNombre());
-		comboBoxGenero.setSelectedItem(usuarioLogeado.getGenero().getNombre());
+
 		
-		
+		comboBoxGenero.setSelectedItem(usuarioSeleccionado.getGenero().getNombre());
+		comboBoxITR.setSelectedItem(usuarioSeleccionado.getItr().getNombre());
+		comboBoxDepartamento.setSelectedItem(usuarioSeleccionado.getDepartamento().getNombre());
+
 
 	}
 
