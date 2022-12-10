@@ -23,6 +23,8 @@ import rojeru_san.rsfield.RSPassword;
 import rojeru_san.complementos.RSButtonHover;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import rojeru_san.rsdate.RSYearDate;
 import rojeru_san.rslabel.RSLabelImage;
@@ -211,6 +213,7 @@ public class PanelEditarPerfil extends JPanel {
 		add(lblITR);
 
 		comboBoxITR = new RSComboBox();
+	
 		comboBoxITR.setColorBoton(Color.WHITE);
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
@@ -230,11 +233,20 @@ public class PanelEditarPerfil extends JPanel {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUIEstudiante();
 			panelDinamicoEditarPerfilPorTipoUsuarios.yearDate.setEnabled(false);
 			comboBoxITR.setEnabled(false);
+			comboBoxITR.setColorArrow(Color.DARK_GRAY);
+			comboBoxITR.setColorBoton(Color.LIGHT_GRAY);
+			comboBoxITR.setConBorde(true);
+			comboBoxITR.setColorBorde(Color.LIGHT_GRAY);
+
 		} else if (Menu.getUsuario() instanceof Tutor) {
 			panelDinamicoEditarPerfilPorTipoUsuarios.initUITutor();
 			panelDinamicoEditarPerfilPorTipoUsuarios.comboBoxAreaTutor.setEditable(false);
 			panelDinamicoEditarPerfilPorTipoUsuarios.comboBoxRolTutor.setEditable(false);
 			comboBoxITR.setEnabled(false);
+			comboBoxITR.setColorArrow(Color.DARK_GRAY);
+			comboBoxITR.setColorBoton(Color.LIGHT_GRAY);
+			comboBoxITR.setConBorde(true);
+			comboBoxITR.setColorBorde(Color.LIGHT_GRAY);
 
 		}
 		add(panelDinamicoEditarPerfilPorTipoUsuarios);
@@ -321,7 +333,7 @@ public class PanelEditarPerfil extends JPanel {
 						String contrasena = password.getText();
 
 						if (contrasena.length() > 50 || contrasena.length() < 8) {
-							throw new Exception("El campo contraseña debe tener entre 8 y 50 caracteres.");
+							throw new Exception("El campo contraseï¿½a debe tener entre 8 y 50 caracteres.");
 						}
 
 						boolean contieneNums = false;
@@ -349,7 +361,7 @@ public class PanelEditarPerfil extends JPanel {
 						String doc = textCedula.getText();
 
 						if (doc.length() != 8 || doc == "        " || !esNumerico(doc)) {
-							throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
+							throw new Exception("Formato de documento invï¿½lido, debe contener 8 dï¿½gitos numericos");
 						} else {
 							usuarioMod.setDocumento(doc);
 						}
@@ -373,7 +385,7 @@ public class PanelEditarPerfil extends JPanel {
 							java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
 							usuarioMod.setFechaNacimiento(sqlDate);
 						} else {
-							throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
+							throw new Exception("Fecha invï¿½lida, introduzca una fecha menor a la actual.");
 						}
 
 						usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long) 1));
@@ -401,20 +413,56 @@ public class PanelEditarPerfil extends JPanel {
 						}
 
 						usuarioMod.setLocalidad(localidad.replaceAll("\\s", ""));
-
-						String mailPersonal = textEmailPersonal.getText();
-
-						if (!mailPersonal.contains("@")) {
-							throw new Exception("Formato de email personal incorrecto");
-						}
+											
+						//Inicio Control Email Personal
+						
+				        // PatrÃ³n para validar el email
+				        Pattern pattern = Pattern
+				                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+				 
+				        // El email a validar
+				        String mailPersonal = textEmailPersonal.getText();
+				 				        
+				        Matcher mather = pattern.matcher(mailPersonal);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El Email Personal ingresado es invÃ¡lido.");
+				        }
+						
+				        //Fin Control Email Personal
+											
 
 						usuarioMod.setMail(mailPersonal);
 
-						String mailInstitucional = textEmailUtec.getText();
+						
+						//Inicio Control Email Institucional
+				        //verifica que este en el dominio @utec.edu.uy
+						Pattern patternInst;
+						if (Menu.getUsuario() instanceof Estudiante) {
+				         patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(estudiantes)\\.utec\\.edu\\.uy(\\W|$)");
+						}else {
+				         patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(utec)\\.edu\\.uy(\\W|$)");
+				        }
+				 
+				        // El email a validar
+				        String mailInstitucional = textEmailUtec.getText();
+				 
 
-						if (!mailInstitucional.contains("@")) {
-							throw new Exception("Formato de email institucional incorrecto");
-						}
+				        mather = patternInst.matcher(mailInstitucional);
+				 
+				        if (!mather.find()) {	
+				        	if (Menu.getUsuario() instanceof Estudiante) {
+				        		throw new Exception("El email institucional no esta dentro del dominio."
+					        			+ "\nEjemplo: nombre.apellido@estudiantes.utec.edu.uy");
+				        	}else {
+				        		throw new Exception("El email institucional no esta dentro del dominio."
+					        			+ "\nEjemplo: nombre.apellido@utec.edu.uy");
+				        	}
+				        
+				        	
+				        }					
+				        //Fin Control Email Institucional						
 
 						usuarioMod.setMailInstitucional(mailInstitucional);
 

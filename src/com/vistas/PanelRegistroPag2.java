@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -222,9 +224,49 @@ public class PanelRegistroPag2 extends JPanel {
 					try {
 						Analista analistaRegistro=(Analista) PanelRegistroPag.usuarioRegistro;
 						
+						
+						//Inicio Control Email Personal
+						
+				        // Patrón para validar el email
+				        Pattern pattern = Pattern
+				                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+				 
+				        // El email a validar
+				        String email = textMailPersonal.getText();
+				 				        
+				        Matcher mather = pattern.matcher(email);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El Email Personal ingresado es inválido.");
+				        }
+						
+				        //Fin Control Email Personal
+						
 						analistaRegistro.setMail(textMailPersonal.getText());
 						analistaRegistro.setMailInstitucional(textMailUtec.getText());
 						
+						//Inicio Control Email Institucional
+						//verifica que este en el dominio @utec.edu.uy				        
+				        Pattern patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(utec)\\.edu\\.uy(\\W|$)");
+				        
+				 
+				        // El email a validar
+				        String emailInst = textMailUtec.getText();
+				 
+
+				        mather = patternInst.matcher(emailInst);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El email institucional no esta dentro del dominio."
+				        			+ "\nEjemplo: nombre.apellido@utec.edu.uy");
+				        }
+						
+				        //Fin Control Email Institucional
+						
+						
+						
+		
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
 							throw new Exception("El email institucional ya se encuentra registado en el sistema");
@@ -289,8 +331,46 @@ public class PanelRegistroPag2 extends JPanel {
 						Tutor tutorRegistro=new Tutor();
 						copiarUsuario(PanelRegistroPag.usuarioRegistro, tutorRegistro);
 						
+						
 						tutorRegistro.setMailInstitucional(textMailUtec.getText());
 						tutorRegistro.setMail(textMailPersonal.getText());
+						
+						
+						//Inicio Control Email Personal
+						
+				        // Patrón para validar el email
+				        Pattern pattern = Pattern
+				                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+				 
+				        // El email a validar
+				        String email = textMailPersonal.getText();
+				 				        
+				        Matcher mather = pattern.matcher(email);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El Email Personal ingresado es inválido.");
+				        }
+						
+				        //Fin Control Email Personal
+						
+						//Inicio Control Email Institucional
+				        //verifica que este en el dominio @utec.edu.uy
+				        Pattern patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(utec)\\.edu\\.uy(\\W|$)");
+				        
+				 
+				        // El email a validar
+				        String emailInst = textMailUtec.getText();
+				 
+
+				        mather = patternInst.matcher(emailInst);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El email institucional no esta dentro del dominio."
+				        			+ "\nEjemplo: nombre.apellido@utec.edu.uy");
+				        }
+						
+				        //Fin Control Email Institucional
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
@@ -371,6 +451,44 @@ public class PanelRegistroPag2 extends JPanel {
 						
 						estudianteRegistro.setMailInstitucional(textMailUtec.getText());
 						estudianteRegistro.setMail(textMailPersonal.getText());
+						
+						
+						//Inicio Control Email Personal
+						
+				        // Patrón para validar el email
+				        Pattern pattern = Pattern
+				                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+				 
+				        // El email a validar
+				        String email = textMailPersonal.getText();
+				 				        
+				        Matcher mather = pattern.matcher(email);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El Email Personal ingresado es inválido.");
+				        }
+						
+				        //Fin Control Email Personal
+						
+						//Inicio Control Email Institucional
+				        //verifica que este en el dominio @utec.edu.uy
+				        Pattern patternInst = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(estudiantes)\\.utec\\.edu\\.uy(\\W|$)");
+				        
+				 
+				        // El email a validar
+				        String emailInst = textMailUtec.getText();
+				 
+
+				        mather = patternInst.matcher(emailInst);
+				 
+				        if (!mather.find()) {				   
+				        	throw new Exception("El email institucional no esta dentro del dominio."
+				        			+ "\nEjemplo: nombre.apellido@estudiantes.utec.edu.uy");
+				        }
+						
+				        //Fin Control Email Institucional
+						
 						
 						String[] splitNombreUsuario=textMailUtec.getText().split("@");
 						if(DAOGeneral.usuarioRemote.buscarNombre(splitNombreUsuario[0])!=null) {
