@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -17,6 +18,7 @@ import com.controlador.DAOGeneral;
 import com.entities.AreaTutor;
 import com.entities.Departamento;
 import com.entities.Estudiante;
+import com.entities.Genero;
 import com.entities.ITR;
 import com.entities.TipoTutor;
 import com.entities.Tutor;
@@ -36,6 +38,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 	private DefaultComboBoxModel modeloDep;
 	private DefaultComboBoxModel modeloAreaTutor;
 	private DefaultComboBoxModel modeloTipoTutor;
+	private DefaultComboBoxModel modeloGenero;
 
 	private RSComboBox comboBoxAreaTutor;
 	private RSComboBox comboBoxRolTutor;
@@ -43,7 +46,8 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 	
 	public PanelModificarDatosUsuarios() {
-		datosComunes();
+		
+		
 	}
 
 	public void datosAnalista() {
@@ -59,18 +63,18 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		JLabel lblTelefonoDeContacto_1_1 = new JLabel("a la carrera *");
 		lblTelefonoDeContacto_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto_1_1.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblTelefonoDeContacto_1_1.setBounds(12, 417, 86, 14);
+		lblTelefonoDeContacto_1_1.setBounds(331, 419, 86, 14);
 		add(lblTelefonoDeContacto_1_1);
 
 		JLabel lblAoDeIngreso = new JLabel("A\u00f1o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblAoDeIngreso.setBounds(12, 402, 86, 14);
+		lblAoDeIngreso.setBounds(329, 406, 86, 14);
 		add(lblAoDeIngreso);
 
 		yearDate = new RSYearDate();
 		yearDate.setColorBackground(new Color(52, 152, 219));
-		yearDate.setBounds(100, 395, 215, 42);
+		yearDate.setBounds(419, 399, 215, 42);
 		add(yearDate);
 
 		yearDate.setYear(((Estudiante) usuarioLogeado).getAnoIngreso());
@@ -82,14 +86,14 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		JLabel lblRol = new JLabel("Rol*");
 		lblRol.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblRol.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblRol.setBounds(18, 410, 78, 14);
+		lblRol.setBounds(18, 463, 78, 14);
 		add(lblRol);
 
 		comboBoxRolTutor = new RSComboBox();
 		modeloTipoTutor = new DefaultComboBoxModel();
 		comboBoxRolTutor.setModel(modeloTipoTutor);
 		comboBoxRolTutor.setColorFondo(new Color(52, 152, 219));
-		comboBoxRolTutor.setBounds(101, 395, 214, 42);
+		comboBoxRolTutor.setBounds(101, 450, 214, 42);
 		add(comboBoxRolTutor);
 
 		JLabel lblAreaTutor = new JLabel("\u00c1rea*");
@@ -292,9 +296,22 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(106, 486, 172, 33);
+		btnhvrCancelar.setBounds(106, 512, 172, 33);
 		add(btnhvrCancelar);
-
+		
+		JLabel lblGenero = new JLabel("Genero *");
+		lblGenero.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblGenero.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblGenero.setBounds(12, 411, 84, 14);
+		add(lblGenero);
+		modeloGenero=new DefaultComboBoxModel();
+		RSComboBox comboBoxGenero = new RSComboBox();
+		comboBoxGenero.setModel(modeloGenero);
+		comboBoxGenero.setColorFondo(new Color(52, 152, 219));
+		comboBoxGenero.setColorBoton(Color.WHITE);
+		comboBoxGenero.setBounds(101, 397, 214, 42);
+		add(comboBoxGenero);
+		
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
 		btnhvrGuardar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -467,11 +484,20 @@ public class PanelModificarDatosUsuarios extends JPanel {
 						} else if (usuarioMod instanceof Estudiante) {
 							((Estudiante) usuarioMod).setAnoIngreso(yearDate.getYear());
 						}
-
+						usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorNombre(comboBoxGenero.getSelectedItem().toString()));
 						DAOGeneral.usuarioRemote.modificarUsuario(usuarioMod);
 
-						PanelGestionUsuarios.getInstancia()
-								.cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
+						PanelGestionUsuarios paenGestion=PanelGestionUsuarios.getInstancia();
+						
+						if(paenGestion.comboEstado.getSelectedItem().toString()=="Activo") {
+							paenGestion.cargarDatosTabla(paenGestion.filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						}else if(paenGestion.comboEstado.getSelectedItem().toString()=="Inactivo") {
+							paenGestion.cargarDatosTabla(paenGestion.filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						}else if(paenGestion.comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")){
+							paenGestion.cargarDatosTabla(paenGestion.filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						}else{
+							paenGestion.cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
+						}
 						JOptionPane.showMessageDialog(null, "Se modifico correctamente el usuario", "Aviso",
 								JOptionPane.INFORMATION_MESSAGE);
 
@@ -487,9 +513,13 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(384, 486, 172, 33);
+		btnhvrGuardar.setBounds(385, 512, 172, 33);
 		add(btnhvrGuardar);
 
+		
+		
+		
+		
 		try {
 			cargarComboComun();
 		} catch (Exception e) {
@@ -497,6 +527,9 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		}
 		comboBoxITR.setSelectedItem(usuarioLogeado.getItr().getNombre());
 		comboBoxDepartamento.setSelectedItem(usuarioLogeado.getDepartamento().getNombre());
+		comboBoxGenero.setSelectedItem(usuarioLogeado.getGenero().getNombre());
+		
+		
 
 	}
 
@@ -511,6 +544,13 @@ public class PanelModificarDatosUsuarios extends JPanel {
 		modeloITR.addElement("");
 		for (ITR itr : DAOGeneral.itrRemote.obtenerItrs()) {
 			modeloITR.addElement(itr.getNombre());
+		}
+		
+		
+		modeloGenero.removeAllElements();
+		modeloGenero.addElement("");
+		for(Genero g:DAOGeneral.generoRemote.obtenerGeneros()) {
+			modeloGenero.addElement(g.getNombre());
 		}
 	}
 

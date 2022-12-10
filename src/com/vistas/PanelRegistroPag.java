@@ -280,8 +280,32 @@ public class PanelRegistroPag extends JPanel {
 					}
 						
 					usuarioRegistro.setTelefono(tel);
+					String contrasena=password.getText();
+					if (contrasena.length() > 50 || contrasena.length() < 8) {
+						throw new Exception("El campo contraseña debe tener entre 8 y 50 caracteres.");
+					}
+
+					boolean contieneNums = false;
+					boolean contieneLetras = false;
+
+					for (int i = 0; i < contrasena.length(); i++) {
+						if (Character.isLetter(contrasena.charAt(i))) {
+							contieneLetras = true;
+							break;
+						}
+					}
+
+					for (int i = 0; i < contrasena.length(); i++) {
+						if (Character.isDigit(contrasena.charAt(i))) {
+							contieneNums = true;
+							break;
+						}
+					}
+					if (!contieneNums || !contieneLetras) {
+						throw new Exception("La contrasena debe contener numeros y letras");
+					}
 					
-					usuarioRegistro.setContrasena(password.getText());
+					usuarioRegistro.setContrasena(contrasena);
 
 					Registro.mostrarPag2(PanelRegistroPag2.getInstancia());
 

@@ -422,9 +422,9 @@ public class PanelRegistroPag2 extends JPanel {
 						System.out.println(fechaActualLD.getYear());
 						
 						if (fechaObtenida > fechaActualLD.getYear()) {
-							throw new Exception("Fecha invalida, introduzca una fecha menor a la actual.");
-							
+							throw new Exception("Fecha invalida, introduzca una fecha menor a la actual.");	
 						}
+						
 						estudianteRegistro.setAnoIngreso(fechaObtenida);
 						
 						estudianteRegistro.setValidado(false);

@@ -81,7 +81,7 @@ public class Login extends JFrame {
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 50));
 
-		;
+		
 
 		JLabel lblContrasena = new JLabel("Contrase\u00F1a");
 		lblContrasena.setToolTipText("");

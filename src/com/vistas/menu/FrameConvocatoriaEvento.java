@@ -31,17 +31,22 @@ import com.entities.ITR;
 import com.exception.ServicesException;
 import com.vistas.Login;
 
+import RSMaterialComponent.RSTextFieldIconUno;
 import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import javax.swing.JTextField;
+import rojerusan.RSTableMetro.SELECTION_ROWS;
 
 public class FrameConvocatoriaEvento extends JFrame {
 
 	private JPanel contentPane;
 	private DefaultTableModel modeloNoAsignados;
 	private DefaultTableModel modeloAsignados;
+
 	public static Evento eventoSeleccionado;
+
 	private RSTableMetro tableNoAsignado;
 	private RSTableMetro tableAsignado;
 
@@ -53,6 +58,8 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 	private ArrayList<Estudiante> asignados;
 	private ArrayList<Estudiante> noAsignados;
+
+	private RSTextFieldIconUno textBuscador;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -71,7 +78,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 	 * Create the frame.
 	 */
 	public FrameConvocatoriaEvento() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);		
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
 		setResizable(false);
 
@@ -87,17 +94,16 @@ public class FrameConvocatoriaEvento extends JFrame {
 		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTitulo.setBounds(207, 10, 360, 27);
 		contentPane.add(lblTitulo);
-		
+
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage.setBounds(627, 10, 50, 50);
 		contentPane.add(labelImage);
 
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 142, 569, 207);
+		scrollPane.setBounds(10, 142, 569, 222);
 		contentPane.add(scrollPane);
 		modeloNoAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Docuemtno", "ITR", "Generacion", "Id" }) {
@@ -108,6 +114,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 			}
 		};
 		tableNoAsignado = new RSTableMetro();
+		tableNoAsignado.setModelSelection(SELECTION_ROWS.MULTIPLE_INTERVAL_SELECTION);
 		tableNoAsignado.setBackgoundHead(new Color(52, 152, 219));
 
 		tableNoAsignado.setModel(modeloNoAsignados);
@@ -119,7 +126,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		comboBoxITRN.setColorBoton(Color.WHITE);
 		comboBoxITRN.setColorFondo(new Color(52, 152, 219));
 		comboBoxITRN.setModel(modeloITRN);
-		comboBoxITRN.setBounds(17, 73, 121, 32);
+		comboBoxITRN.setBounds(266, 74, 121, 32);
 		contentPane.add(comboBoxITRN);
 
 		modeloGenN = new DefaultComboBoxModel();
@@ -127,28 +134,12 @@ public class FrameConvocatoriaEvento extends JFrame {
 		comboBoxGenN.setColorBoton(Color.WHITE);
 		comboBoxGenN.setColorFondo(new Color(52, 152, 219));
 		comboBoxGenN.setModel(modeloGenN);
-		comboBoxGenN.setBounds(151, 73, 121, 32);
+		comboBoxGenN.setBounds(400, 74, 121, 32);
 		contentPane.add(comboBoxGenN);
-
-		modeloITRA = new DefaultComboBoxModel();
-		RSComboBox comboBoxITRA = new RSComboBox();
-		comboBoxITRA.setColorBoton(Color.WHITE);
-		comboBoxITRA.setColorFondo(new Color(52, 152, 219));
-		comboBoxITRA.setModel(modeloITRA);
-		comboBoxITRA.setBounds(17, 379, 121, 32);
-		contentPane.add(comboBoxITRA);
-
-		modeloGenA = new DefaultComboBoxModel();
-		RSComboBox comboBoxGenA = new RSComboBox();
-		comboBoxGenA.setColorBoton(Color.WHITE);
-		comboBoxGenA.setColorFondo(new Color(52, 152, 219));
-		comboBoxGenA.setModel(modeloGenA);
-		comboBoxGenA.setBounds(151, 379, 121, 32);
-		contentPane.add(comboBoxGenA);
 
 		JLabel lblNewLabel = new JLabel("ITR");
 		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblNewLabel.setBounds(17, 56, 45, 13);
+		lblNewLabel.setBounds(266, 57, 45, 13);
 		contentPane.add(lblNewLabel);
 
 		RSButtonHover btnhvrFiltrarN = new RSButtonHover();
@@ -156,27 +147,64 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					ArrayList<Estudiante> estudiantesFilt1 = new ArrayList<>();
+					ArrayList<Estudiante> estudiantesFilt1NoAsignado = new ArrayList<>();
+					ArrayList<Estudiante> estudiantesFilt1Asignado = new ArrayList<>();
+
 					if (comboBoxITRN.getSelectedItem().toString() == "") {
-						estudiantesFilt1 = noAsignados;
+						estudiantesFilt1NoAsignado = noAsignados;
+						estudiantesFilt1Asignado = asignados;
 					} else {
 						for (Estudiante es : noAsignados) {
 							if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
-								estudiantesFilt1.add(es);
+								estudiantesFilt1NoAsignado.add(es);
+							}
+						}
+						for (Estudiante es : asignados) {
+							if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
+								estudiantesFilt1Asignado.add(es);
 							}
 						}
 					}
-					ArrayList<Estudiante> estudiantesFilt2 = new ArrayList<>();
+					ArrayList<Estudiante> estudiantesFilt2NoAsignado = new ArrayList<>();
+					ArrayList<Estudiante> estudiantesFilt2Asignado = new ArrayList<>();
+
 					if (comboBoxGenN.getSelectedItem().toString() == "") {
-						estudiantesFilt2 = estudiantesFilt1;
+						estudiantesFilt2NoAsignado = estudiantesFilt1NoAsignado;
+						estudiantesFilt2Asignado = estudiantesFilt1Asignado;
 					} else {
-						for (Estudiante es : estudiantesFilt1) {
+						for (Estudiante es : estudiantesFilt1NoAsignado) {
 							if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
-								estudiantesFilt2.add(es);
+								estudiantesFilt2NoAsignado.add(es);
+							}
+						}
+						for (Estudiante es : estudiantesFilt1Asignado) {
+							if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
+								estudiantesFilt2Asignado.add(es);
 							}
 						}
 					}
-					cargarTablaNoAsignado(estudiantesFilt2);
+					ArrayList<Estudiante> estudiantesFilt3NoAsignado = new ArrayList<>();
+					ArrayList<Estudiante> estudiantesFilt3Asignado = new ArrayList<>();
+					if(textBuscador.getText().equalsIgnoreCase("")) {
+						estudiantesFilt3Asignado=estudiantesFilt2Asignado;
+						estudiantesFilt3NoAsignado=estudiantesFilt2NoAsignado;
+					}else {
+						for (Estudiante es : estudiantesFilt2NoAsignado) {
+							String nombre=es.getNombre1()+" "+es.getApellido1();
+							if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
+								estudiantesFilt3NoAsignado.add(es);
+							}
+						}
+						for (Estudiante es : estudiantesFilt2Asignado) {
+							String nombre=es.getNombre1()+" "+es.getApellido1();
+							if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
+								estudiantesFilt3Asignado.add(es);
+							}
+						}
+					}
+					
+					cargarTablaNoAsignado(estudiantesFilt3NoAsignado);
+					cargarTablaAsignado(estudiantesFilt3Asignado);
 				} catch (ServicesException e1) {
 					e1.printStackTrace();
 				}
@@ -192,7 +220,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00f3n");
 		lblGeneracionEstudiante.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGeneracionEstudiante.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblGeneracionEstudiante.setBounds(151, 56, 78, 13);
+		lblGeneracionEstudiante.setBounds(400, 57, 78, 13);
 		contentPane.add(lblGeneracionEstudiante);
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("LISTA DE ESTUDIANTES");
@@ -204,16 +232,17 @@ public class FrameConvocatoriaEvento extends JFrame {
 		JLabel lblNewLabel_2_1_2 = new JLabel("ESTUDIANTES CONVOCADOS");
 		lblNewLabel_2_1_2.setForeground(new Color(58, 69, 75));
 		lblNewLabel_2_1_2.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1_2.setBounds(10, 422, 360, 27);
+		lblNewLabel_2_1_2.setBounds(10, 398, 360, 27);
 		contentPane.add(lblNewLabel_2_1_2);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(10, 451, 569, 207);
+		scrollPane_1.setBounds(10, 436, 569, 222);
 		contentPane.add(scrollPane_1);
 
 		tableAsignado = new RSTableMetro();
+		tableAsignado.setModelSelection(SELECTION_ROWS.MULTIPLE_INTERVAL_SELECTION);
 		tableAsignado.setBackgoundHead(new Color(52, 152, 219));
 
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
@@ -252,7 +281,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-
+					
 					quitarEstudiante();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -264,55 +293,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrQuitar.setBackground(new Color(52, 152, 219));
 		btnhvrQuitar.setBounds(589, 533, 108, 33);
 		contentPane.add(btnhvrQuitar);
-
-		RSButtonHover btnhvrFiltrarA = new RSButtonHover();
-		btnhvrFiltrarA.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					ArrayList<Estudiante> estudiantesFilt1 = new ArrayList<>();
-					if (comboBoxITRA.getSelectedItem().toString() == "") {
-						estudiantesFilt1 = asignados;
-					} else {
-						for (Estudiante es : asignados) {
-							if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRA.getSelectedItem().toString())) {
-								estudiantesFilt1.add(es);
-							}
-						}
-					}
-					ArrayList<Estudiante> estudiantesFilt2 = new ArrayList<>();
-					if (comboBoxGenA.getSelectedItem().toString() == "") {
-						estudiantesFilt2 = estudiantesFilt1;
-					} else {
-						for (Estudiante es : estudiantesFilt1) {
-							if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenA.getSelectedItem().toString())) {
-								estudiantesFilt2.add(es);
-							}
-						}
-					}
-					cargarTablaAsignado(estudiantesFilt2);
-				} catch (ServicesException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		btnhvrFiltrarA.setText("Filtrar");
-		btnhvrFiltrarA.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnhvrFiltrarA.setBackground(new Color(52, 152, 219));
-		btnhvrFiltrarA.setBounds(569, 379, 108, 33);
-		contentPane.add(btnhvrFiltrarA);
-
-		JLabel lblGeneracionEstudiante_1 = new JLabel("Generaci\u00f3n");
-		lblGeneracionEstudiante_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGeneracionEstudiante_1.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblGeneracionEstudiante_1.setBounds(151, 362, 78, 13);
-		contentPane.add(lblGeneracionEstudiante_1);
-
-		JLabel lblNewLabel_1 = new JLabel("ITR");
-		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblNewLabel_1.setBounds(17, 362, 45, 13);
-		contentPane.add(lblNewLabel_1);
 
 		tableAsignado.addMouseListener(new MouseAdapter() {
 			@Override
@@ -418,6 +398,41 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrCancelar.setBounds(164, 669, 108, 33);
 		contentPane.add(btnhvrCancelar);
 
+		textBuscador = new RSTextFieldIconUno();
+		textBuscador.setPlaceholder("Buscador...\r\n");
+		textBuscador.setBounds(10, 74, 228, 32);
+		contentPane.add(textBuscador);
+		textBuscador.setColumns(10);
+
+		JLabel lblBuscador = new JLabel("Buscador");
+		lblBuscador.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBuscador.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblBuscador.setBounds(10, 57, 78, 13);
+		contentPane.add(lblBuscador);
+
+		RSButtonHover btnhvrBorrarFiltro = new RSButtonHover();
+		btnhvrBorrarFiltro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				comboBoxGenN.setSelectedIndex(0);
+				comboBoxITRN.setSelectedIndex(0);
+				textBuscador.setText("");
+				try {
+					cargarTablaAsignado(asignados);
+
+					cargarTablaNoAsignado(noAsignados);
+				} catch (ServicesException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnhvrBorrarFiltro.setText("Borrar Filtro");
+		btnhvrBorrarFiltro.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrBorrarFiltro.setBackground(new Color(52, 152, 219));
+		btnhvrBorrarFiltro.setBounds(589, 127, 96, 33);
+		contentPane.add(btnhvrBorrarFiltro);
+
 		try {
 			asignados = (ArrayList<Estudiante>) estudianteAsignados();
 			noAsignados = (ArrayList<Estudiante>) estudianteNoAsignados();
@@ -426,10 +441,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 			cargarCombo();
 
 			LocalDate year = LocalDate.now();
-			modeloGenA.addElement("");
-			for (int i = 2012; i <= year.getYear(); i++) {
-				modeloGenA.addElement(i);
-			}
 
 			modeloGenN.addElement("");
 			for (int i = 2012; i <= year.getYear(); i++) {
@@ -473,7 +484,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 	public List<Estudiante> estudianteNoAsignados() throws ServicesException {
 		List<Estudiante> estudiantes = new ArrayList<>();
 		for (Estudiante e : DAOGeneral.estudianteBean.obtenerEstudiantes()) {
-			if(e.getValidado() && e.getActivo()) {
+			if (e.getValidado() && e.getActivo()) {
 				boolean flag = false;
 				for (Estudiante j : estudianteAsignados()) {
 					if (e.getId() == j.getId()) {
@@ -485,7 +496,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 					estudiantes.add(e);
 				}
 			}
-			
 
 		}
 
@@ -502,44 +512,46 @@ public class FrameConvocatoriaEvento extends JFrame {
 	}
 
 	public void cargarCombo() throws ServicesException {
-		modeloITRA.removeAllElements();
-		modeloITRA.addElement("");
-		for (ITR itr : DAOGeneral.itrRemote.obtenerItrs()) {
-			modeloITRA.addElement(itr.getNombre());
-		}
 		modeloITRN.removeAllElements();
 		modeloITRN.addElement("");
 		for (ITR itr : DAOGeneral.itrRemote.obtenerItrs()) {
 			modeloITRN.addElement(itr.getNombre());
 		}
-	}
-
+	}	
+	
 	public void agregarEstudiante() throws Exception {
 		if (tableNoAsignado.getSelectedRow() == -1) {
 			throw new Exception("Debe seleccionar un estudiante de la lista No Asignados, para poder Agregarlo.");
 		}
-		Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
-				.buscarUsuarioPorId((Long) modeloNoAsignados.getValueAt(tableNoAsignado.getSelectedRow(), 4));
-		Estudiante estudianteLista = buscarEstudiante(noAsignados, estudianteTabla);
-		noAsignados.remove(estudianteLista);
-		asignados.add(estudianteLista);
+		
+		for(int i:tableNoAsignado.getSelectedRows()) {
+			Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
+					.buscarUsuarioPorId((Long) modeloNoAsignados.getValueAt(i, 4));
+			Estudiante estudianteLista = buscarEstudiante(noAsignados, estudianteTabla);
+			noAsignados.remove(estudianteLista);
+			asignados.add(estudianteLista);
+		}
 
 		cargarTablaAsignado(asignados);
 		cargarTablaNoAsignado(noAsignados);
 	}
-
+	
+	
 	public void quitarEstudiante() throws Exception {
 		if (tableAsignado.getSelectedRow() == -1) {
 			throw new Exception(
 					"Debe seleccionar un estudiante de la lista Asignados, para poder quitarlo de la misma.");
 		}
-		Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
-				.buscarUsuarioPorId((Long) modeloAsignados.getValueAt(tableAsignado.getSelectedRow(), 4));
-		Estudiante estudianteLista = buscarEstudiante(asignados, estudianteTabla);
-		asignados.remove(estudianteLista);
-		noAsignados.add(estudianteLista);
-
+		for(int i:tableAsignado.getSelectedRows()) {
+			Estudiante estudianteTabla = (Estudiante) DAOGeneral.usuarioRemote
+					.buscarUsuarioPorId((Long) modeloAsignados.getValueAt(i, 4));
+			Estudiante estudianteLista = buscarEstudiante(asignados, estudianteTabla);
+			asignados.remove(estudianteLista);
+			noAsignados.add(estudianteLista);
+		}
 		cargarTablaAsignado(asignados);
 		cargarTablaNoAsignado(noAsignados);
 	}
+
+
 }

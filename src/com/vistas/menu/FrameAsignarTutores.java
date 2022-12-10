@@ -1,6 +1,7 @@
 package com.vistas.menu;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -91,8 +93,7 @@ public class FrameAsignarTutores extends JFrame {
 
 		JScrollPane scrollPaneTutoresAsignados = new JScrollPane();
 		scrollPaneTutoresAsignados.setBounds(10, 160, 201, 284);
-		scrollPaneTutoresAsignados.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		
 		contentPane.add(scrollPaneTutoresAsignados);
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre", "Documento", "ITR", "Area", "Id" }) {
@@ -106,6 +107,7 @@ public class FrameAsignarTutores extends JFrame {
 
 		tableAsignados = new RSTableMetro();
 		tableAsignados.setBackgoundHead(new Color(52, 152, 219));
+		tableAsignados.setIntercellSpacing(new Dimension(0, 0));
 
 		tableAsignados.addMouseListener(new MouseAdapter() {
 			@Override
@@ -121,6 +123,22 @@ public class FrameAsignarTutores extends JFrame {
 		});
 		tableAsignados.setModel(modeloAsignados);
 		tableAsignados.removeColumn(tableAsignados.getColumnModel().getColumn(4));
+		tableAsignados.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tableAsignados.getColumnModel().getColumn(0).setMinWidth(80);
+
+		tableAsignados.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tableAsignados.getColumnModel().getColumn(1).setMinWidth(80);
+
+		tableAsignados.getColumnModel().getColumn(2).setPreferredWidth(80);
+		tableAsignados.getColumnModel().getColumn(2).setMinWidth(80);
+
+		tableAsignados.getColumnModel().getColumn(3).setPreferredWidth(80);
+		tableAsignados.getColumnModel().getColumn(3).setMinWidth(80);
+		tableAsignados.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+
+
+		
 
 		scrollPaneTutoresAsignados.setViewportView(tableAsignados);
 
@@ -149,6 +167,23 @@ public class FrameAsignarTutores extends JFrame {
 		tableNoAsignados = new RSTableMetro();
 		tableNoAsignados.setBackgoundHead(new Color(52, 152, 219));
 
+		tableNoAsignados.setModel(modeloNoAsignados);	
+		tableNoAsignados.removeColumn(tableNoAsignados.getColumnModel().getColumn(4));
+
+		tableNoAsignados.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tableNoAsignados.getColumnModel().getColumn(0).setMinWidth(80);
+
+		tableNoAsignados.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tableNoAsignados.getColumnModel().getColumn(1).setMinWidth(80);
+
+		tableNoAsignados.getColumnModel().getColumn(2).setPreferredWidth(80);
+		tableNoAsignados.getColumnModel().getColumn(2).setMinWidth(80);
+
+		tableNoAsignados.getColumnModel().getColumn(3).setPreferredWidth(80);
+		tableNoAsignados.getColumnModel().getColumn(3).setMinWidth(80);
+		
+		tableNoAsignados.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
 		tableNoAsignados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -162,7 +197,6 @@ public class FrameAsignarTutores extends JFrame {
 			}
 		});
 		tableNoAsignados.setModel(modeloNoAsignados);
-		tableNoAsignados.removeColumn(tableNoAsignados.getColumnModel().getColumn(4));
 
 		scrollPanelTutoresNoAsignados.setViewportView(tableNoAsignados);
 

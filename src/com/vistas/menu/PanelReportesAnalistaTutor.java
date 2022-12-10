@@ -194,6 +194,9 @@ public class PanelReportesAnalistaTutor extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					if(tableMetro.getSelectedRow()==-1) {
+						throw new Exception("Debe seleccionar un estudiante para poder visualizar su escolaridad");
+					}
 					escolaridadEstudiante();
 				}catch(Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);

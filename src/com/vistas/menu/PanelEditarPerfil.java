@@ -1,34 +1,33 @@
 package com.vistas.menu;
 
-import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import rojeru_san.rsfield.RSTextFull;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.controlador.DAOGeneral;
 import com.entities.Departamento;
 import com.entities.Estudiante;
+import com.entities.Genero;
 import com.entities.ITR;
 import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exception.ServicesException;
 
-import rojeru_san.rsdate.RSDateChooser;
-import rojerusan.RSComboBox;
-import java.awt.Color;
-import rojeru_san.rsfield.RSPassword;
 import rojeru_san.complementos.RSButtonHover;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.awt.event.ActionEvent;
-import rojeru_san.rsdate.RSYearDate;
+import rojeru_san.rsdate.RSDateChooser;
+import rojeru_san.rsfield.RSPassword;
+import rojeru_san.rsfield.RSTextFull;
 import rojeru_san.rslabel.RSLabelImage;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
+import rojerusan.RSComboBox;
 
 public class PanelEditarPerfil extends JPanel {
 	
@@ -39,11 +38,11 @@ public class PanelEditarPerfil extends JPanel {
 	public PanelEditarPerfilExtra panelDinamicoEditarPerfilPorTipoUsuarios;
 	private PanelMenu panelEstudiante = new PanelMenu();
 
-	DefaultComboBoxModel modeloDep = new DefaultComboBoxModel();;
+	DefaultComboBoxModel modeloDep = new DefaultComboBoxModel();
 	RSComboBox comboBoxITR;
 	RSComboBox comboBoxDepartamento;
-	DefaultComboBoxModel modeloITR = new DefaultComboBoxModel();;
-
+	DefaultComboBoxModel modeloITR = new DefaultComboBoxModel();
+	DefaultComboBoxModel modeloGenero;
 	
 	public PanelEditarPerfil() {
 		setBounds(245, 0, 700, 725);
@@ -210,6 +209,21 @@ public class PanelEditarPerfil extends JPanel {
 		lblITR.setBounds(12, 417, 84, 14);
 		add(lblITR);
 
+		modeloGenero=new DefaultComboBoxModel();
+		RSComboBox comboBoxGenero = new RSComboBox();
+		comboBoxGenero.setModel(modeloGenero);
+		comboBoxGenero.setColorFondo(new Color(52, 152, 219));
+		comboBoxGenero.setColorBoton(Color.WHITE);
+		comboBoxGenero.setBounds(445, 403, 250, 42);
+		add(comboBoxGenero);
+		
+		JLabel lblGenero = new JLabel("Genero *");
+		lblGenero.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblGenero.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblGenero.setBounds(356, 417, 84, 14);
+		add(lblGenero);
+		
+		
 		comboBoxITR = new RSComboBox();
 		comboBoxITR.setColorBoton(Color.WHITE);
 		comboBoxITR.setModel(modeloITR);
@@ -223,7 +237,7 @@ public class PanelEditarPerfil extends JPanel {
 
 		comboBoxITR.setSelectedItem(Menu.getUsuario().getItr().getNombre());
 		comboBoxDepartamento.setSelectedItem(Menu.getUsuario().getDepartamento().getNombre());
-
+		comboBoxGenero.setSelectedItem(Menu.getUsuario().getGenero().getNombre());
 		
 
 		if (Menu.getUsuario() instanceof Estudiante) {
@@ -376,7 +390,7 @@ public class PanelEditarPerfil extends JPanel {
 							throw new Exception("Fecha inválida, introduzca una fecha menor a la actual.");
 						}
 
-						usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorId((long) 1));
+						usuarioMod.setGenero(DAOGeneral.generoRemote.buscarGeneroPorNombre(comboBoxGenero.getSelectedItem().toString()));
 
 						String valorCBITRString = comboBoxITR.getSelectedItem().toString();
 
@@ -458,6 +472,8 @@ public class PanelEditarPerfil extends JPanel {
 		labelImage_1.setIcon(new ImageIcon(PanelEditarPerfil.class.getResource("/com/vistas/img/UTEC.png")));
 		labelImage_1.setBounds(646, 11, 51, 53);
 		add(labelImage_1);
+		
+		
 
 	}
 
@@ -465,6 +481,7 @@ public class PanelEditarPerfil extends JPanel {
 		try {
 			cargarComboBoxDepartamento();
 			cargarComboBoxITR();
+			cargarComboBoxGenero();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -486,6 +503,14 @@ public class PanelEditarPerfil extends JPanel {
 			modeloITR.addElement(itr.getNombre());
 		}
 	}
+	
+	public void cargarComboBoxGenero() throws ServicesException {
+		modeloGenero.removeAllElements();
+		modeloGenero.addElement("");
+		for (Genero g : DAOGeneral.generoRemote.obtenerGeneros()) {
+			modeloGenero.addElement(g.getNombre());
+		}
+	}
 
 	// si usa un numero que no sea entre 0 y 9
 	// se te va a romper porque la parte "d+" solo trabaja
@@ -494,5 +519,4 @@ public class PanelEditarPerfil extends JPanel {
 	public static boolean esNumerico(String str) {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}
-
 }

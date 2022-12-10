@@ -39,6 +39,8 @@ import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rslabel.RSLabelImage;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelGestionUsuarios extends JPanel {
 
@@ -52,6 +54,7 @@ public class PanelGestionUsuarios extends JPanel {
 	DefaultComboBoxModel modeloEstado;
 	DefaultComboBoxModel modeloTipoUsuario;
 	DefaultComboBoxModel modeloGeneracion;
+	RSComboBox comboEstado;
 
 	/**
 	 * Create the panel.
@@ -99,7 +102,7 @@ public class PanelGestionUsuarios extends JPanel {
 				new String[] { "Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "C\u00E9dula",
 						"Fecha de Nacimiento", "Tel\u00E9fono", "Localidad", "Departamento", "Email Personal",
 						"Email UTEC", "ITR", "Tipo Usuario", "Generaci\u00F3n Estudiante", "\u00C1rea Tutor",
-						"Rol Tutor", "Estado","Id" }){
+						"Rol Tutor", "Estado", "Id" }) {
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -138,7 +141,7 @@ public class PanelGestionUsuarios extends JPanel {
 		tableMetro.getColumnModel().getColumn(16).setPreferredWidth(80);
 		tableMetro.getColumnModel().getColumn(16).setMinWidth(80);
 		scrollPane.setViewportView(tableMetro);
-		
+
 		tableMetro.removeColumn(tableMetro.getColumnModel().getColumn(17));
 
 		RSComboBox comboITR = new RSComboBox();
@@ -155,7 +158,7 @@ public class PanelGestionUsuarios extends JPanel {
 		lblNewLabel.setBounds(10, 96, 45, 13);
 		add(lblNewLabel);
 
-		RSComboBox comboEstado = new RSComboBox();
+		comboEstado = new RSComboBox();
 		comboEstado.setColorFondo(new Color(52, 152, 219));
 		comboEstado.setDisabledIdex("");
 
@@ -217,14 +220,17 @@ public class PanelGestionUsuarios extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					listaFiltro = new ArrayList<>();
-					if(comboEstado.getSelectedItem().toString()=="Activo") {
-						listaFiltro=(ArrayList<Usuario>) filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
-					}else if(comboEstado.getSelectedItem().toString()=="Inactivo"){
-						listaFiltro=(ArrayList<Usuario>) filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
-					}else if(comboEstado.getSelectedItem().toString()=="Sin validar"){
-						listaFiltro=(ArrayList<Usuario>) filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
-					}else if(comboEstado.getSelectedItem().toString()=="Todos"){
-						listaFiltro=(ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios();
+					if (comboEstado.getSelectedItem().toString() == "Activo") {
+						listaFiltro = (ArrayList<Usuario>) filtrarActivo(
+								(ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
+					} else if (comboEstado.getSelectedItem().toString() == "Inactivo") {
+						listaFiltro = (ArrayList<Usuario>) filtrarInactivo(
+								(ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
+					} else if (comboEstado.getSelectedItem().toString() == "Sin validar") {
+						listaFiltro = (ArrayList<Usuario>) filtrarSinValidar(
+								(ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios());
+					} else if (comboEstado.getSelectedItem().toString() == "Todos") {
+						listaFiltro = (ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios();
 					}
 					List<Usuario> listaFiltro2 = new ArrayList<>();
 					for (Iterator<Usuario> iter = listaFiltro.iterator(); iter.hasNext();) {
@@ -305,41 +311,41 @@ public class PanelGestionUsuarios extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					long idUsuarioSeleccionado=(long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
+					long idUsuarioSeleccionado = (long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
 					Usuario usuarioHa = DAOGeneral.usuarioRemote.buscarUsuarioPorId(idUsuarioSeleccionado);
 					if (usuarioHa.getActivo() && usuarioHa.getValidado()) {
 						throw new Exception("Usuario ya esta habilitado");
 					}
-					int input = JOptionPane.showConfirmDialog(getParent(),
-							"Desea habilitar al usuario seleccionado", "Aviso...",
-							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea habilitar al usuario seleccionado",
+							"Aviso...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					if (input == 0) {
 						usuarioHa.setActivo(true);
 						usuarioHa.setValidado(true);
 
 						DAOGeneral.usuarioRemote.modificarUsuario(usuarioHa);
-						if(comboEstado.getSelectedItem().toString()=="Activo") {
-							cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else if(comboEstado.getSelectedItem().toString()=="Inactivo") {
-							cargarDatosTabla(filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else if(comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")){
-							cargarDatosTabla(filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else{
+						if (comboEstado.getSelectedItem().toString() == "Activo") {
+							cargarDatosTabla(
+									filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else if (comboEstado.getSelectedItem().toString() == "Inactivo") {
+							cargarDatosTabla(
+									filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else if (comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")) {
+							cargarDatosTabla(
+									filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else {
 							cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 						}
-						
-						
+
 						setCursor(new Cursor(Cursor.WAIT_CURSOR));
-						EmailSender email=new EmailSender();
+						EmailSender email = new EmailSender();
 						email.setupServerProperties();
 						email.draftEmail(usuarioHa);
 						email.sendEmail();
-						
+
 						JOptionPane.showMessageDialog(null, "Se habilito correctamente el usuario", "Aviso...",
 								JOptionPane.INFORMATION_MESSAGE);
 						setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
-						
 					}
 				} catch (Exception m) {
 					JOptionPane.showMessageDialog(null, m.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -356,31 +362,33 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrEliminarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				long idUsuarioSeleccionado=(long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
+				long idUsuarioSeleccionado = (long) modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17);
 
 				try {
 					Usuario usuarioRm = DAOGeneral.usuarioRemote.buscarUsuarioPorId(idUsuarioSeleccionado);
-					if(!usuarioRm.getActivo()) {
+					if (!usuarioRm.getActivo()) {
 						throw new Exception("El usuario seleccionado ya esta incativo");
 					}
-					int input = JOptionPane.showConfirmDialog(getParent(),
-							"Desea inhabilitar al usuario seleccionado", "Aviso...",
-							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					int input = JOptionPane.showConfirmDialog(getParent(), "Desea inhabilitar al usuario seleccionado",
+							"Aviso...", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					if (input == 0) {
 						usuarioRm.setActivo(false);
 						DAOGeneral.usuarioRemote.modificarUsuario(usuarioRm);
-						JOptionPane.showMessageDialog(null, "Se realizo una baja logica del usuario seleccionado", "Aviso",
-								JOptionPane.INFORMATION_MESSAGE);
-						if(comboEstado.getSelectedItem().toString()=="Activo") {
-							cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else if(comboEstado.getSelectedItem().toString()=="Inactivo") {
-							cargarDatosTabla(filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else if(comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")){
-							cargarDatosTabla(filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
-						}else{
+						JOptionPane.showMessageDialog(null, "Se realizo una baja logica del usuario seleccionado",
+								"Aviso", JOptionPane.INFORMATION_MESSAGE);
+						if (comboEstado.getSelectedItem().toString() == "Activo") {
+							cargarDatosTabla(
+									filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else if (comboEstado.getSelectedItem().toString() == "Inactivo") {
+							cargarDatosTabla(
+									filtrarInactivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else if (comboEstado.getSelectedItem().toString().equalsIgnoreCase("Sin validar")) {
+							cargarDatosTabla(
+									filtrarSinValidar((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+						} else {
 							cargarDatosTabla(DAOGeneral.usuarioRemote.obtenerUsuarios());
 						}
-						
+
 					}
 				} catch (Exception b) {
 					JOptionPane.showMessageDialog(null, b.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
@@ -424,8 +432,9 @@ public class PanelGestionUsuarios extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					
-					modificarUsuario(Long.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
+
+					modificarUsuario(
+							Long.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
 				} catch (ServicesException e1) {
 					e1.printStackTrace();
 				}
@@ -438,12 +447,37 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrModificarUsuario.setBounds(585, 267, 108, 33);
 		add(btnhvrModificarUsuario);
 
+		RSButtonHover btnhvrBorrarFiltro = new RSButtonHover();
+		btnhvrBorrarFiltro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					comboEstado.setSelectedIndex(0);
+					comboGeneracion.setSelectedIndex(0);
+					comboTipoUsuario.setSelectedIndex(0);
+					comboITR.setSelectedIndex(0);
+
+					cargarDatosTabla(filtrarActivo((ArrayList<Usuario>) DAOGeneral.usuarioRemote.obtenerUsuarios()));
+				} catch (ServicesException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		btnhvrBorrarFiltro.setText("Borrar Filtro");
+		btnhvrBorrarFiltro.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrBorrarFiltro.setBackground(new Color(52, 152, 219));
+		btnhvrBorrarFiltro.setBounds(582, 151, 108, 33);
+		add(btnhvrBorrarFiltro);
+
 		tableMetro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 2 && tableMetro.getSelectedRow() != -1) {
 					try {
-						modificarUsuario(Long.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
+						modificarUsuario(Long
+								.parseLong(modeloTablaMetro.getValueAt(tableMetro.getSelectedRow(), 17).toString()));
 					} catch (ServicesException e1) {
 						e1.printStackTrace();
 					}
@@ -499,9 +533,9 @@ public class PanelGestionUsuarios extends JPanel {
 			}
 			if (u.getActivo() && u.getValidado()) {
 				v.addElement("Activo");
-			} else if(u.getActivo() && !u.getValidado()){
+			} else if (u.getActivo() && !u.getValidado()) {
 				v.addElement("Sin validar");
-			}else {
+			} else {
 				v.addElement("Inactivo");
 			}
 			v.addElement(u.getId());
@@ -523,44 +557,40 @@ public class PanelGestionUsuarios extends JPanel {
 	public static PanelGestionUsuarios getInstancia() {
 		return instancia;
 	}
-	
-	public List<Usuario> filtrarActivo(ArrayList<Usuario>usuarios){
-		ArrayList<Usuario>listaFiltro = new ArrayList<>();
-		for (Iterator<Usuario> iter = usuarios.iterator(); iter
-				.hasNext();) {
+
+	public List<Usuario> filtrarActivo(ArrayList<Usuario> usuarios) {
+		ArrayList<Usuario> listaFiltro = new ArrayList<>();
+		for (Iterator<Usuario> iter = usuarios.iterator(); iter.hasNext();) {
 			Usuario u = iter.next();
-			if(u.getActivo() && u.getValidado()) {
+			if (u.getActivo() && u.getValidado()) {
 				listaFiltro.add(u);
 			}
 		}
 		return listaFiltro;
 	}
-	
-	public List<Usuario> filtrarInactivo(ArrayList<Usuario>usuarios){
-		ArrayList<Usuario>listaFiltro = new ArrayList<>();
-		for (Iterator<Usuario> iter = usuarios.iterator(); iter
-				.hasNext();) {
+
+	public List<Usuario> filtrarInactivo(ArrayList<Usuario> usuarios) {
+		ArrayList<Usuario> listaFiltro = new ArrayList<>();
+		for (Iterator<Usuario> iter = usuarios.iterator(); iter.hasNext();) {
 			Usuario u = iter.next();
-			if(!u.getActivo()) {
+			if (!u.getActivo()) {
 				listaFiltro.add(u);
 			}
 		}
 		return listaFiltro;
 	}
-	
-	public List<Usuario> filtrarSinValidar(ArrayList<Usuario>usuarios){
-		ArrayList<Usuario>listaFiltro = new ArrayList<>();
-		for (Iterator<Usuario> iter = usuarios.iterator(); iter
-				.hasNext();) {
+
+	public List<Usuario> filtrarSinValidar(ArrayList<Usuario> usuarios) {
+		ArrayList<Usuario> listaFiltro = new ArrayList<>();
+		for (Iterator<Usuario> iter = usuarios.iterator(); iter.hasNext();) {
 			Usuario u = iter.next();
-			if((u.getActivo() && !u.getValidado())) {
+			if ((u.getActivo() && !u.getValidado())) {
 				listaFiltro.add(u);
 			}
 		}
 		return listaFiltro;
 	}
-	
-	
+
 	private void modificarUsuario(long id) throws ServicesException {
 		Usuario usuarioMod = DAOGeneral.usuarioRemote.buscarUsuarioPorId(id);
 		PanelModificarDatosUsuarios.usuarioLogeado = usuarioMod;
