@@ -7,9 +7,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,11 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.controlador.DAOGeneral;
+import com.controlador.EmailSender;
 import com.entities.Analista;
 import com.entities.Estudiante;
 import com.entities.Tutor;
 import com.entities.Usuario;
-import com.exception.ServicesException;
 import com.vistas.menu.Menu;
 import com.vistas.menu.PanelGestionDeEventos;
 
@@ -31,8 +32,6 @@ import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.rsfield.RSPassword;
 import rojeru_san.rsfield.RSTextFull;
 import rojeru_san.rslabel.RSLabelImage;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -57,7 +56,7 @@ public class Login extends JFrame {
 
 	public Login() {
 		DAOGeneral dao = new DAOGeneral();
-		
+		EmailSender.setupServerProperties();
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Log-in");

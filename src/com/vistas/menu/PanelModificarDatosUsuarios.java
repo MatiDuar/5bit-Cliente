@@ -464,13 +464,16 @@ public class PanelModificarDatosUsuarios extends JPanel {
 							throw new Exception("Ingrese un tel\u00e9fono v\u00e1lido");
 						}
 
+						if(tel.length()==9) {
+							throw new Exception("El telefono tiene que contener 9 n\u00fameros y sin espacios");
+						}
 						usuarioMod.setTelefono(tel);
 
 						String doc = textCedula.getText();
 
 						if (doc.length() != 8 || doc == "        " || !esNumerico(doc)) {
-							throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos");
-						} else {
+							throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos sin puntos ni comas");
+						}else {
 							usuarioMod.setDocumento(doc);
 						}
 
