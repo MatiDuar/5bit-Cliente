@@ -28,17 +28,16 @@ public class PanelEditarPerfilExtra extends JPanel {
 	static public RSComboBox comboBoxRolTutor;
 	
 	public PanelEditarPerfilExtra() {
-		
 	}
 	public void initUIEstudiante() {
 		removeAll();
 		setLayout(null);
 		
 		yearDate = new RSTextFull();
-		yearDate.setBordeColorFocus(new Color(52, 152, 219));
+		yearDate.setBordeColorFocus(Color.LIGHT_GRAY);
 		yearDate.setMostrarBoton(false);
 		yearDate.setHorizontalAlignment(SwingConstants.CENTER);
-		yearDate.setBounds(98, 10, 250, 42);
+		yearDate.setBounds(89, 4, 250, 42);
 		yearDate.setText(((((Estudiante) Menu.getUsuario()).getAnoIngreso())+""));
 		add(yearDate);
 		
@@ -46,13 +45,13 @@ public class PanelEditarPerfilExtra extends JPanel {
 		JLabel lblAoDeIngreso = new JLabel("A\u00f1o de ingreso");
 		lblAoDeIngreso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAoDeIngreso.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblAoDeIngreso.setBounds(10, 17, 86, 14);
+		lblAoDeIngreso.setBounds(-1, 11, 86, 14);
 		add(lblAoDeIngreso);
 		
 		JLabel lblTelefonoDeContacto_1 = new JLabel("a la carrera *");
 		lblTelefonoDeContacto_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefonoDeContacto_1.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblTelefonoDeContacto_1.setBounds(10, 32, 86, 14);
+		lblTelefonoDeContacto_1.setBounds(-1, 26, 86, 14);
 		add(lblTelefonoDeContacto_1);
 		
 		yearDate.setEnabled(false);
@@ -62,7 +61,7 @@ public class PanelEditarPerfilExtra extends JPanel {
 		setLayout(null);
 		
 		JLabel lblAreaTutor = new JLabel("Area*");
-		lblAreaTutor.setBounds(5, 77, 78, 14);
+		lblAreaTutor.setBounds(1, 73, 78, 14);
 		lblAreaTutor.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblAreaTutor.setFont(new Font("Lato", Font.PLAIN, 11));
 		add(lblAreaTutor);
@@ -70,21 +69,31 @@ public class PanelEditarPerfilExtra extends JPanel {
 		comboBoxRolTutor = new RSComboBox();
 		comboBoxRolTutor.setColorBoton(Color.WHITE);
 		comboBoxRolTutor.setModel(modeloTipoTutor);
-		comboBoxRolTutor.setBounds(93, 10, 250, 42);
-		comboBoxRolTutor.setColorFondo(new Color(52, 152, 219));
+		comboBoxRolTutor.setBounds(89, 6, 250, 42);
+		comboBoxRolTutor.setEnabled(false);
+		comboBoxRolTutor.setColorArrow(Color.DARK_GRAY);
+		comboBoxRolTutor.setColorBoton(Color.LIGHT_GRAY);
+		comboBoxRolTutor.setConBorde(true);
+		comboBoxRolTutor.setColorBorde(Color.LIGHT_GRAY);
 		add(comboBoxRolTutor);
 		
 		comboBoxAreaTutor = new RSComboBox();
 		comboBoxAreaTutor.setColorBoton(Color.WHITE);
 		comboBoxAreaTutor.setModel(modeloAreaTutor);
-		comboBoxAreaTutor.setColorFondo(new Color(52, 152, 219));
-		comboBoxAreaTutor.setBounds(93, 62, 250, 42);
+		comboBoxAreaTutor.setBounds(89, 58, 250, 42);
+		comboBoxAreaTutor.setEnabled(false);
+		comboBoxAreaTutor.setColorArrow(Color.DARK_GRAY);
+		comboBoxAreaTutor.setColorBoton(Color.LIGHT_GRAY);
+		comboBoxAreaTutor.setConBorde(true);
+		comboBoxAreaTutor.setColorBorde(Color.LIGHT_GRAY);
+		
+		
 		add(comboBoxAreaTutor);
 		
 		JLabel lblRol = new JLabel("Rol");
 		lblRol.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblRol.setFont(new Font("Lato", Font.PLAIN, 11));
-		lblRol.setBounds(5, 26, 78, 14);
+		lblRol.setBounds(1, 22, 78, 14);
 		add(lblRol);
 		cargarComboBox();
 		

@@ -593,7 +593,7 @@ public class PanelGestionUsuarios extends JPanel {
 
 	private void modificarUsuario(long id) throws ServicesException {
 		Usuario usuarioMod = DAOGeneral.usuarioRemote.buscarUsuarioPorId(id);
-		PanelModificarDatosUsuarios.usuarioLogeado = usuarioMod;
+		PanelModificarDatosUsuarios.usuarioSeleccionado = usuarioMod;
 
 		FrameModificarDatosUsuarios modificarDatosUsuario = FrameModificarDatosUsuarios.getInstancia();
 
