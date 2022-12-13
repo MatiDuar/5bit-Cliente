@@ -611,10 +611,6 @@ public class PanelModificarDatosUsuarios extends JPanel {
 
 	}
 
-	// si usa un numero que no sea entre 0 y 9
-	// se te va a romper porque la parte "d+" solo trabaja
-	// con numeros arabicos.
-
 	public static boolean esNumerico(String str) {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}

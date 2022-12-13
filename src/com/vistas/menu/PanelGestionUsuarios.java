@@ -145,6 +145,7 @@ public class PanelGestionUsuarios extends JPanel {
 		tableMetro.removeColumn(tableMetro.getColumnModel().getColumn(17));
 
 		RSComboBox comboITR = new RSComboBox();
+		comboITR.setColorBoton(Color.WHITE);
 		comboITR.setColorFondo(new Color(52, 152, 219));
 		comboITR.setDisabledIdex("");
 
@@ -159,6 +160,7 @@ public class PanelGestionUsuarios extends JPanel {
 		add(lblNewLabel);
 
 		comboEstado = new RSComboBox();
+		comboEstado.setColorBoton(Color.WHITE);
 		comboEstado.setColorFondo(new Color(52, 152, 219));
 		comboEstado.setDisabledIdex("");
 
@@ -178,10 +180,12 @@ public class PanelGestionUsuarios extends JPanel {
 		add(lblEstado);
 
 		RSComboBox comboGeneracion = new RSComboBox();
+		comboGeneracion.setColorBoton(Color.WHITE);
 		comboGeneracion.setColorFondo(new Color(52, 152, 219));
 		comboGeneracion.setDisabledIdex("");
 
 		RSComboBox comboTipoUsuario = new RSComboBox();
+		comboTipoUsuario.setColorBoton(Color.WHITE);
 		comboTipoUsuario.setColorFondo(new Color(52, 152, 219));
 		comboTipoUsuario.setDisabledIdex("");
 
@@ -287,7 +291,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrFiltrar.setText("Filtrar");
 		btnhvrFiltrar.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
-		btnhvrFiltrar.setBounds(582, 113, 108, 33);
+		btnhvrFiltrar.setBounds(582, 113, 112, 33);
 		add(btnhvrFiltrar);
 
 		modeloGeneracion = new DefaultComboBoxModel();
@@ -355,7 +359,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrHabilitarUsuario.setText("Validar");
 		btnhvrHabilitarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrHabilitarUsuario.setBackground(new Color(52, 152, 219));
-		btnhvrHabilitarUsuario.setBounds(585, 219, 108, 33);
+		btnhvrHabilitarUsuario.setBounds(585, 219, 112, 33);
 		add(btnhvrHabilitarUsuario);
 
 		RSButtonHover btnhvrEliminarUsuario = new RSButtonHover();
@@ -399,7 +403,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrEliminarUsuario.setText("Eliminar");
 		btnhvrEliminarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrEliminarUsuario.setBackground(new Color(52, 152, 219));
-		btnhvrEliminarUsuario.setBounds(585, 315, 108, 33);
+		btnhvrEliminarUsuario.setBounds(585, 315, 112, 33);
 		add(btnhvrEliminarUsuario);
 
 		RSButtonHover btnhvrMantenimientoListaItr = new RSButtonHover();
@@ -413,7 +417,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrMantenimientoListaItr.setText("Lista ITR");
 		btnhvrMantenimientoListaItr.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrMantenimientoListaItr.setBackground(new Color(52, 152, 219));
-		btnhvrMantenimientoListaItr.setBounds(582, 634, 108, 33);
+		btnhvrMantenimientoListaItr.setBounds(582, 634, 112, 33);
 		add(btnhvrMantenimientoListaItr);
 
 		JLabel lblUsuarios = new JLabel("Acciones Usuarios");
@@ -444,7 +448,7 @@ public class PanelGestionUsuarios extends JPanel {
 		btnhvrModificarUsuario.setText("Modificar");
 		btnhvrModificarUsuario.setFont(new Font("Lato Black", Font.BOLD, 14));
 		btnhvrModificarUsuario.setBackground(new Color(52, 152, 219));
-		btnhvrModificarUsuario.setBounds(585, 267, 108, 33);
+		btnhvrModificarUsuario.setBounds(585, 267, 112, 33);
 		add(btnhvrModificarUsuario);
 
 		RSButtonHover btnhvrBorrarFiltro = new RSButtonHover();
@@ -466,9 +470,9 @@ public class PanelGestionUsuarios extends JPanel {
 		});
 
 		btnhvrBorrarFiltro.setText("Borrar Filtro");
-		btnhvrBorrarFiltro.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrBorrarFiltro.setFont(new Font("Lato Black", Font.BOLD, 13));
 		btnhvrBorrarFiltro.setBackground(new Color(52, 152, 219));
-		btnhvrBorrarFiltro.setBounds(582, 151, 108, 33);
+		btnhvrBorrarFiltro.setBounds(582, 151, 112, 33);
 		add(btnhvrBorrarFiltro);
 
 		tableMetro.addMouseListener(new MouseAdapter() {

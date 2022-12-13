@@ -38,6 +38,8 @@ import rojeru_san.complementos.RSButtonHover;
 import rojeru_san.efectos.ValoresEnum.ICONS;
 import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
+import rojeru_san.rslabel.RSLabelImage;
+import javax.swing.ImageIcon;
 
 public class FrameAsistenciaAEvento extends JFrame {
 
@@ -73,7 +75,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 
 	public FrameAsistenciaAEvento() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 586, 657);
+		setBounds(100, 100, 558, 657);
 		setLocationRelativeTo(null);
 		setTitle("Registro de asistencia");
 		setResizable(false);
@@ -87,14 +89,14 @@ public class FrameAsistenciaAEvento extends JFrame {
 
 		JLabel lblTitulo = new JLabel("ASISTENCIA A EVENTO");
 		lblTitulo.setForeground(new Color(58, 69, 75));
-		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblTitulo.setBounds(161, 10, 281, 27);
+		lblTitulo.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblTitulo.setBounds(162, 10, 251, 27);
 		contentPane.add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 163, 521, 393);
+		scrollPane.setBounds(10, 163, 520, 393);
 		contentPane.add(scrollPane);
 
 		table = new RSTableMetro();
@@ -205,7 +207,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(106, 571, 108, 33);
+		btnhvrCancelar.setBounds(118, 571, 108, 33);
 		contentPane.add(btnhvrCancelar);
 
 		RSButtonHover btnhvrGuardar = new RSButtonHover();
@@ -237,7 +239,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(321, 571, 108, 33);
+		btnhvrGuardar.setBounds(344, 571, 108, 33);
 		contentPane.add(btnhvrGuardar);
 
 		textBuscar = new RSTextFieldIconUno();
@@ -281,6 +283,11 @@ public class FrameAsistenciaAEvento extends JFrame {
 		btnhvrFiltrar.setBackground(new Color(52, 152, 219));
 		btnhvrFiltrar.setBounds(423, 93, 108, 33);
 		contentPane.add(btnhvrFiltrar);
+		
+		RSLabelImage labelImage = new RSLabelImage();
+		labelImage.setIcon(new ImageIcon(FrameAsistenciaAEvento.class.getResource("/com/vistas/img/UTEC.png")));
+		labelImage.setBounds(479, 10, 51, 53);
+		contentPane.add(labelImage);
 
 		try {
 			cargarConvocados();

@@ -38,6 +38,7 @@ import rojerusan.RSComboBox;
 import rojerusan.RSTableMetro;
 import javax.swing.JTextField;
 import rojerusan.RSTableMetro.SELECTION_ROWS;
+import rojeru_san.efectos.ValoresEnum.ICONS;
 
 public class FrameConvocatoriaEvento extends JFrame {
 
@@ -83,7 +84,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		setResizable(false);
 
 		setTitle("Convocatoria a Evento");
-		setBounds(100, 100, 711, 762);
+		setBounds(100, 100, 718, 762);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,13 +92,13 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 		JLabel lblTitulo = new JLabel("CONVOCATORIA DE EVENTO");
 		lblTitulo.setForeground(new Color(58, 69, 75));
-		lblTitulo.setFont(new Font("Dialog", Font.PLAIN, 20));
+		lblTitulo.setFont(new Font("Lato Black", Font.PLAIN, 20));
 		lblTitulo.setBounds(207, 10, 360, 27);
 		contentPane.add(lblTitulo);
 
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(Login.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(627, 10, 50, 50);
+		labelImage.setBounds(639, 10, 50, 50);
 		contentPane.add(labelImage);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -212,9 +213,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 			}
 		});
 		btnhvrFiltrarN.setText("Filtrar");
-		btnhvrFiltrarN.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrFiltrarN.setFont(new Font("Lato Black", Font.BOLD, 13));
 		btnhvrFiltrarN.setBackground(new Color(52, 152, 219));
-		btnhvrFiltrarN.setBounds(569, 73, 108, 33);
+		btnhvrFiltrarN.setBounds(585, 74, 112, 33);
 		contentPane.add(btnhvrFiltrarN);
 
 		JLabel lblGeneracionEstudiante = new JLabel("Generaci\u00f3n");
@@ -270,9 +271,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 		});
 
 		btnhvrAgregar.setText("Agregar");
-		btnhvrAgregar.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrAgregar.setFont(new Font("Lato Black", Font.BOLD, 13));
 		btnhvrAgregar.setBackground(new Color(52, 152, 219));
-		btnhvrAgregar.setBounds(585, 222, 108, 33);
+		btnhvrAgregar.setBounds(585, 222, 112, 33);
 		contentPane.add(btnhvrAgregar);
 
 		RSButtonHover btnhvrQuitar = new RSButtonHover();
@@ -291,7 +292,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrQuitar.setText("Quitar");
 		btnhvrQuitar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrQuitar.setBackground(new Color(52, 152, 219));
-		btnhvrQuitar.setBounds(589, 533, 108, 33);
+		btnhvrQuitar.setBounds(585, 533, 112, 33);
 		contentPane.add(btnhvrQuitar);
 
 		tableAsignado.addMouseListener(new MouseAdapter() {
@@ -376,7 +377,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrGuardar.setText("Guardar");
 		btnhvrGuardar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrGuardar.setBackground(new Color(52, 152, 219));
-		btnhvrGuardar.setBounds(413, 669, 108, 33);
+		btnhvrGuardar.setBounds(432, 669, 108, 33);
 		contentPane.add(btnhvrGuardar);
 
 		RSButtonHover btnhvrCancelar = new RSButtonHover();
@@ -395,10 +396,11 @@ public class FrameConvocatoriaEvento extends JFrame {
 		btnhvrCancelar.setText("Cancelar");
 		btnhvrCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrCancelar.setBackground(new Color(52, 152, 219));
-		btnhvrCancelar.setBounds(164, 669, 108, 33);
+		btnhvrCancelar.setBounds(162, 669, 108, 33);
 		contentPane.add(btnhvrCancelar);
 
 		textBuscador = new RSTextFieldIconUno();
+		textBuscador.setIcons(ICONS.SEARCH);
 		textBuscador.setPlaceholder("Buscador...\r\n");
 		textBuscador.setBounds(10, 74, 228, 32);
 		contentPane.add(textBuscador);
@@ -428,9 +430,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 			}
 		});
 		btnhvrBorrarFiltro.setText("Borrar Filtro");
-		btnhvrBorrarFiltro.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnhvrBorrarFiltro.setFont(new Font("Lato Black", Font.BOLD, 13));
 		btnhvrBorrarFiltro.setBackground(new Color(52, 152, 219));
-		btnhvrBorrarFiltro.setBounds(589, 127, 96, 33);
+		btnhvrBorrarFiltro.setBounds(585, 144, 112, 33);
 		contentPane.add(btnhvrBorrarFiltro);
 
 		try {

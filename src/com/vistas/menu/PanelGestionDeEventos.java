@@ -80,7 +80,7 @@ public class PanelGestionDeEventos extends JPanel {
 
 		RSLabelImage labelImage_1 = new RSLabelImage();
 		labelImage_1.setIcon(new ImageIcon(PanelGestionDeEventos.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage_1.setBounds(646, 11, 51, 53);
+		labelImage_1.setBounds(639, 11, 51, 53);
 		add(labelImage_1);
 		modeloEstado = new DefaultComboBoxModel();
 

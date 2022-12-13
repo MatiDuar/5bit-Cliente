@@ -55,7 +55,7 @@ public class PanelReportesEstudiante extends JPanel {
 		
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(PanelGestionUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(642, 10, 51, 53);
+		labelImage.setBounds(639, 10, 51, 53);
 		add(labelImage);
 		
 		JLabel lblNewLabel = new JLabel("DATOS ESTUDIANTE");

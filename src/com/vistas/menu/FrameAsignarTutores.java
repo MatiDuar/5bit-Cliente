@@ -79,7 +79,7 @@ public class FrameAsignarTutores extends JFrame {
 		setResizable(false);
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/vistas/img/UTEC.png")));
-		setBounds(100, 100, 525, 564);
+		setBounds(100, 100, 665, 564);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -88,11 +88,11 @@ public class FrameAsignarTutores extends JFrame {
 		
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(PanelGestionUsuarios.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(439, 11, 51, 53);
+		labelImage.setBounds(589, 11, 51, 53);
 		contentPane.add(labelImage);
 
 		JScrollPane scrollPaneTutoresAsignados = new JScrollPane();
-		scrollPaneTutoresAsignados.setBounds(10, 160, 201, 284);
+		scrollPaneTutoresAsignados.setBounds(11, 160, 285, 284);
 		
 		contentPane.add(scrollPaneTutoresAsignados);
 		modeloAsignados = new DefaultTableModel(new Object[][] {},
@@ -143,16 +143,16 @@ public class FrameAsignarTutores extends JFrame {
 		scrollPaneTutoresAsignados.setViewportView(tableAsignados);
 
 		JLabel lblNewLabel = new JLabel("Tutores Asignados");
-		lblNewLabel.setBounds(22, 135, 165, 14);
+		lblNewLabel.setBounds(12, 138, 165, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblFuncionalidadesNoAsignadas = new JLabel("Tutores  No Asignadaos");
-		lblFuncionalidadesNoAsignadas.setBounds(310, 135, 180, 14);
+		lblFuncionalidadesNoAsignadas.setBounds(354, 139, 180, 14);
 		contentPane.add(lblFuncionalidadesNoAsignadas);
 
 		JScrollPane scrollPanelTutoresNoAsignados = new JScrollPane();
 		scrollPanelTutoresNoAsignados.setBackground(new Color(52, 152, 219));
-		scrollPanelTutoresNoAsignados.setBounds(298, 160, 201, 284);
+		scrollPanelTutoresNoAsignados.setBounds(354, 160, 285, 284);
 		contentPane.add(scrollPanelTutoresNoAsignados);
 
 		modeloNoAsignados = new DefaultTableModel(new Object[][] {},
@@ -202,8 +202,8 @@ public class FrameAsignarTutores extends JFrame {
 
 		JLabel lblNewLabel_2_1 = new JLabel("ASIGNAR TUTORES");
 		lblNewLabel_2_1.setForeground(new Color(58, 69, 75));
-		lblNewLabel_2_1.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNewLabel_2_1.setBounds(136, 11, 237, 27);
+		lblNewLabel_2_1.setFont(new Font("Lato Black", Font.PLAIN, 20));
+		lblNewLabel_2_1.setBounds(232, 11, 215, 27);
 		contentPane.add(lblNewLabel_2_1);
 
 		RSButtonHover btnGuardar = new RSButtonHover();
@@ -227,7 +227,7 @@ public class FrameAsignarTutores extends JFrame {
 		btnGuardar.setText("Guardar");
 		btnGuardar.setFont(new Font("Lato", Font.BOLD, 14));
 		btnGuardar.setBackground(new Color(52, 152, 219));
-		btnGuardar.setBounds(310, 481, 108, 33);
+		btnGuardar.setBounds(396, 481, 108, 33);
 		contentPane.add(btnGuardar);
 
 		RSButtonIconUno btnAgregarTutor = new RSButtonIconUno();
@@ -248,7 +248,7 @@ public class FrameAsignarTutores extends JFrame {
 		});
 		btnAgregarTutor.setIcons(ICONS.ARROW_BACK);
 		btnAgregarTutor.setBackground(new Color(52, 152, 219));
-		btnAgregarTutor.setBounds(234, 185, 40, 40);
+		btnAgregarTutor.setBounds(305, 185, 40, 40);
 		contentPane.add(btnAgregarTutor);
 
 		RSButtonIconUno btnSacarTutor = new RSButtonIconUno();
@@ -263,7 +263,7 @@ public class FrameAsignarTutores extends JFrame {
 			}
 		});
 		btnSacarTutor.setIcons(ICONS.ARROW_FORWARD);
-		btnSacarTutor.setBounds(234, 358, 40, 40);
+		btnSacarTutor.setBounds(305, 358, 40, 40);
 		btnSacarTutor.setBackground(new Color(52, 152, 219));
 		contentPane.add(btnSacarTutor);
 
@@ -271,14 +271,15 @@ public class FrameAsignarTutores extends JFrame {
 		btnCancelar.setText("Cancelar");
 		btnCancelar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnCancelar.setBackground(new Color(52, 152, 219));
-		btnCancelar.setBounds(103, 481, 108, 33);
+		btnCancelar.setBounds(144, 481, 108, 33);
 		contentPane.add(btnCancelar);
 
 		RSTextFull textBuscar = new RSTextFull();
+		textBuscar.setPlaceholder("Buscar ...");
 		textBuscar.setBordeColorFocus(new Color(52, 152, 219));
 		textBuscar.setText((String) null);
 		textBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textBuscar.setBounds(10, 82, 218, 33);
+		textBuscar.setBounds(10, 82, 287, 33);
 		contentPane.add(textBuscar);
 
 		modeloITR = new DefaultComboBoxModel();
@@ -287,7 +288,7 @@ public class FrameAsignarTutores extends JFrame {
 		comboBoxITR.setColorFondo(new Color(52, 152, 219));
 		comboBoxITR.setFont(new Font("Dialog", Font.BOLD, 12));
 		comboBoxITR.setModel(modeloITR);
-		comboBoxITR.setBounds(246, 82, 99, 33);
+		comboBoxITR.setBounds(311, 82, 99, 33);
 		contentPane.add(comboBoxITR);
 
 		modeloArea = new DefaultComboBoxModel();
@@ -296,10 +297,11 @@ public class FrameAsignarTutores extends JFrame {
 		comboBoxArea.setColorFondo(new Color(52, 152, 219));
 		comboBoxArea.setModel(modeloArea);
 		comboBoxArea.setFont(new Font("Dialog", Font.BOLD, 12));
-		comboBoxArea.setBounds(355, 82, 99, 33);
+		comboBoxArea.setBounds(420, 82, 99, 33);
 		contentPane.add(comboBoxArea);
 
 		RSButtonIconUno btnhvrBuscar = new RSButtonIconUno();
+		btnhvrBuscar.setText("Buscar");
 		btnhvrBuscar.setIcons(ICONS.SEARCH);
 		btnhvrBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -384,19 +386,19 @@ public class FrameAsignarTutores extends JFrame {
 		btnhvrBuscar.setSelectedIcon(new ImageIcon(FrameAsignarTutores.class.getResource("/necesario/ver2.png")));
 		btnhvrBuscar.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnhvrBuscar.setBackground(new Color(52, 152, 219));
-		btnhvrBuscar.setBounds(464, 81, 35, 33);
+		btnhvrBuscar.setBounds(529, 82, 108, 33);
 		contentPane.add(btnhvrBuscar);
 
 		JLabel lblItr = new JLabel("ITR");
 		lblItr.setHorizontalAlignment(SwingConstants.LEFT);
 		lblItr.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblItr.setBounds(246, 57, 71, 14);
+		lblItr.setBounds(311, 57, 71, 14);
 		contentPane.add(lblItr);
 
 		JLabel lblArea = new JLabel("Area");
 		lblArea.setHorizontalAlignment(SwingConstants.LEFT);
 		lblArea.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblArea.setBounds(355, 58, 71, 14);
+		lblArea.setBounds(420, 58, 71, 14);
 		contentPane.add(lblArea);
 
 		JLabel lblBuscador = new JLabel("Buscador");

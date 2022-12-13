@@ -59,7 +59,7 @@ public class PanelReportesAnalistaTutor extends JPanel {
 
 		RSLabelImage labelImage = new RSLabelImage();
 		labelImage.setIcon(new ImageIcon(PanelReportesAnalistaTutor.class.getResource("/com/vistas/img/UTEC.png")));
-		labelImage.setBounds(642, 10, 51, 53);
+		labelImage.setBounds(639, 10, 51, 53);
 		add(labelImage);
 
 		textBuscar = new RSTextFieldIconUno();
