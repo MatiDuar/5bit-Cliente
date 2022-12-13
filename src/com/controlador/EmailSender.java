@@ -22,13 +22,13 @@ public class EmailSender
 		//DRAFT AN EMAIL
 		//SEND EMAIL
 			
-		Session newSession = null;
+		static Session newSession = null;
 		MimeMessage mimeMessage = null;
 		
 		public static void main(String args[]) throws AddressException, MessagingException, IOException
 		{
 			EmailSender mail = new EmailSender();
-			mail.setupServerProperties();
+			setupServerProperties();
 			mail.draftEmail(null);
 			mail.sendEmail();
 		}
@@ -67,7 +67,7 @@ public class EmailSender
 			 return mimeMessage;
 		}
 
-		public void setupServerProperties() {
+		public static void setupServerProperties() {
 			Properties properties = System.getProperties();
 			properties.put("mail.smtp.port", "25");
 			properties.put("mail.smtp.auth", "true");

@@ -198,8 +198,8 @@ public class PanelRegistroPag extends JPanel {
 					
 					String doc = textdOCUMENTO.getText();
 				
-					if(doc.length()!=8 || doc == "        " || !esNumerico(doc)){
-						throw new Exception("Formato de documento invï¿½lido, debe contener 8 dï¿½gitos numericos");
+					if (doc.length() != 8 || doc == "        " || !esNumerico(doc)) {
+						throw new Exception("Formato de documento inválido, debe contener 8 dígitos numericos sin puntos ni comas");
 					}
 					
 					usuarioRegistro.setDocumento(doc);
@@ -278,7 +278,10 @@ public class PanelRegistroPag extends JPanel {
 					if(!esNumerico(tel)) {
 						throw new Exception("Ingrese un telÃ©fono vÃ¡lido");
 					}
-						
+
+					if(tel.length()==9) {
+						throw new Exception("El telefono tiene que contener 9 n\u00fameros y sin espacios");
+					}
 					usuarioRegistro.setTelefono(tel);
 					String contrasena=password.getText();
 					if (contrasena.length() > 50 || contrasena.length() < 8) {
