@@ -288,7 +288,9 @@ public class FrameNuevoEvento extends JFrame {
 							throw new Exception("El evento no puede ser registrado con una fecha anterior a la de hoy");
 						}
 						Timestamp dateInicio = new Timestamp(fechaInicio.getDatoFecha().getTime());
+						
 						String horaMinIncio[] = comboBoxHoraInicio.getSelectedItem().toString().split(":");
+						
 						dateInicio.setHours(Integer.parseInt(horaMinIncio[0]));
 						dateInicio.setMinutes(Integer.parseInt(horaMinIncio[1]));
 						eventoNuevo.setFechaInicio(dateInicio);
@@ -329,6 +331,7 @@ public class FrameNuevoEvento extends JFrame {
 						setVisible(false);
 					}
 				} catch (Exception e1) {
+					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);				}
 			}
 		});

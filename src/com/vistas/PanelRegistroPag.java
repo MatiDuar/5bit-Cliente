@@ -279,7 +279,7 @@ public class PanelRegistroPag extends JPanel {
 						throw new Exception("Ingrese un teléfono válido");
 					}
 
-					if(tel.length()==9) {
+					if(tel.length()!=9) {
 						throw new Exception("El telefono tiene que contener 9 n\u00fameros y sin espacios");
 					}
 					usuarioRegistro.setTelefono(tel);

@@ -61,6 +61,9 @@ public class FrameConvocatoriaEvento extends JFrame {
 	private ArrayList<Estudiante> noAsignados;
 
 	private RSTextFieldIconUno textBuscador;
+	
+	private RSComboBox comboBoxITRN;
+	private RSComboBox comboBoxGenN;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -123,15 +126,18 @@ public class FrameConvocatoriaEvento extends JFrame {
 		scrollPane.setViewportView(tableNoAsignado);
 
 		modeloITRN = new DefaultComboBoxModel();
-		RSComboBox comboBoxITRN = new RSComboBox();
+		 comboBoxITRN = new RSComboBox();
 		comboBoxITRN.setColorBoton(Color.WHITE);
+		comboBoxITRN.setDisabledIdex("");
 		comboBoxITRN.setColorFondo(new Color(52, 152, 219));
 		comboBoxITRN.setModel(modeloITRN);
 		comboBoxITRN.setBounds(266, 74, 121, 32);
 		contentPane.add(comboBoxITRN);
 
 		modeloGenN = new DefaultComboBoxModel();
-		RSComboBox comboBoxGenN = new RSComboBox();
+		comboBoxGenN = new RSComboBox();
+		comboBoxGenN.setDisabledIdex("");
+
 		comboBoxGenN.setColorBoton(Color.WHITE);
 		comboBoxGenN.setColorFondo(new Color(52, 152, 219));
 		comboBoxGenN.setModel(modeloGenN);
@@ -148,64 +154,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					ArrayList<Estudiante> estudiantesFilt1NoAsignado = new ArrayList<>();
-					ArrayList<Estudiante> estudiantesFilt1Asignado = new ArrayList<>();
-
-					if (comboBoxITRN.getSelectedItem().toString() == "") {
-						estudiantesFilt1NoAsignado = noAsignados;
-						estudiantesFilt1Asignado = asignados;
-					} else {
-						for (Estudiante es : noAsignados) {
-							if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
-								estudiantesFilt1NoAsignado.add(es);
-							}
-						}
-						for (Estudiante es : asignados) {
-							if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
-								estudiantesFilt1Asignado.add(es);
-							}
-						}
-					}
-					ArrayList<Estudiante> estudiantesFilt2NoAsignado = new ArrayList<>();
-					ArrayList<Estudiante> estudiantesFilt2Asignado = new ArrayList<>();
-
-					if (comboBoxGenN.getSelectedItem().toString() == "") {
-						estudiantesFilt2NoAsignado = estudiantesFilt1NoAsignado;
-						estudiantesFilt2Asignado = estudiantesFilt1Asignado;
-					} else {
-						for (Estudiante es : estudiantesFilt1NoAsignado) {
-							if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
-								estudiantesFilt2NoAsignado.add(es);
-							}
-						}
-						for (Estudiante es : estudiantesFilt1Asignado) {
-							if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
-								estudiantesFilt2Asignado.add(es);
-							}
-						}
-					}
-					ArrayList<Estudiante> estudiantesFilt3NoAsignado = new ArrayList<>();
-					ArrayList<Estudiante> estudiantesFilt3Asignado = new ArrayList<>();
-					if(textBuscador.getText().equalsIgnoreCase("")) {
-						estudiantesFilt3Asignado=estudiantesFilt2Asignado;
-						estudiantesFilt3NoAsignado=estudiantesFilt2NoAsignado;
-					}else {
-						for (Estudiante es : estudiantesFilt2NoAsignado) {
-							String nombre=es.getNombre1()+" "+es.getApellido1();
-							if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
-								estudiantesFilt3NoAsignado.add(es);
-							}
-						}
-						for (Estudiante es : estudiantesFilt2Asignado) {
-							String nombre=es.getNombre1()+" "+es.getApellido1();
-							if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
-								estudiantesFilt3Asignado.add(es);
-							}
-						}
-					}
-					
-					cargarTablaNoAsignado(estudiantesFilt3NoAsignado);
-					cargarTablaAsignado(estudiantesFilt3Asignado);
+					filtrarTabla();
 				} catch (ServicesException e1) {
 					e1.printStackTrace();
 				}
@@ -421,7 +370,6 @@ public class FrameConvocatoriaEvento extends JFrame {
 				textBuscador.setText("");
 				try {
 					cargarTablaAsignado(asignados);
-
 					cargarTablaNoAsignado(noAsignados);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
@@ -512,6 +460,67 @@ public class FrameConvocatoriaEvento extends JFrame {
 		}
 		return null;
 	}
+	
+	public void filtrarTabla() throws ServicesException {
+		ArrayList<Estudiante> estudiantesFilt1NoAsignado = new ArrayList<>();
+		ArrayList<Estudiante> estudiantesFilt1Asignado = new ArrayList<>();
+
+		if (comboBoxITRN.getSelectedItem().toString() == "") {
+			estudiantesFilt1NoAsignado = noAsignados;
+			estudiantesFilt1Asignado = asignados;
+		} else {
+			for (Estudiante es : noAsignados) {
+				if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
+					estudiantesFilt1NoAsignado.add(es);
+				}
+			}
+			for (Estudiante es : asignados) {
+				if (es.getItr().getNombre().equalsIgnoreCase(comboBoxITRN.getSelectedItem().toString())) {
+					estudiantesFilt1Asignado.add(es);
+				}
+			}
+		}
+		ArrayList<Estudiante> estudiantesFilt2NoAsignado = new ArrayList<>();
+		ArrayList<Estudiante> estudiantesFilt2Asignado = new ArrayList<>();
+
+		if (comboBoxGenN.getSelectedItem().toString() == "") {
+			estudiantesFilt2NoAsignado = estudiantesFilt1NoAsignado;
+			estudiantesFilt2Asignado = estudiantesFilt1Asignado;
+		} else {
+			for (Estudiante es : estudiantesFilt1NoAsignado) {
+				if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
+					estudiantesFilt2NoAsignado.add(es);
+				}
+			}
+			for (Estudiante es : estudiantesFilt1Asignado) {
+				if (es.getAnoIngreso() == Integer.parseInt(comboBoxGenN.getSelectedItem().toString())) {
+					estudiantesFilt2Asignado.add(es);
+				}
+			}
+		}
+		ArrayList<Estudiante> estudiantesFilt3NoAsignado = new ArrayList<>();
+		ArrayList<Estudiante> estudiantesFilt3Asignado = new ArrayList<>();
+		if(textBuscador.getText().equalsIgnoreCase("")) {
+			estudiantesFilt3Asignado=estudiantesFilt2Asignado;
+			estudiantesFilt3NoAsignado=estudiantesFilt2NoAsignado;
+		}else {
+			for (Estudiante es : estudiantesFilt2NoAsignado) {
+				String nombre=es.getNombre1()+" "+es.getApellido1();
+				if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
+					estudiantesFilt3NoAsignado.add(es);
+				}
+			}
+			for (Estudiante es : estudiantesFilt2Asignado) {
+				String nombre=es.getNombre1()+" "+es.getApellido1();
+				if (nombre.toLowerCase().startsWith(textBuscador.getText().toLowerCase())) {
+					estudiantesFilt3Asignado.add(es);
+				}
+			}
+		}
+		
+		cargarTablaNoAsignado(estudiantesFilt3NoAsignado);
+		cargarTablaAsignado(estudiantesFilt3Asignado);
+	}
 
 	public void cargarCombo() throws ServicesException {
 		modeloITRN.removeAllElements();
@@ -536,6 +545,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 
 		cargarTablaAsignado(asignados);
 		cargarTablaNoAsignado(noAsignados);
+		filtrarTabla();
 	}
 	
 	
@@ -553,6 +563,7 @@ public class FrameConvocatoriaEvento extends JFrame {
 		}
 		cargarTablaAsignado(asignados);
 		cargarTablaNoAsignado(noAsignados);
+		filtrarTabla();
 	}
 
 

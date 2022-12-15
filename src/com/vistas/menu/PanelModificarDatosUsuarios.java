@@ -505,7 +505,7 @@ public class PanelModificarDatosUsuarios extends JPanel {
 							throw new Exception("Ingrese un tel\u00e9fono v\u00e1lido");
 						}
 
-						if(tel.length()==9) {
+						if(tel.length()!=9) {
 							throw new Exception("El telefono tiene que contener 9 n\u00fameros y sin espacios");
 						}
 						usuarioMod.setTelefono(tel);
