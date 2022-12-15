@@ -53,6 +53,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 	DefaultComboBoxModel modeloItr = new DefaultComboBoxModel<>();
 	DefaultComboBoxModel modeloEstado = new DefaultComboBoxModel<>();
 	private RSTextFieldIconUno textBuscar;
+	private Boolean agregando=false;
 	
 	private float dinamicNota;
 
@@ -230,6 +231,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 						setVisible(false);
 					}
 				} catch (Exception e1) {
+					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -256,6 +258,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 					try {
 						filtrarTabla();
 					} catch (ServicesException e1) {
+						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -273,6 +276,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 				try {
 					filtrarTabla();
 				} catch (Exception e1) {
+					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -295,22 +299,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 			cargarCombo();
 			cargarTabla(DAOGeneral.conAsistenciaBean.buscarPorEvento(eventoSeleccionado));
 			
-			if(eventoSeleccionado.getTipoActividad().getEsCalificado()) {
-				modeloTabla.addTableModelListener(new TableModelListener() {
-					public void tableChanged(TableModelEvent evt) {
-						try {
-							if (Float.parseFloat(modeloTabla.getValueAt(table.getSelectedRow(), 5).toString()) > 5) {
-								throw new Exception("La nota solo puede ser de 0 a 5");
-							}
-						} catch (Exception e1) {
-							modeloTabla.setValueAt(dinamicNota, table.getSelectedRow(), 5);
-							JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
-
-						}
-
-					}
-				});
-			}
+			
+			
 		} catch (ServicesException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
 
@@ -320,6 +310,7 @@ public class FrameAsistenciaAEvento extends JFrame {
 	public void cargarTabla(List<Estudiante> estudiantes) throws ServicesException {
 
 		modeloTabla.setRowCount(0);
+		agregando=true;
 		for (Estudiante e : estudiantes) {
 			Vector v = new Vector();
 			v.addElement(e.getNombre1() + " " + e.getApellido1());
@@ -337,6 +328,8 @@ public class FrameAsistenciaAEvento extends JFrame {
 			}
 			modeloTabla.addRow(v);
 		}
+		agregando=false;
+
 	}
 
 	public void cargarCombo() throws ServicesException {
